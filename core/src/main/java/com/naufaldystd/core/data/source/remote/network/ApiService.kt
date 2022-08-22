@@ -20,28 +20,28 @@ interface ApiService {
 		@Part("name") name: RequestBody,
 		@Part("email") email: RequestBody,
 		@Part("password") password: RequestBody
-	): Call<RegisterResponse>
+	): RegisterResponse
 
 	@Multipart
 	@POST("login")
 	suspend fun loginAccount(
 		@Part("email") email: RequestBody,
 		@Part("password") password: RequestBody,
-	): Call<LoginResponse>
+	): LoginResponse
 
 	@Multipart
 	@POST("stories")
 	suspend fun addStory(
 		@Part("description") description: RequestBody,
 		@Part file: MultipartBody.Part
-	): Call<AddStoryResponse>
+	): AddStoryResponse
 
 	@Multipart
 	@POST("stories/guest")
 	suspend fun addStoryGuest(
 		@Part("description") description: RequestBody,
 		@Part file: MultipartBody.Part
-	): Call<AddStoryResponse>
+	): AddStoryResponse
 
 	@GET("stories")
 	suspend fun getStories(
