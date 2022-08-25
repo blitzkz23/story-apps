@@ -54,12 +54,12 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
 		}
 	}
 
-	suspend fun addStory(description: RequestBody, photo: MultipartBody.Part): Flow<StoryApiResponse<AddStoryResponse>> {
+	suspend fun addStory(token: String, description: RequestBody, photo: MultipartBody.Part): Flow<StoryApiResponse<String>> {
 		return flow {
 			try {
-				val response = apiService.addStory(description, photo)
+				val response = apiService.addStory(token, description, photo)
 				if (!response.error) {
-					emit(StoryApiResponse.Success(response))
+					emit(StoryApiResponse.Success(response.message))
 				} else {
 					emit(StoryApiResponse.Empty)
 				}
@@ -70,12 +70,12 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
 		}
 	}
 
-	suspend fun addStoryGuest(description: RequestBody, photo: MultipartBody.Part): Flow<StoryApiResponse<AddStoryResponse>> {
+	suspend fun addStoryGuest(description: RequestBody, photo: MultipartBody.Part): Flow<StoryApiResponse<String>> {
 		return flow {
 			try {
 				val response = apiService.addStoryGuest(description, photo)
 				if (!response.error) {
-					emit(StoryApiResponse.Success(response))
+					emit(StoryApiResponse.Success(response.message))
 				} else {
 					emit(StoryApiResponse.Empty)
 				}

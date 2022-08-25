@@ -12,6 +12,8 @@ import com.naufaldystd.core.utils.DataMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -76,5 +78,36 @@ class StoryRepositoryImpl @Inject constructor(
 				localDataSource.insertStories(stories)
 			}
 		}.asFlow()
+
+	override suspend fun addStory(
+		token: String,
+		description: RequestBody,
+		photo: MultipartBody.Part
+	): Resource<String> {
+		return when(val response = remoteDataSource.addStory(token, description, photo).first()) {
+			is StoryApiResponse.Success -> {
+				Resource.Success(response.data)
+			} is StoryApiResponse.Error -> {
+				Resource.Error(response.errorMessage)
+			} else -> {
+				Resource.Loading()
+			}
+		}
+	}
+
+	override suspend fun addStoryGuest(
+		description: RequestBody,
+		photo: MultipartBody.Part
+	): Resource<String> {
+		return when(val response = remoteDataSource.addStoryGuest(description, photo).first()) {
+			is StoryApiResponse.Success -> {
+				Resource.Success(response.data)
+			} is StoryApiResponse.Error -> {
+				Resource.Error(response.errorMessage)
+			} else -> {
+				Resource.Loading()
+			}
+		}
+	}
 
 }
