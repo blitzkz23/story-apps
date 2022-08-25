@@ -5,10 +5,7 @@ import android.util.Log
 import com.naufaldystd.core.data.source.local.entity.StoryEntity
 import com.naufaldystd.core.data.source.remote.network.ApiService
 import com.naufaldystd.core.data.source.remote.network.StoryApiResponse
-import com.naufaldystd.core.data.source.remote.response.AddStoryResponse
-import com.naufaldystd.core.data.source.remote.response.LoginResponse
-import com.naufaldystd.core.data.source.remote.response.RegisterResponse
-import com.naufaldystd.core.data.source.remote.response.StoryResponse
+import com.naufaldystd.core.data.source.remote.response.*
 import com.naufaldystd.core.domain.model.Story
 import com.naufaldystd.core.utils.Constants.CONSTANT_RDS
 import kotlinx.coroutines.Dispatchers
@@ -24,12 +21,12 @@ import javax.inject.Singleton
 class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
 
 	// Register function with flow
-	suspend fun registerAccount(name: String, email: String, password: String) : Flow<StoryApiResponse<RegisterResponse>> {
+	suspend fun registerAccount(name: String, email: String, password: String) : Flow<StoryApiResponse<String>> {
 		return flow {
 			try {
 				val response = apiService.registerAccount(name, email, password)
 				if (!response.error) {
-					emit(StoryApiResponse.Success(response))
+					emit(StoryApiResponse.Success(response.message))
 				} else {
 					emit(StoryApiResponse.Empty)
 				}
@@ -41,12 +38,12 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
 	}
 
 	// Login function with flow
-	suspend fun loginAccount(email: String, password: String) : Flow<StoryApiResponse<LoginResponse>> {
+	suspend fun loginAccount(email: String, password: String) : Flow<StoryApiResponse<LoginResult>> {
 		return flow {
 			try {
 				val response = apiService.loginAccount(email, password)
 				if (!response.error) {
-					emit(StoryApiResponse.Success(response))
+					emit(StoryApiResponse.Success(response.loginResult))
 				} else {
 					emit(StoryApiResponse.Empty)
 				}
@@ -57,12 +54,12 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
 		}
 	}
 
-	suspend fun addStory(description: RequestBody, photo: MultipartBody.Part): Flow<StoryApiResponse<AddStoryResponse>> {
+	suspend fun addStory(token: String, description: RequestBody, photo: MultipartBody.Part): Flow<StoryApiResponse<String>> {
 		return flow {
 			try {
-				val response = apiService.addStory(description, photo)
+				val response = apiService.addStory(token, description, photo)
 				if (!response.error) {
-					emit(StoryApiResponse.Success(response))
+					emit(StoryApiResponse.Success(response.message))
 				} else {
 					emit(StoryApiResponse.Empty)
 				}
@@ -73,12 +70,12 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
 		}
 	}
 
-	suspend fun addStoryGuest(description: RequestBody, photo: MultipartBody.Part): Flow<StoryApiResponse<AddStoryResponse>> {
+	suspend fun addStoryGuest(description: RequestBody, photo: MultipartBody.Part): Flow<StoryApiResponse<String>> {
 		return flow {
 			try {
 				val response = apiService.addStoryGuest(description, photo)
 				if (!response.error) {
-					emit(StoryApiResponse.Success(response))
+					emit(StoryApiResponse.Success(response.message))
 				} else {
 					emit(StoryApiResponse.Empty)
 				}

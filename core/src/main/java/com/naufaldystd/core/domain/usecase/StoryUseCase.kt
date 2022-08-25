@@ -1,4 +1,4 @@
-package com.naufaldystd.core.domain.repository
+package com.naufaldystd.core.domain.usecase
 
 import com.naufaldystd.core.data.source.Resource
 import com.naufaldystd.core.domain.model.Story
@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
-interface StoryRepository {
+interface StoryUseCase {
 	suspend fun registerAccount(name: String, email: String, password: String): Resource<String>
 	suspend fun loginAccount(email: String, password: String): Resource<UserModel>
 	fun getAllStories(token: String): Flow<Resource<List<Story>>>

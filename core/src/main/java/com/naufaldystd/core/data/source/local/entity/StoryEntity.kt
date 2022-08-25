@@ -10,7 +10,7 @@ data class StoryEntity(
 	@PrimaryKey
 	@NonNull
 	@ColumnInfo(name = "id")
-	val id: Int,
+	val id: String,
 
 	@ColumnInfo(name = "name")
 	val name: String,
