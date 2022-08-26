@@ -1,5 +1,6 @@
 package com.naufaldystd.storyapps.di
 
+import androidx.datastore.core.DataStore
 import com.naufaldystd.core.domain.usecase.StoryInteractor
 import com.naufaldystd.core.domain.usecase.StoryUseCase
 import dagger.Binds
@@ -15,4 +16,5 @@ abstract class AppModule {
 	@Binds
 	@Singleton
 	abstract fun provideUseCase(storyInteractor: StoryInteractor): StoryUseCase
+
 }
