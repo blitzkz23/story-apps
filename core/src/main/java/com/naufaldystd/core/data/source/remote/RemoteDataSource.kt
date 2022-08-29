@@ -1,12 +1,10 @@
 package com.naufaldystd.core.data.source.remote
 
-import android.os.Build.VERSION_CODES.P
 import android.util.Log
-import com.naufaldystd.core.data.source.local.entity.StoryEntity
 import com.naufaldystd.core.data.source.remote.network.ApiService
 import com.naufaldystd.core.data.source.remote.network.StoryApiResponse
-import com.naufaldystd.core.data.source.remote.response.*
-import com.naufaldystd.core.domain.model.Story
+import com.naufaldystd.core.data.source.remote.response.LoginResult
+import com.naufaldystd.core.data.source.remote.response.StoryResponse
 import com.naufaldystd.core.utils.Constants.CONSTANT_RDS
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -58,6 +56,7 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
 		}
 	}
 
+	// Function to add story for registered account
 	suspend fun addStory(token: String, description: RequestBody, photo: MultipartBody.Part): Flow<StoryApiResponse<String>> {
 		return flow {
 			try {
@@ -74,6 +73,7 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
 		}
 	}
 
+	// Function to add story for guest user
 	suspend fun addStoryGuest(description: RequestBody, photo: MultipartBody.Part): Flow<StoryApiResponse<String>> {
 		return flow {
 			try {
@@ -90,6 +90,7 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
 		}
 	}
 
+	// function to get all stories from API for main page
 	suspend fun getStories(token: String): Flow<StoryApiResponse<List<StoryResponse>>> {
 		return flow {
 			try {

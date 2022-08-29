@@ -11,6 +11,7 @@ import com.naufaldystd.core.utils.AppExecutors
 import com.naufaldystd.core.utils.DataMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -27,17 +28,19 @@ class StoryRepositoryImpl @Inject constructor(
 		name: String,
 		email: String,
 		password: String
-	): Resource<String> {
-		return when (val response =
-			remoteDataSource.registerAccount(name, email, password).first()) {
-			is StoryApiResponse.Success -> {
-				Resource.Success(response.data)
-			}
-			is StoryApiResponse.Error -> {
-				Resource.Error(response.errorMessage)
-			}
-			else -> {
-				Resource.Loading()
+	): Flow<Resource<String>> {
+		return flow {
+			when (val response =
+				remoteDataSource.registerAccount(name, email, password).first()) {
+				is StoryApiResponse.Success -> {
+					emit(Resource.Success(response.data))
+				}
+				is StoryApiResponse.Error -> {
+					emit(Resource.Error(response.errorMessage))
+				}
+				else -> {
+					emit(Resource.Loading())
+				}
 			}
 		}
 	}

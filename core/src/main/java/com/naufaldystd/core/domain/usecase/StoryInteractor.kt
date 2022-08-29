@@ -16,7 +16,7 @@ class StoryInteractor @Inject constructor(private val storyRepositoryImpl: Story
 		name: String,
 		email: String,
 		password: String
-	): Resource<String> = storyRepositoryImpl.registerAccount(name, email, password)
+	): Flow<Resource<String>> = storyRepositoryImpl.registerAccount(name, email, password)
 
 	override suspend fun loginAccount(email: String, password: String): Resource<UserModel> =
 		storyRepositoryImpl.loginAccount(email, password)
