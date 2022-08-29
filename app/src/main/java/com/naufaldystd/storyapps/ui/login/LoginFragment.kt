@@ -29,9 +29,19 @@ class LoginFragment : Fragment() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
-		binding.ctaRegister.setOnClickListener {
-			findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+		// Set on click listeners for all button
+		binding.apply {
+			ctaRegister.setOnClickListener {
+				findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+			}
+			btnLogin.setOnClickListener {
+
+			}
+			btnLoginGuest.setOnClickListener {
+				findNavController().navigate(R.id.action_loginFragment_to_storyFragment)
+			}
 		}
+
 	}
 
 
