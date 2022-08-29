@@ -45,19 +45,21 @@ class StoryRepositoryImpl @Inject constructor(
 		}
 	}
 
-	override suspend fun loginAccount(email: String, password: String): Resource<UserModel> {
-		return when (val response = remoteDataSource.loginAccount(email, password).first()) {
-			is StoryApiResponse.Success -> {
-				// Get data from previous response and turn it into model
-				val loginResponse = response.data
-				val userModel = DataMapper.mapLoginResponsesToUserModel(loginResponse)
-				Resource.Success(userModel)
-			}
-			is StoryApiResponse.Error -> {
-				Resource.Error(response.errorMessage)
-			}
-			else -> {
-				Resource.Loading()
+	override suspend fun loginAccount(email: String, password: String): Flow<Resource<UserModel>> {
+		return flow {
+			when (val response = remoteDataSource.loginAccount(email, password).first()) {
+				is StoryApiResponse.Success -> {
+					// Get data from previous response and turn it into model
+					val loginResponse = response.data
+					val userModel = DataMapper.mapLoginResponsesToUserModel(loginResponse)
+					emit(Resource.Success(userModel))
+				}
+				is StoryApiResponse.Error -> {
+					emit(Resource.Error(response.errorMessage))
+				}
+				else -> {
+					emit(Resource.Loading())
+				}
 			}
 		}
 	}

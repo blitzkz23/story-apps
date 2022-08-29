@@ -64,12 +64,12 @@ class RegisterFragment : Fragment() {
 							}
 							is Resource.Success -> {
 								binding.loading.visibility = View.GONE
-								Toast.makeText(context, getString(R.string.login_success_msg), Toast.LENGTH_SHORT).show()
+								Toast.makeText(context, getString(R.string.reg_success_msg), Toast.LENGTH_SHORT).show()
 								activity?.onBackPressed()
 							}
 							is Resource.Error -> {
 								binding.loading.visibility = View.GONE
-								Toast.makeText(context, getString(R.string.login_failed_msg), Toast.LENGTH_SHORT).show()
+								Toast.makeText(context, getString(R.string.reg_failed_msg), Toast.LENGTH_SHORT).show()
 							}
 						}
 

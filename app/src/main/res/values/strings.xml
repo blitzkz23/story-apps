@@ -19,6 +19,8 @@
     <string name="have_account">Sudah punya akun?</string>
     <string name="login_cta">Masuk disini!</string>
     <string name="prompt_name">Nama</string>
-    <string name="login_success_msg">Akun berhasil dibuat, silahkan masuk menggunakan akun tersebut.</string>
-    <string name="login_failed_msg">Akun sudah pernah didaftarkan</string>
+    <string name="reg_success_msg">Akun berhasil dibuat, silahkan masuk menggunakan akun tersebut.</string>
+    <string name="reg_failed_msg">Akun sudah pernah didaftarkan</string>
+    <string name="login_failed_msg">E-mail atau password salah!</string>
+    <string name="login_welcome">Selamat datang </string>
 </resources>
