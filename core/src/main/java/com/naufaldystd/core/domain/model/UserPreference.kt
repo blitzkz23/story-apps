@@ -24,7 +24,7 @@ class UserPreference @Inject constructor(private val dataStore: DataStore<Prefer
 		}
 	}
 
-	suspend fun saveUser(user: UserModel) {
+	suspend fun saveUserSession(user: UserModel) {
 		dataStore.edit { preferences ->
 			preferences[NAME_KEY] = user.name
 			preferences[USERID_KEY] = user.userId

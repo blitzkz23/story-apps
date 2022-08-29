@@ -77,6 +77,8 @@ class LoginFragment : Fragment() {
 								},
 								Toast.LENGTH_SHORT
 							).show()
+							user.data?.let { loginViewModel.logUser(it) }
+							findNavController().navigate(R.id.action_loginFragment_to_storyFragment)
 						}
 						is Resource.Error -> {
 							binding.loading.visibility = View.GONE
