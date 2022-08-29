@@ -9,7 +9,9 @@ import com.naufaldystd.core.data.source.remote.response.*
 import com.naufaldystd.core.domain.model.Story
 import com.naufaldystd.core.utils.Constants.CONSTANT_RDS
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import okhttp3.MultipartBody
@@ -38,17 +40,19 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
 	}
 
 	// Login function with flow
+	@OptIn(ExperimentalCoroutinesApi::class)
 	suspend fun loginAccount(email: String, password: String) : Flow<StoryApiResponse<LoginResult>> {
-		return flow {
+		// Use channel flow instead of flow, because flow doesn't allow emit() concurrently.
+		return channelFlow {
 			try {
 				val response = apiService.loginAccount(email, password)
 				if (!response.error) {
-					emit(StoryApiResponse.Success(response.loginResult))
+					send(StoryApiResponse.Success(response.loginResult))
 				} else {
-					emit(StoryApiResponse.Empty)
+					send(StoryApiResponse.Empty)
 				}
 			} catch (e: Exception) {
-				emit(StoryApiResponse.Error(e.toString()))
+				send(StoryApiResponse.Error(e.toString()))
 				Log.e(REMOTE_DATA_SOURCE, e.toString())
 			}
 		}
