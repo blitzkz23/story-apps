@@ -114,11 +114,11 @@
         app:layout_constraintTop_toTopOf="@+id/cta_login" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_login"
+        android:id="@+id/btn_register"
         style="@style/Text.Button"
         android:layout_width="0dp"
         android:layout_height="60dp"
-        android:text="@string/action_login"
+        android:text="@string/action_register"
         app:cornerRadius="12dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"

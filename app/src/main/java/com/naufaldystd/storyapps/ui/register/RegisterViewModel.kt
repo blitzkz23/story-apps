@@ -1,0 +1,12 @@
+package com.naufaldystd.storyapps.ui.register
+
+import androidx.lifecycle.ViewModel
+import com.naufaldystd.core.domain.usecase.StoryUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
+
+@HiltViewModel
+class RegisterViewModel @Inject constructor(private val storyUseCase: StoryUseCase) : ViewModel() {
+	suspend fun registerAccount(name: String, email: String, password: String) =
+		storyUseCase.registerAccount(name, email, password)
+}

@@ -5,16 +5,22 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.naufaldystd.storyapps.R
 import com.naufaldystd.storyapps.databinding.FragmentRegisterBinding
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class RegisterFragment : Fragment() {
 	private var _binding: FragmentRegisterBinding? = null
 
 	// This property is only valid between onCreateView and
 	// onDestroyView.
 	private val binding get() = _binding!!
+	private val registerViewModel: RegisterViewModel by viewModels()
 
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
@@ -32,7 +38,22 @@ class RegisterFragment : Fragment() {
 		// Set on click listener for all button
 		binding.apply {
 			ctaLogin.setOnClickListener {
-				findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+				findNavController().navigate(R.id.action_registerFragment_to_loginFragment  )
+			}
+			btnRegister.setOnClickListener {
+				actionRegister()
+			}
+		}
+	}
+
+	private fun actionRegister() {
+		binding.apply {
+			val name = etNameText.text.toString()
+			val email = etEmailText.text.toString()
+			val password = etPasswordText.text.toString()
+
+			lifecycleScope.launch {
+				registerViewModel.registerAccount(name, email, password)
 			}
 		}
 	}
