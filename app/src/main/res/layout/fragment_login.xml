@@ -50,25 +50,13 @@
         app:layout_constraintTop_toBottomOf="@id/subheader_login"
         app:layout_constraintStart_toStartOf="@id/guideline1" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/et_email_layout"
-        style="@style/TextInputLayoutStyle1"
+    <com.naufaldystd.storyapps.utils.component.CustomEmailField
+        android:id="@+id/et_email_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimens4"
-        app:layout_constraintEnd_toEndOf="@id/guideline2"
+        app:layout_constraintTop_toBottomOf="@id/tv_email"
         app:layout_constraintStart_toStartOf="@id/guideline1"
-        app:layout_constraintTop_toBottomOf="@id/tv_email">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_email_text"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:lines="1"
-            android:inputType="textEmailAddress"
-            android:maxLength="255"
-            android:maxLines="1" />
-    </com.google.android.material.textfield.TextInputLayout>
+        app:layout_constraintEnd_toEndOf="@id/guideline2" />
 
     <TextView
         android:id="@+id/tv_password"
@@ -77,29 +65,16 @@
         style="@style/Text.Header4"
         android:text="@string/prompt_password"
         android:layout_marginTop="@dimen/dimens8"
-        app:layout_constraintTop_toBottomOf="@id/et_email_layout"
+        app:layout_constraintTop_toBottomOf="@id/et_email_text"
         app:layout_constraintStart_toStartOf="@id/guideline1" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/et_password_layout"
-        style="@style/TextInputLayoutStyle1"
+    <com.naufaldystd.storyapps.utils.component.CustomPasswordField
+        android:id="@+id/et_password_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimens4"
-        app:layout_constraintEnd_toEndOf="@id/guideline2"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@id/tv_password"
         app:layout_constraintStart_toStartOf="@id/guideline1"
-        app:layout_constraintTop_toBottomOf="@id/tv_password">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_password_text"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="textPassword"
-            android:lines="1"
-            android:maxLength="255"
-            android:maxLines="1" />
-    </com.google.android.material.textfield.TextInputLayout>
+        app:layout_constraintEnd_toEndOf="@id/guideline2" />
 
     <TextView
         android:id="@+id/cta_register"
@@ -109,7 +84,7 @@
         android:layout_marginTop="@dimen/dimens8"
         android:text="@string/register_cta"
         app:layout_constraintEnd_toEndOf="@id/guideline2"
-        app:layout_constraintTop_toBottomOf="@id/et_password_layout" />
+        app:layout_constraintTop_toBottomOf="@id/et_password_text" />
 
     <TextView
         android:id="@+id/prompt_account"

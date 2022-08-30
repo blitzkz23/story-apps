@@ -18,7 +18,6 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
-	private lateinit var user: UserModel
 	private var _binding: FragmentLoginBinding? = null
 
 	// This property is only valid between onCreateView and
@@ -51,7 +50,11 @@ class LoginFragment : Fragment() {
 				findNavController().navigate(R.id.action_loginFragment_to_storyFragment)
 			}
 		}
+	}
 
+	override fun onDestroyView() {
+		super.onDestroyView()
+		_binding = null
 	}
 
 	private fun actionLogin() {
@@ -78,7 +81,6 @@ class LoginFragment : Fragment() {
 								Toast.LENGTH_SHORT
 							).show()
 							user.data?.let { loginViewModel.logUser(it) }
-							findNavController().navigate(R.id.action_loginFragment_to_storyFragment)
 						}
 						is Resource.Error -> {
 							binding.loading.visibility = View.GONE

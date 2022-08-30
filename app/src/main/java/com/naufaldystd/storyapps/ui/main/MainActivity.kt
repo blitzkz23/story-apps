@@ -10,6 +10,8 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.findNavController
 import com.naufaldystd.storyapps.R
 import com.naufaldystd.storyapps.databinding.ActivityMainBinding
+import com.naufaldystd.storyapps.ui.login.LoginFragment
+import com.naufaldystd.storyapps.ui.story.StoryFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -42,8 +44,13 @@ class MainActivity : AppCompatActivity() {
 	}
 
 	private fun setupViewModel() {
+		// If user session is active, replace login fragment with story fragment
 		mainViewModel.getUser().observe(this) { user ->
-			if (user.isLogin) findNavController(R.id.nav_host_fragment).navigate(R.id.action_loginFragment_to_storyFragment)
+			if (user.isLogin) {
+				val ft = supportFragmentManager.beginTransaction()
+				ft.replace(R.id.nav_host_fragment, StoryFragment())
+				ft.commit()
+			}
 		}
 	}
 }

@@ -6,15 +6,15 @@ import android.graphics.drawable.Drawable
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
+import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
-import android.view.MotionEvent
 import android.view.View
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import com.naufaldystd.storyapps.R
 
-class CustomEditText : AppCompatEditText {
-	private lateinit var visibleButtonImage: Drawable
+class CustomPasswordField : AppCompatEditText {
+	private lateinit var passwordIconDrawable: Drawable
 
 	constructor(context: Context) : super(context) {
 		init()
@@ -30,19 +30,29 @@ class CustomEditText : AppCompatEditText {
 
 	override fun onDraw(canvas: Canvas?) {
 		super.onDraw(canvas)
-		hint = "Silahkan masukkan password..."
+
+		transformationMethod = PasswordTransformationMethod.getInstance()
+		hint = context.getString(R.string.prompt_hint_password)
+		background = context.getDrawable(R.drawable.edit_text_bg)
+	}
+
+	private fun init() {
 		textAlignment = View.TEXT_ALIGNMENT_VIEW_START
+		passwordIconDrawable = ContextCompat.getDrawable(context, R.drawable.ic_lock) as Drawable
 		inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
-		showHiddenButton()
-	}
+		compoundDrawablePadding = 16
+		setButtonDrawables(passwordIconDrawable)
+		setAutofillHints(AUTOFILL_HINT_PASSWORD)
 
-	private fun showVisibleButton() {
-		setButtonDrawables(endOfTheText = visibleButtonImage)
-	}
+		addTextChangedListener(object : TextWatcher {
+			override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) { }
 
-	private fun showHiddenButton() {
-		visibleButtonImage = ContextCompat.getDrawable(context, R.drawable.ic_hidden_eye) as Drawable
-		setButtonDrawables(endOfTheText = visibleButtonImage)
+			override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+				if (p0.toString().length < 6 && !p0.isNullOrEmpty()) setErrorMsg()
+			}
+
+			override fun afterTextChanged(p0: Editable?) { }
+		})
 	}
 
 	private fun setButtonDrawables(
@@ -60,24 +70,7 @@ class CustomEditText : AppCompatEditText {
 	}
 
 	private fun setErrorMsg() {
-		error = "Password minimal harus 6 kata"
-	}
-
-	private fun init() {
-		visibleButtonImage = ContextCompat.getDrawable(context, R.drawable.ic_hidden_eye) as Drawable
-		addTextChangedListener(object : TextWatcher {
-			override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-			}
-
-			override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-				if (p0.toString().length < 6) setErrorMsg()
-			}
-
-			override fun afterTextChanged(p0: Editable?) {
-				if (p0.toString().length < 6) setErrorMsg()
-			}
-		})
+		error = context.getString(R.string.error_message_password)
 	}
 
 }

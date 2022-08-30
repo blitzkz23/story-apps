@@ -48,6 +48,11 @@ class RegisterFragment : Fragment() {
 		}
 	}
 
+	override fun onDestroyView() {
+		super.onDestroyView()
+		_binding = null
+	}
+
 	private fun actionRegister() {
 		binding.apply {
 			val name = etNameText.text.toString()
