@@ -3,6 +3,7 @@ package com.naufaldystd.storyapps.ui.login
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -40,6 +41,18 @@ class LoginFragment : Fragment() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
+		// Set validation for button state, only enable button if form are not empty and formats are correct
+		setButtonEnable()
+		binding.etPasswordText.addTextChangedListener(object : TextWatcher {
+			override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+			override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+				setButtonEnable()
+			}
+
+			override fun afterTextChanged(s: Editable?) {}
+		})
+
 		// Set on click listeners for all button
 		binding.apply {
 			ctaRegister.setOnClickListener {
@@ -54,9 +67,14 @@ class LoginFragment : Fragment() {
 		}
 	}
 
-	override fun onDestroyView() {
-		super.onDestroyView()
-		_binding = null
+
+	private fun setButtonEnable() {
+		val email = binding.etEmailText.text
+		val password = binding.etPasswordText.text
+
+		binding.btnLogin.isEnabled =
+			(email != null) && Patterns.EMAIL_ADDRESS.matcher(email)
+				.matches() && (password != null) && password.toString().length >= 6
 	}
 
 	private fun actionLogin() {
@@ -98,5 +116,8 @@ class LoginFragment : Fragment() {
 		}
 	}
 
-
+	override fun onDestroyView() {
+		super.onDestroyView()
+		_binding = null
+	}
 }
