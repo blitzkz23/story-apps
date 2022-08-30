@@ -1,6 +1,9 @@
 package com.naufaldystd.storyapps.ui.register
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -37,6 +40,18 @@ class RegisterFragment : Fragment() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
+		// Set validation for button state, only enable button if form are not empty and formats are correct
+		setButtonEnable()
+		binding.etPasswordText.addTextChangedListener(object : TextWatcher {
+			override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+			override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+				setButtonEnable()
+			}
+
+			override fun afterTextChanged(s: Editable?) {}
+		})
+
 		// Set on click listener for all button
 		binding.apply {
 			ctaLogin.setOnClickListener {
@@ -48,39 +63,56 @@ class RegisterFragment : Fragment() {
 		}
 	}
 
-	override fun onDestroyView() {
-		super.onDestroyView()
-		_binding = null
+	private fun setButtonEnable() {
+		val name = binding.etNameText.text
+		val email = binding.etEmailText.text
+		val password = binding.etPasswordText.text
+
+		binding.btnRegister.isEnabled =
+			(name != null) && name.toString()
+				.isNotEmpty() && (email != null) && Patterns.EMAIL_ADDRESS.matcher(email)
+				.matches() && (password != null) && password.toString().length >= 6
 	}
 
 	private fun actionRegister() {
-		binding.apply {
-			val name = etNameText.text.toString()
-			val email = etEmailText.text.toString()
-			val password = etPasswordText.text.toString()
-			loading.visibility = View.VISIBLE
+		binding.loading.visibility = View.VISIBLE
 
-			lifecycleScope.launch {
-				registerViewModel.registerAccount(name, email, password)
-					.observe(viewLifecycleOwner) { respond ->
-						when (respond) {
-							is Resource.Loading -> {
-								binding.loading.visibility = View.GONE
-							}
-							is Resource.Success -> {
-								binding.loading.visibility = View.GONE
-								Toast.makeText(context, getString(R.string.reg_success_msg), Toast.LENGTH_SHORT).show()
-								activity?.onBackPressed()
-							}
-							is Resource.Error -> {
-								binding.loading.visibility = View.GONE
-								Toast.makeText(context, getString(R.string.reg_failed_msg), Toast.LENGTH_SHORT).show()
-							}
+		val name = binding.etNameText.text.toString()
+		val email = binding.etEmailText.text.toString()
+		val password = binding.etPasswordText.text.toString()
+
+		lifecycleScope.launch {
+			registerViewModel.registerAccount(name, email, password)
+				.observe(viewLifecycleOwner) { respond ->
+					when (respond) {
+						is Resource.Loading -> {
+							binding.loading.visibility = View.GONE
 						}
-
+						is Resource.Success -> {
+							binding.loading.visibility = View.GONE
+							Toast.makeText(
+								context,
+								getString(R.string.reg_success_msg),
+								Toast.LENGTH_SHORT
+							).show()
+							activity?.onBackPressed()
+						}
+						is Resource.Error -> {
+							binding.loading.visibility = View.GONE
+							Toast.makeText(
+								context,
+								getString(R.string.reg_failed_msg),
+								Toast.LENGTH_SHORT
+							).show()
+						}
 					}
-			}
+				}
 		}
+	}
+
+	override fun onDestroyView() {
+		super.onDestroyView()
+		_binding = null
 	}
 
 }
