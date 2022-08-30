@@ -1,3 +1,29 @@
 <resources>
     <string name="app_name">Story Apps</string>
+    <!-- Strings related to login -->
+    <string name="prompt_name">Name</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_login">Masuk</string>
+    <string name="action_register">Daftar</string>
+    <string name="welcome">"Welcome!"</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="header_welcome">Selamat datang di Cericode!</string>
+    <string name="subheading_login">Bagikan pengalaman belajar, cerita suksesmu, atau simak bagaimana kisah orang-orang sukses yang belajar disini!</string>
+    <string name="register_cta">Daftar disini!</string>
+    <string name="no_account">Belum punya akun?</string>
+    <string name="login_illust">Login Illustration</string>
+    <string name="action_login_guest">Masuk Sebagai Tamu</string>
+    <string name="header_register">Silahkan lengkapi data diri dibawah untuk mulai berbagi!</string>
+    <string name="have_account">Sudah punya akun?</string>
+    <string name="login_cta">Masuk disini!</string>
+    <string name="reg_success_msg">Akun berhasil dibuat, silahkan masuk menggunakan akun tersebut.</string>
+    <string name="reg_failed_msg">Akun sudah pernah didaftarkan</string>
+    <string name="login_failed_msg">E-mail atau password salah!</string>
+    <string name="login_welcome">Selamat datang </string>
+    <string name="error_message_password">Password minimal harus 6 kata</string>
+    <string name="prompt_hint_password">Silakan masukkan password…</string>
+    <string name="prompt_hint_email">Silakan masukkan e-mail…</string>
+    <string name="error_message_email">Format e-mail yang dimasukkan belum benar</string>
+    <string name="error_message_name">Nama tidak boleh kosong</string>
 </resources>
