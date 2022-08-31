@@ -26,6 +26,7 @@ class SettingActivity : AppCompatActivity() {
 		setContentView(binding.root)
 
 		setupFullscreen()
+		setupUserInfo()
 
 		findViewById<ImageButton>(R.id.btn_back)?.setOnClickListener {
 			onBackPressed()
@@ -36,6 +37,12 @@ class SettingActivity : AppCompatActivity() {
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
 			startActivity(intent)
 			finish()
+		}
+	}
+
+	private fun setupUserInfo() {
+		settingViewModel.getUser().observe(this) { user ->
+			binding.userName.text = user.name
 		}
 	}
 
