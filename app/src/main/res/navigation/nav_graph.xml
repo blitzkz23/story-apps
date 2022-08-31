@@ -36,6 +36,11 @@
         <action
             android:id="@+id/action_storyFragment_to_settingActivity"
             app:destination="@id/settingActivity" />
+        <action
+            android:id="@+id/action_storyFragment_to_registerFragment"
+            app:destination="@id/registerFragment"
+            app:popUpTo="@id/storyFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <activity
         android:id="@+id/settingActivity"

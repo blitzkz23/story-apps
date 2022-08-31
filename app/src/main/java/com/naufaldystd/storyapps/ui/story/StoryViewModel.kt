@@ -17,11 +17,6 @@ import javax.inject.Inject
 
 @HiltViewModel()
 class StoryViewModel @Inject constructor(private val storyUseCase: StoryUseCase, private val pref: UserPreference): ViewModel() {
-	private var token: String = ""
-
-	fun setToken(token: String) {
-		this.token = token
-	}
 
 	fun getUser(): LiveData<UserModel> {
 		return pref.getUser().asLiveData()
