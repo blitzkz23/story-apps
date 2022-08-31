@@ -27,5 +27,5 @@ class StoryViewModel @Inject constructor(private val storyUseCase: StoryUseCase,
 		return pref.getUser().asLiveData()
 	}
 
-	val story = storyUseCase.getAllStories(token).asLiveData()
+	fun getAllStories(token: String) = storyUseCase.getAllStories(token).asLiveData()
 }

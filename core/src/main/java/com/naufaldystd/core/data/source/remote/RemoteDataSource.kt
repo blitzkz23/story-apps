@@ -91,18 +91,19 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
 	}
 
 	// function to get all stories from API for main page
+	@OptIn(ExperimentalCoroutinesApi::class)
 	suspend fun getStories(token: String): Flow<StoryApiResponse<List<StoryResponse>>> {
-		return flow {
+		return channelFlow {
 			try {
 				val response = apiService.getStories("Bearer $token")
 				val dataArray = response.listStory
 				if (dataArray.isNotEmpty()) {
-					emit(StoryApiResponse.Success(response.listStory))
+					send(StoryApiResponse.Success(response.listStory))
 				} else {
-					emit(StoryApiResponse.Empty)
+					send(StoryApiResponse.Empty)
 				}
 			} catch (e: Exception) {
-				emit(StoryApiResponse.Error(e.toString()))
+				send(StoryApiResponse.Error(e.toString()))
 				Log.e(REMOTE_DATA_SOURCE, e.toString())
 			}
 		}

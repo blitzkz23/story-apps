@@ -34,7 +34,6 @@ class StoryFragment : Fragment() {
 		super.onViewCreated(view, savedInstanceState)
 
 		setupHeaderToken()
-		getStoriesData()
 		getView()?.findViewById<ImageButton>(R.id.btn_setting)?.setOnClickListener {
 			val navController = Navigation.findNavController(view)
 			navController.navigate(R.id.action_storyFragment_to_settingActivity)
@@ -43,29 +42,25 @@ class StoryFragment : Fragment() {
 
 	private fun setupHeaderToken() {
 		storyViewModel.getUser().observe(viewLifecycleOwner) { user ->
-			storyViewModel.setToken(user.token)
-		}
-	}
-
-	private fun getStoriesData() {
-		binding.loading.visibility = View.VISIBLE
-		storyViewModel.story.observe(viewLifecycleOwner) { story ->
-			if (story != null) {
-				when (story) {
-					is Resource.Loading -> binding.loading.visibility = View.GONE
-					is Resource.Success -> {
-						binding.loading.visibility = View.GONE
-					}
-					is Resource.Error -> {
-						binding.loading.visibility = View.GONE
-						Toast.makeText(
-							context,
-							"Gagal menampilkan data, mohon coba lagi nanti",
-							Toast.LENGTH_SHORT
-						).show()
+			storyViewModel.getAllStories(user.token).observe(viewLifecycleOwner) { story ->
+				if (story != null) {
+					when (story) {
+						is Resource.Loading -> binding.loading.visibility = View.GONE
+						is Resource.Success -> {
+							binding.loading.visibility = View.GONE
+						}
+						is Resource.Error -> {
+							binding.loading.visibility = View.GONE
+							Toast.makeText(
+								context,
+								"Gagal menampilkan data, mohon coba lagi nanti",
+								Toast.LENGTH_SHORT
+							).show()
+						}
 					}
 				}
 			}
 		}
 	}
+
 }
