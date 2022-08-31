@@ -94,7 +94,7 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
 	suspend fun getStories(token: String): Flow<StoryApiResponse<List<StoryResponse>>> {
 		return flow {
 			try {
-				val response = apiService.getStories(token)
+				val response = apiService.getStories("Bearer $token")
 				val dataArray = response.listStory
 				if (dataArray.isNotEmpty()) {
 					emit(StoryApiResponse.Success(response.listStory))

@@ -83,9 +83,7 @@ class RegisterFragment : Fragment() {
 			registerViewModel.registerAccount(name, email, password)
 				.observe(viewLifecycleOwner) { respond ->
 					when (respond) {
-						is Resource.Loading -> {
-							binding.loading.visibility = View.GONE
-						}
+						is Resource.Loading -> binding.loading.visibility = View.GONE
 						is Resource.Success -> {
 							binding.loading.visibility = View.GONE
 							Toast.makeText(

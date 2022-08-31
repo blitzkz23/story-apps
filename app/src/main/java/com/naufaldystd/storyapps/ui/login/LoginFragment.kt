@@ -84,9 +84,7 @@ class LoginFragment : Fragment() {
 			lifecycleScope.launch {
 				loginViewModel.loginAccount(email, password).observe(viewLifecycleOwner) { user ->
 					when (user) {
-						is Resource.Loading -> {
-							loading.visibility = View.GONE
-						}
+						is Resource.Loading -> loading.visibility = View.GONE
 						is Resource.Success -> {
 							loading.visibility = View.GONE
 							Toast.makeText(

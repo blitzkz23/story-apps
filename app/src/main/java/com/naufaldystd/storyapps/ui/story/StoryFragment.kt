@@ -5,8 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
+import com.naufaldystd.core.data.source.Resource
 import com.naufaldystd.storyapps.R
 import com.naufaldystd.storyapps.databinding.FragmentStoryBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -15,6 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class StoryFragment : Fragment() {
 	private var _binding: FragmentStoryBinding? = null
 	private val binding get() = _binding!!
+	private val storyViewModel: StoryViewModel by viewModels()
 
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
@@ -29,9 +33,39 @@ class StoryFragment : Fragment() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
+		setupHeaderToken()
+		getStoriesData()
 		getView()?.findViewById<ImageButton>(R.id.btn_setting)?.setOnClickListener {
 			val navController = Navigation.findNavController(view)
 			navController.navigate(R.id.action_storyFragment_to_settingActivity)
+		}
+	}
+
+	private fun setupHeaderToken() {
+		storyViewModel.getUser().observe(viewLifecycleOwner) { user ->
+			storyViewModel.setToken(user.token)
+		}
+	}
+
+	private fun getStoriesData() {
+		binding.loading.visibility = View.VISIBLE
+		storyViewModel.story.observe(viewLifecycleOwner) { story ->
+			if (story != null) {
+				when (story) {
+					is Resource.Loading -> binding.loading.visibility = View.GONE
+					is Resource.Success -> {
+						binding.loading.visibility = View.GONE
+					}
+					is Resource.Error -> {
+						binding.loading.visibility = View.GONE
+						Toast.makeText(
+							context,
+							"Gagal menampilkan data, mohon coba lagi nanti",
+							Toast.LENGTH_SHORT
+						).show()
+					}
+				}
+			}
 		}
 	}
 }
