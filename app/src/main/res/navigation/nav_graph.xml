@@ -15,6 +15,8 @@
             app:destination="@id/registerFragment" />
         <action
             android:id="@+id/action_loginFragment_to_storyFragment"
+            app:popUpTo="@+id/loginFragment"
+            app:popUpToInclusive="true"
             app:destination="@id/storyFragment" />
     </fragment>
     <fragment
@@ -30,5 +32,13 @@
         android:id="@+id/storyFragment"
         android:name="com.naufaldystd.storyapps.ui.story.StoryFragment"
         android:label="fragment_story"
-        tools:layout="@layout/fragment_story" />
+        tools:layout="@layout/fragment_story" >
+        <action
+            android:id="@+id/action_storyFragment_to_settingActivity"
+            app:destination="@id/settingActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/settingActivity"
+        android:name="com.naufaldystd.storyapps.ui.setting.SettingActivity"
+        android:label="SettingActivity" />
 </navigation>

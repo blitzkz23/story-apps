@@ -7,7 +7,9 @@ import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
+import com.naufaldystd.core.domain.model.Story
 import com.naufaldystd.storyapps.R
 import com.naufaldystd.storyapps.databinding.ActivityMainBinding
 import com.naufaldystd.storyapps.ui.login.LoginFragment
@@ -47,9 +49,7 @@ class MainActivity : AppCompatActivity() {
 		// If user session is active, replace login fragment with story fragment
 		mainViewModel.getUser().observe(this) { user ->
 			if (user.isLogin) {
-				val ft = supportFragmentManager.beginTransaction()
-				ft.replace(R.id.nav_host_fragment, StoryFragment())
-				ft.commit()
+				findNavController(R.id.nav_host_fragment).navigate(R.id.action_loginFragment_to_storyFragment)
 			}
 		}
 	}

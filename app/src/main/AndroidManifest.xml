@@ -17,9 +17,12 @@
         android:theme="@style/Theme.StoryApps"
         tools:targetApi="31">
         <activity
+            android:name=".ui.setting.SettingActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.main.MainActivity"
-            android:theme="@style/Theme.StoryApps.App.Starting"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.StoryApps.App.Starting">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -23,8 +23,6 @@ import kotlinx.coroutines.launch
 class LoginFragment : Fragment() {
 	private var _binding: FragmentLoginBinding? = null
 
-	// This property is only valid between onCreateView and
-	// onDestroyView.
 	private val binding get() = _binding!!
 	private val loginViewModel: LoginViewModel by viewModels()
 

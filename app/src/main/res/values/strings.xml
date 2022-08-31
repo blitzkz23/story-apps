@@ -26,4 +26,9 @@
     <string name="prompt_hint_email">Silakan masukkan e-mail…</string>
     <string name="error_message_email">Format e-mail yang dimasukkan belum benar</string>
     <string name="error_message_name">Nama tidak boleh kosong</string>
+    <string name="image_button_setting">Image Button Setting</string>
+    <string name="logo_image">Logo Image</string>
+    <string name="user_profile_image">User profile image</string>
+    <string name="nama_user">Nama User</string>
+    <string name="logout">Keluar</string>
 </resources>
