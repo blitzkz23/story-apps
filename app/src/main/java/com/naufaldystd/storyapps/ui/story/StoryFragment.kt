@@ -48,16 +48,8 @@ class StoryFragment : Fragment() {
 			startActivity(intent)
 		}
 
-		storyViewModel.getUser().observe(viewLifecycleOwner) { user ->
-			if (user.name == getString(R.string.guest)) {
-				binding.messageForGuest.visibility = View.VISIBLE
-				binding.btnRegister2.visibility = View.VISIBLE
-				binding.btnRegister2.setOnClickListener {
-					findNavController().navigate(R.id.action_storyFragment_to_registerFragment)
-				}
-			} else {
-				setupHeaderTokenAndStoryData()
-			}
+		storyViewModel.getUser().observe(viewLifecycleOwner) {
+			setupHeaderTokenAndStoryData()
 		}
 
 		getView()?.findViewById<ImageButton>(R.id.btn_setting)?.setOnClickListener {
