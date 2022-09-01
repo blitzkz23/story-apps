@@ -40,6 +40,8 @@ class RegisterFragment : Fragment() {
 
 		// Set validation for button state, only enable button if form are not empty and formats are correct
 		setButtonEnable()
+		setupButtonAction()
+
 		binding.etPasswordText.addTextChangedListener(object : TextWatcher {
 			override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
@@ -49,8 +51,9 @@ class RegisterFragment : Fragment() {
 
 			override fun afterTextChanged(s: Editable?) {}
 		})
+	}
 
-		// Set on click listener for all button
+	private fun setupButtonAction() {
 		binding.apply {
 			ctaLogin.setOnClickListener {
 				findNavController().navigate(R.id.action_registerFragment_to_loginFragment)

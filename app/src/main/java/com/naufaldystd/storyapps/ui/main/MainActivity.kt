@@ -44,10 +44,10 @@ class MainActivity : AppCompatActivity() {
 	}
 
 	private fun checkLoggedUser() {
-		// If user session is active, replace login fragment with story fragment
+		// If user session is active, redirect to story activity
 		mainViewModel.getUser().observe(this) { user ->
 			if (user.isLogin) {
-				startActivity( Intent(this@MainActivity, StoryActivity::class.java).also { intent ->
+				startActivity(Intent(this@MainActivity, StoryActivity::class.java).also { intent ->
 					intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
 				})
 				finish()

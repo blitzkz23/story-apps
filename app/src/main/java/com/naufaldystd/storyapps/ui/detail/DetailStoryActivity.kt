@@ -22,6 +22,10 @@ class DetailStoryActivity : AppCompatActivity() {
 		ActivityDetailStoryBinding.inflate(layoutInflater)
 	}
 
+	companion object {
+		const val EXTRA_PARCEL = EXTRA
+	}
+
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(binding.root)
@@ -68,9 +72,5 @@ class DetailStoryActivity : AppCompatActivity() {
 			)
 		}
 		supportActionBar?.hide()
-	}
-
-	companion object {
-		const val EXTRA_PARCEL = EXTRA
 	}
 }

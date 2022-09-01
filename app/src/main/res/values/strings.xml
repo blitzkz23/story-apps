@@ -34,4 +34,7 @@
     <string name="message_for_guest">Mohon maaf, Anda membutuhkan sebuah akun untuk dapat membaca konten pada halaman ini.\n\nNamun anda tetap dapat membagikan cerita Anda, untuk orang lain dengan menekan tombol berbagi atau tombol dibawah ini untuk mendaftar dan mulai membaca!</string>
     <string name="share">Berbagi</string>
     <string name="guest">Tamu</string>
+    <string name="camera">Kamera</string>
+    <string name="gallery">Gallery</string>
+    <string name="tambahkan_story">Tambahkan Story</string>
 </resources>

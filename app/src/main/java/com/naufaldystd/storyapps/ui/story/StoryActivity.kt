@@ -10,21 +10,20 @@ import android.view.WindowManager
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.fragment.app.viewModels
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.naufaldystd.core.data.source.Resource
 import com.naufaldystd.core.ui.StoryAdapter
 import com.naufaldystd.storyapps.R
-import com.naufaldystd.storyapps.databinding.FragmentStoryBinding
+import com.naufaldystd.storyapps.databinding.ActivityStoryBinding
 import com.naufaldystd.storyapps.ui.detail.DetailStoryActivity
 import com.naufaldystd.storyapps.ui.setting.SettingActivity
+import com.naufaldystd.storyapps.ui.story.add.AddStoryActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class StoryActivity : AppCompatActivity() {
-	private val binding: FragmentStoryBinding by lazy {
-		FragmentStoryBinding.inflate(layoutInflater)
+	private val binding: ActivityStoryBinding by lazy {
+		ActivityStoryBinding.inflate(layoutInflater)
 	}
 	private val storyViewModel: StoryViewModel by viewModels()
 	private lateinit var storyAdapter: StoryAdapter
@@ -32,14 +31,10 @@ class StoryActivity : AppCompatActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(binding.root)
-		setupFullscreen()
 
-		storyAdapter = StoryAdapter()
-		storyAdapter.onItemClick = { intentData ->
-			val intent = Intent(this@StoryActivity, DetailStoryActivity::class.java)
-			intent.putExtra(DetailStoryActivity.EXTRA_PARCEL, intentData)
-			startActivity(intent)
-		}
+		setupFullscreen()
+		setupAdapter()
+		setupButtonAction()
 
 		storyViewModel.getUser().observe(this) { user ->
 			if (user.name != getString(R.string.guest)) {
@@ -52,9 +47,22 @@ class StoryActivity : AppCompatActivity() {
 				}
 			}
 		}
+	}
 
+	private fun setupButtonAction() {
 		findViewById<ImageButton>(R.id.btn_setting)?.setOnClickListener {
-			val intent = Intent(this@StoryActivity, SettingActivity::class.java)
+			startActivity(Intent(this@StoryActivity, SettingActivity::class.java))
+		}
+		binding.btnAddStory.setOnClickListener {
+			startActivity(Intent(this@StoryActivity, AddStoryActivity::class.java))
+		}
+	}
+
+	private fun setupAdapter() {
+		storyAdapter = StoryAdapter()
+		storyAdapter.onItemClick = { intentData ->
+			val intent = Intent(this@StoryActivity, DetailStoryActivity::class.java)
+			intent.putExtra(DetailStoryActivity.EXTRA_PARCEL, intentData)
 			startActivity(intent)
 		}
 	}
