@@ -44,8 +44,8 @@ class MainActivity : AppCompatActivity() {
 	private fun checkLoggedUser() {
 		// If user session is active, replace login fragment with story fragment
 		mainViewModel.getUser().observe(this) { user ->
-			if (user.isLogin) {
-				findNavController(R.id.nav_host_fragment).navigate(R.id.action_loginFragment_to_storyFragment)
+			if (!user.isLogin) {
+				findNavController(R.id.nav_host_fragment).navigate(R.id.action_storyFragment_to_loginFragment)
 			}
 		}
 	}

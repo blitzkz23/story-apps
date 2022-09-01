@@ -43,14 +43,14 @@ class StoryFragment : Fragment() {
 		}
 
 		storyViewModel.getUser().observe(viewLifecycleOwner) { user ->
-			if (user.name != context?.getString(R.string.guest)) {
-				setupHeaderTokenAndStoryData()
-			} else {
+			if (user.name == getString(R.string.guest)) {
 				binding.messageForGuest.visibility = View.VISIBLE
 				binding.btnRegister2.visibility = View.VISIBLE
 				binding.btnRegister2.setOnClickListener {
 					findNavController().navigate(R.id.action_storyFragment_to_registerFragment)
 				}
+			} else {
+				setupHeaderTokenAndStoryData()
 			}
 		}
 
