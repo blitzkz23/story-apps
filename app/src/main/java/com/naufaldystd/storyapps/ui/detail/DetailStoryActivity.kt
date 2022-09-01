@@ -41,6 +41,9 @@ class DetailStoryActivity : AppCompatActivity() {
 		}
 	}
 
+	/**
+	 * Populate view with data, if extra from previous page exists
+	 */
 	private fun populateView(data: Story) {
 		with(binding) {
 			Glide.with(this@DetailStoryActivity)
@@ -61,6 +64,9 @@ class DetailStoryActivity : AppCompatActivity() {
 		}
 	}
 
+	/**
+	 * Set full screen without default action bar
+	 */
 	@Suppress("DEPRECATION")
 	private fun setupFullscreen() {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {

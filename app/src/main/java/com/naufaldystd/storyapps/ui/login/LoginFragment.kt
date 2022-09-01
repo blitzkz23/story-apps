@@ -40,7 +40,6 @@ class LoginFragment : Fragment() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
-		// Set validation for button state, only enable button if form are not empty and formats are correct
 		setButtonEnable()
 		setupButtonAction()
 		binding.etPasswordText.addTextChangedListener(object : TextWatcher {
@@ -54,6 +53,9 @@ class LoginFragment : Fragment() {
 
 	}
 
+	/**
+	 * Set click listener for all button
+	 */
 	private fun setupButtonAction() {
 		binding.apply {
 			ctaRegister.setOnClickListener {
@@ -71,7 +73,9 @@ class LoginFragment : Fragment() {
 		}
 	}
 
-
+	/**
+	 * Set validation for button state, only enable button if form are not empty and formats are correct
+	 */
 	private fun setButtonEnable() {
 		val email = binding.etEmailText.text
 		val password = binding.etPasswordText.text
@@ -81,6 +85,9 @@ class LoginFragment : Fragment() {
 				.matches() && (password != null) && password.toString().length >= 6
 	}
 
+	/**
+	 * Get text and password from client and send login account request to API
+	 */
 	private fun actionLogin() {
 		binding.apply {
 			val email = etEmailText.text.toString()

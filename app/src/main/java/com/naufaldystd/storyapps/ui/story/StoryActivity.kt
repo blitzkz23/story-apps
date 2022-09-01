@@ -49,6 +49,9 @@ class StoryActivity : AppCompatActivity() {
 		}
 	}
 
+	/**
+	 * Set click listener for all button
+	 */
 	private fun setupButtonAction() {
 		findViewById<ImageButton>(R.id.btn_setting)?.setOnClickListener {
 			startActivity(Intent(this@StoryActivity, SettingActivity::class.java))
@@ -58,6 +61,9 @@ class StoryActivity : AppCompatActivity() {
 		}
 	}
 
+	/**
+	 * Set adapter for recyclerview
+	 */
 	private fun setupAdapter() {
 		storyAdapter = StoryAdapter()
 		storyAdapter.onItemClick = { intentData ->
@@ -67,6 +73,9 @@ class StoryActivity : AppCompatActivity() {
 		}
 	}
 
+	/**
+	 * Set full screen without default action bar
+	 */
 	@Suppress("DEPRECATION")
 	private fun setupFullscreen() {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -80,6 +89,9 @@ class StoryActivity : AppCompatActivity() {
 		supportActionBar?.hide()
 	}
 
+	/**
+	 * Set header token for data request and set the returned data into adapter and eventually recyclerview
+	 */
 	private fun setupHeaderTokenAndStoryData() {
 		storyViewModel.getUser().observe(this) { user ->
 			storyViewModel.getAllStories(user.token).observe(this) { story ->

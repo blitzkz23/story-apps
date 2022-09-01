@@ -30,6 +30,9 @@ class MainActivity : AppCompatActivity() {
 		checkLoggedUser()
 	}
 
+	/**
+	 * Set full screen without default action bar
+	 */
 	@Suppress("DEPRECATION")
 	private fun setupFullscreen() {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -43,8 +46,10 @@ class MainActivity : AppCompatActivity() {
 		supportActionBar?.hide()
 	}
 
+	/**
+	 * Check if user session is active, redirect to main screen (story activity)
+	 */
 	private fun checkLoggedUser() {
-		// If user session is active, redirect to story activity
 		mainViewModel.getUser().observe(this) { user ->
 			if (user.isLogin) {
 				startActivity(Intent(this@MainActivity, StoryActivity::class.java).also { intent ->

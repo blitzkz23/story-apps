@@ -38,7 +38,6 @@ class RegisterFragment : Fragment() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
-		// Set validation for button state, only enable button if form are not empty and formats are correct
 		setButtonEnable()
 		setupButtonAction()
 
@@ -53,6 +52,9 @@ class RegisterFragment : Fragment() {
 		})
 	}
 
+	/**
+	 * Set click listener for all button
+	 */
 	private fun setupButtonAction() {
 		binding.apply {
 			ctaLogin.setOnClickListener {
@@ -64,6 +66,9 @@ class RegisterFragment : Fragment() {
 		}
 	}
 
+	/**
+	 * Set validation for button state, only enable button if form are not empty and formats are correct
+	 */
 	private fun setButtonEnable() {
 		val name = binding.etNameText.text
 		val email = binding.etEmailText.text
@@ -75,6 +80,9 @@ class RegisterFragment : Fragment() {
 				.matches() && (password != null) && password.toString().length >= 6
 	}
 
+	/**
+	 * Get name, text and password from client and send register account request to API
+	 */
 	private fun actionRegister() {
 		binding.loading.visibility = View.VISIBLE
 
