@@ -61,7 +61,10 @@ class LoginFragment : Fragment() {
 				actionLogin()
 			}
 			btnLoginGuest.setOnClickListener {
-				startActivity(Intent(activity, StoryActivity::class.java))
+				startActivity(Intent(activity, StoryActivity::class.java).also { intent ->
+					intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+				})
+				activity?.finish()
 			}
 		}
 	}
