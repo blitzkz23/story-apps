@@ -3,6 +3,6 @@
     <string name="nama_user">Nama User</string>
     <string name="story_image">Story Image</string>
     <string name="story_text"><b>Nama user</b> paragraph teks disini ya ges ya</string>
-    <string name="story_text_format"><![CDATA[<b>%1$s</b>]]> %2$s</string>
+    <string name="story_text_format"><![CDATA[[<b>%1$s</b>]]]> %2$s</string>
     <string name="story_datetime">9 Desember 2022</string>
 </resources>

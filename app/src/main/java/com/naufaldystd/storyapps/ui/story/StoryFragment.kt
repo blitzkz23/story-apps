@@ -1,5 +1,6 @@
 package com.naufaldystd.storyapps.ui.story
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,8 +14,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.naufaldystd.core.data.source.Resource
 import com.naufaldystd.core.ui.StoryAdapter
+import com.naufaldystd.core.utils.Constants.EXTRA
 import com.naufaldystd.storyapps.R
 import com.naufaldystd.storyapps.databinding.FragmentStoryBinding
+import com.naufaldystd.storyapps.ui.detail.DetailStoryActivity
+import com.naufaldystd.storyapps.ui.detail.DetailStoryActivity.Companion.EXTRA_PARCEL
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -38,8 +42,10 @@ class StoryFragment : Fragment() {
 		super.onViewCreated(view, savedInstanceState)
 
 		storyAdapter = StoryAdapter()
-		storyAdapter.onItemClick = {
-			findNavController().navigate(R.id.action_storyFragment_to_detailStoryActivity)
+		storyAdapter.onItemClick = { intentData ->
+			val intent = Intent(activity, DetailStoryActivity::class.java)
+			intent.putExtra(EXTRA_PARCEL, intentData)
+			startActivity(intent)
 		}
 
 		storyViewModel.getUser().observe(viewLifecycleOwner) { user ->

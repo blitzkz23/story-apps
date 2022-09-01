@@ -5,7 +5,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.WindowInsets
 import android.view.WindowManager
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.text.HtmlCompat
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.naufaldystd.core.R
 import com.naufaldystd.core.domain.model.Story
 import com.naufaldystd.core.utils.Constants.EXTRA
 import com.naufaldystd.storyapps.databinding.ActivityDetailStoryBinding
@@ -27,10 +32,29 @@ class DetailStoryActivity : AppCompatActivity() {
 			Log.d("Cobaintent", data.description)
 			populateView(data)
 		}
+		findViewById<ImageButton>(com.naufaldystd.storyapps.R.id.btn_back)?.setOnClickListener {
+			onBackPressed()
+		}
 	}
 
 	private fun populateView(data: Story) {
-
+		with(binding) {
+			Glide.with(this@DetailStoryActivity)
+				.load(data.photoURL)
+				.apply(
+					RequestOptions.placeholderOf(R.drawable.ic_loading)
+						.error(R.drawable.ic_error)
+				)
+				.into(ivItemImage)
+			tvUserAndParagraph.text = HtmlCompat.fromHtml(
+				getString(
+					R.string.story_text_format,
+					data.name,
+					data.description
+				), HtmlCompat.FROM_HTML_MODE_LEGACY
+			)
+			tvDatetime.text = data.createdAt
+		}
 	}
 
 	@Suppress("DEPRECATION")
