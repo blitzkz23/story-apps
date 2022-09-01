@@ -11,9 +11,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.naufaldystd.core.data.source.Resource
+import com.naufaldystd.core.ui.StoryAdapter
 import com.naufaldystd.storyapps.R
 import com.naufaldystd.storyapps.databinding.FragmentStoryBinding
+import com.naufaldystd.storyapps.ui.detail.DetailStoryActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,6 +24,7 @@ class StoryFragment : Fragment() {
 	private var _binding: FragmentStoryBinding? = null
 	private val binding get() = _binding!!
 	private val storyViewModel: StoryViewModel by viewModels()
+	private lateinit var storyAdapter: StoryAdapter
 
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
@@ -35,10 +39,16 @@ class StoryFragment : Fragment() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
+		storyAdapter = StoryAdapter()
+		storyAdapter.onItemClick = { intentData ->
+			val intent = Intent(activity, DetailStoryActivity::class.java)
+			Toast.makeText(context, intentData.description, Toast.LENGTH_SHORT).show()
+//			startActivity(intent)
+		}
 
 		storyViewModel.getUser().observe(viewLifecycleOwner) { user ->
 			if (user.name != "Tamu") {
-				setupHeaderToken()
+				setupHeaderTokenAndStoryData()
 			} else {
 				binding.messageForGuest.visibility = View.VISIBLE
 				binding.btnRegister2.visibility = View.VISIBLE
@@ -47,13 +57,14 @@ class StoryFragment : Fragment() {
 				}
 			}
 		}
+
 		getView()?.findViewById<ImageButton>(R.id.btn_setting)?.setOnClickListener {
 			val navController = Navigation.findNavController(view)
 			navController.navigate(R.id.action_storyFragment_to_settingActivity)
 		}
 	}
 
-	private fun setupHeaderToken() {
+	private fun setupHeaderTokenAndStoryData() {
 		storyViewModel.getUser().observe(viewLifecycleOwner) { user ->
 			storyViewModel.getAllStories(user.token).observe(viewLifecycleOwner) { story ->
 				if (story != null) {
@@ -61,6 +72,7 @@ class StoryFragment : Fragment() {
 						is Resource.Loading -> binding.loading.visibility = View.GONE
 						is Resource.Success -> {
 							binding.loading.visibility = View.GONE
+							storyAdapter.setData(story.data)
 						}
 						is Resource.Error -> {
 							binding.loading.visibility = View.GONE
@@ -74,6 +86,17 @@ class StoryFragment : Fragment() {
 				}
 			}
 		}
+
+		with(binding.rvStory) {
+			layoutManager = LinearLayoutManager(context)
+			setHasFixedSize(true)
+			adapter = storyAdapter
+		}
+	}
+
+	override fun onDestroyView() {
+		super.onDestroyView()
+		_binding = null
 	}
 
 }

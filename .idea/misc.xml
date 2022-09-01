@@ -10,7 +10,9 @@
         <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/app/src/main/res/drawable/ic_hidden_eye.xml" value="0.2495" />
         <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/app/src/main/res/drawable/ic_settings.xml" value="0.15" />
         <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/app/src/main/res/drawable/ic_visible_eye.xml" value="0.2495" />
+        <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/app/src/main/res/layout/activity_detail_story.xml" value="0.31614583333333335" />
         <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/app/src/main/res/layout/activity_setting.xml" value="0.31614583333333335" />
         <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/app/src/main/res/layout/custom_toolbar.xml" value="0.3151041666666667" />
         <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/app/src/main/res/layout/custom_toolbar_home.xml" value="0.7084309133489461" />
         <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/app/src/main/res/layout/custom_toolbar_setting.xml" value="0.31614583333333335" />
@@ -18,6 +20,12 @@
         <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/app/src/main/res/layout/fragment_register.xml" value="0.31614583333333335" />
         <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/app/src/main/res/layout/fragment_setting.xml" value="0.31614583333333335" />
         <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/app/src/main/res/layout/fragment_story.xml" value="0.31614583333333335" />
+        <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/core/src/main/res/drawable/ic_broken_image_black.xml" value="0.2375" />
+        <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/core/src/main/res/drawable/ic_error.xml" value="0.2375" />
+        <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/core/src/main/res/drawable/ic_launcher_background.xml" value="0.2375" />
+        <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/core/src/main/res/drawable/ic_loading.xml" value="0.2375" />
+        <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/core/src/main/res/drawable/ic_refresh.xml" value="0.2375" />
+        <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/core/src/main/res/layout/item_list_story.xml" value="0.31614583333333335" />
       </map>
     </option>
   </component>
