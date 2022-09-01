@@ -34,7 +34,8 @@
             app:destination="@id/registerFragment" />
         <action
             android:id="@+id/action_loginFragment_to_storyFragment"
-            app:destination="@id/storyFragment" />
+            app:destination="@id/storyFragment"
+            app:popUpToInclusive="false" />
         <action
             android:id="@+id/action_loginFragment_to_guestFragment"
             app:destination="@id/guestFragment" />

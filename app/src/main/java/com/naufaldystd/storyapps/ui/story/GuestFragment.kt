@@ -1,13 +1,11 @@
 package com.naufaldystd.storyapps.ui.story
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.naufaldystd.storyapps.R
+import androidx.fragment.app.Fragment
 import com.naufaldystd.storyapps.databinding.FragmentGuestBinding
-import com.naufaldystd.storyapps.databinding.FragmentStoryBinding
 
 
 class GuestFragment : Fragment() {
@@ -19,7 +17,7 @@ class GuestFragment : Fragment() {
 		savedInstanceState: Bundle?
 	): View {
 		// Inflate the layout for this fragment
-		FragmentGuestBinding.inflate(layoutInflater, container, false)
+		_binding = FragmentGuestBinding.inflate(layoutInflater, container, false)
 
 		return binding.root
 	}
