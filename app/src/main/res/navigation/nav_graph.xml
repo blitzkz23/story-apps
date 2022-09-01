@@ -41,9 +41,21 @@
             app:destination="@id/registerFragment"
             app:popUpTo="@id/storyFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_storyFragment_to_detailStoryActivity"
+            app:destination="@id/detailStoryActivity" />
     </fragment>
     <activity
         android:id="@+id/settingActivity"
         android:name="com.naufaldystd.storyapps.ui.setting.SettingActivity"
         android:label="SettingActivity" />
+    <activity
+        android:id="@+id/detailStoryActivity"
+        android:name="com.naufaldystd.storyapps.ui.detail.DetailStoryActivity"
+        android:label="activity_detail_story"
+        tools:layout="@layout/activity_detail_story" >
+        <argument
+            android:name="story"
+            app:argType="com.naufaldystd.core.domain.model.Story" />
+    </activity>
 </navigation>

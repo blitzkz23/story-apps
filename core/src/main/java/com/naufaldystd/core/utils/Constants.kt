@@ -7,4 +7,5 @@ object Constants {
 	const val DB_NAME = BuildConfig.DB_NAME
 	const val CONSTANT_RDS = "RemoteDataSource: "
 	const val USER_PREF = "user_preferences"
+	const val EXTRA = "extra_data"
 }

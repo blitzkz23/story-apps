@@ -7,13 +7,9 @@ import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
-import com.naufaldystd.core.domain.model.Story
 import com.naufaldystd.storyapps.R
 import com.naufaldystd.storyapps.databinding.ActivityMainBinding
-import com.naufaldystd.storyapps.ui.login.LoginFragment
-import com.naufaldystd.storyapps.ui.story.StoryFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,7 +25,7 @@ class MainActivity : AppCompatActivity() {
 		setContentView(binding.root)
 
 		setupFullscreen()
-		setupViewModel()
+		checkLoggedUser()
 	}
 
 	@Suppress("DEPRECATION")
@@ -45,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 		supportActionBar?.hide()
 	}
 
-	private fun setupViewModel() {
+	private fun checkLoggedUser() {
 		// If user session is active, replace login fragment with story fragment
 		mainViewModel.getUser().observe(this) { user ->
 			if (user.isLogin) {

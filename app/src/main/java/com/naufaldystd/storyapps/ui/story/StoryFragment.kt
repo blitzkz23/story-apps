@@ -1,6 +1,5 @@
 package com.naufaldystd.storyapps.ui.story
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +15,6 @@ import com.naufaldystd.core.data.source.Resource
 import com.naufaldystd.core.ui.StoryAdapter
 import com.naufaldystd.storyapps.R
 import com.naufaldystd.storyapps.databinding.FragmentStoryBinding
-import com.naufaldystd.storyapps.ui.detail.DetailStoryActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -40,14 +38,12 @@ class StoryFragment : Fragment() {
 		super.onViewCreated(view, savedInstanceState)
 
 		storyAdapter = StoryAdapter()
-		storyAdapter.onItemClick = { intentData ->
-			val intent = Intent(activity, DetailStoryActivity::class.java)
-			Toast.makeText(context, intentData.description, Toast.LENGTH_SHORT).show()
-//			startActivity(intent)
+		storyAdapter.onItemClick = {
+			findNavController().navigate(R.id.action_storyFragment_to_detailStoryActivity)
 		}
 
 		storyViewModel.getUser().observe(viewLifecycleOwner) { user ->
-			if (user.name != "Tamu") {
+			if (user.name != context?.getString(R.string.guest)) {
 				setupHeaderTokenAndStoryData()
 			} else {
 				binding.messageForGuest.visibility = View.VISIBLE

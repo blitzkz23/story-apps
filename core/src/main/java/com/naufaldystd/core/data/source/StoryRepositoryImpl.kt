@@ -89,12 +89,14 @@ class StoryRepositoryImpl @Inject constructor(
 		description: RequestBody,
 		photo: MultipartBody.Part
 	): Resource<String> {
-		return when(val response = remoteDataSource.addStory(token, description, photo).first()) {
+		return when (val response = remoteDataSource.addStory(token, description, photo).first()) {
 			is StoryApiResponse.Success -> {
 				Resource.Success(response.data)
-			} is StoryApiResponse.Error -> {
+			}
+			is StoryApiResponse.Error -> {
 				Resource.Error(response.errorMessage)
-			} else -> {
+			}
+			else -> {
 				Resource.Loading()
 			}
 		}
@@ -104,12 +106,14 @@ class StoryRepositoryImpl @Inject constructor(
 		description: RequestBody,
 		photo: MultipartBody.Part
 	): Resource<String> {
-		return when(val response = remoteDataSource.addStoryGuest(description, photo).first()) {
+		return when (val response = remoteDataSource.addStoryGuest(description, photo).first()) {
 			is StoryApiResponse.Success -> {
 				Resource.Success(response.data)
-			} is StoryApiResponse.Error -> {
+			}
+			is StoryApiResponse.Error -> {
 				Resource.Error(response.errorMessage)
-			} else -> {
+			}
+			else -> {
 				Resource.Loading()
 			}
 		}
