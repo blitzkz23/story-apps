@@ -71,6 +71,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/message_for_guest"
+        style="@style/Text.Header4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/message_for_guest"
+        android:layout_marginTop="20dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="@+id/guideline1"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_story_layout" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_register2"
+        style="@style/Text.Button"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:text="@string/action_register"
+        app:cornerRadius="12dp"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/dimens20"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="@+id/guideline1"
+        app:layout_constraintTop_toBottomOf="@+id/message_for_guest" />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_add_story"
         style="@style/Text.Button"

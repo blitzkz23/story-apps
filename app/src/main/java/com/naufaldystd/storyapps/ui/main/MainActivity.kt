@@ -1,5 +1,6 @@
 package com.naufaldystd.storyapps.ui.main
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.WindowInsets
@@ -10,6 +11,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.findNavController
 import com.naufaldystd.storyapps.R
 import com.naufaldystd.storyapps.databinding.ActivityMainBinding
+import com.naufaldystd.storyapps.ui.story.StoryActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -44,8 +46,11 @@ class MainActivity : AppCompatActivity() {
 	private fun checkLoggedUser() {
 		// If user session is active, replace login fragment with story fragment
 		mainViewModel.getUser().observe(this) { user ->
-			if (!user.isLogin) {
-				findNavController(R.id.nav_host_fragment).navigate(R.id.action_storyFragment_to_loginFragment)
+			if (user.isLogin) {
+				startActivity( Intent(this@MainActivity, StoryActivity::class.java).also { intent ->
+					intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+				})
+				finish()
 			}
 		}
 	}

@@ -1,5 +1,6 @@
 package com.naufaldystd.storyapps.ui.login
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -15,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import com.naufaldystd.core.data.source.Resource
 import com.naufaldystd.storyapps.R
 import com.naufaldystd.storyapps.databinding.FragmentLoginBinding
+import com.naufaldystd.storyapps.ui.story.StoryActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -59,7 +61,7 @@ class LoginFragment : Fragment() {
 				actionLogin()
 			}
 			btnLoginGuest.setOnClickListener {
-				findNavController().navigate(R.id.action_loginFragment_to_storyFragment)
+				startActivity(Intent(activity, StoryActivity::class.java))
 			}
 		}
 	}
@@ -96,7 +98,6 @@ class LoginFragment : Fragment() {
 								Toast.LENGTH_SHORT
 							).show()
 							user.data?.let { loginViewModel.logUser(it) }
-							findNavController().navigate(R.id.action_loginFragment_to_storyFragment)
 						}
 						is Resource.Error -> {
 							binding.loading.visibility = View.GONE

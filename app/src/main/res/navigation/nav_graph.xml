@@ -3,27 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-     app:startDestination="@id/storyFragment">
-    <fragment
-        android:id="@+id/storyFragment"
-        android:name="com.naufaldystd.storyapps.ui.story.StoryFragment"
-        android:label="fragment_story"
-        tools:layout="@layout/fragment_story" >
-        <action
-            android:id="@+id/action_storyFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
-            app:popUpTo="@id/storyFragment"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_storyFragment_to_settingActivity"
-            app:destination="@id/settingActivity" />
-        <action
-            android:id="@+id/action_storyFragment_to_detailStoryActivity"
-            app:destination="@id/detailStoryActivity" />
-        <action
-            android:id="@+id/action_storyFragment_to_registerFragment"
-            app:destination="@id/registerFragment" />
-    </fragment>
+    app:startDestination="@id/loginFragment">
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.naufaldystd.storyapps.ui.login.LoginFragment"
@@ -32,13 +12,6 @@
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
-        <action
-            android:id="@+id/action_loginFragment_to_storyFragment"
-            app:destination="@id/storyFragment"
-            app:popUpToInclusive="false" />
-        <action
-            android:id="@+id/action_loginFragment_to_guestFragment"
-            app:destination="@id/guestFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -48,18 +21,4 @@
             android:id="@+id/action_registerFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
-    <activity
-        android:id="@+id/detailStoryActivity"
-        android:name="com.naufaldystd.storyapps.ui.detail.DetailStoryActivity"
-        android:label="activity_detail_story"
-        tools:layout="@layout/activity_detail_story" />
-    <activity
-        android:id="@+id/settingActivity"
-        android:name="com.naufaldystd.storyapps.ui.setting.SettingActivity"
-        android:label="activity_setting"
-        tools:layout="@layout/activity_setting" />
-    <fragment
-        android:id="@+id/guestFragment"
-        android:name="com.naufaldystd.storyapps.ui.story.GuestFragment"
-        android:label="GuestFragment" />
 </navigation>
