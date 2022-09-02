@@ -55,6 +55,7 @@ class LoginFragment : Fragment() {
 
 	/**
 	 * Set click listener for all button
+	 *
 	 */
 	private fun setupButtonAction() {
 		binding.apply {
@@ -75,6 +76,7 @@ class LoginFragment : Fragment() {
 
 	/**
 	 * Set validation for button state, only enable button if form are not empty and formats are correct
+	 *
 	 */
 	private fun setButtonEnable() {
 		val email = binding.etEmailText.text
@@ -87,6 +89,7 @@ class LoginFragment : Fragment() {
 
 	/**
 	 * Get text and password from client and send login account request to API
+	 *
 	 */
 	private fun actionLogin() {
 		binding.apply {

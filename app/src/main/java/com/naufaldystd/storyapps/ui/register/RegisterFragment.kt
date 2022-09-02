@@ -54,6 +54,7 @@ class RegisterFragment : Fragment() {
 
 	/**
 	 * Set click listener for all button
+	 *
 	 */
 	private fun setupButtonAction() {
 		binding.apply {
@@ -68,6 +69,7 @@ class RegisterFragment : Fragment() {
 
 	/**
 	 * Set validation for button state, only enable button if form are not empty and formats are correct
+	 *
 	 */
 	private fun setButtonEnable() {
 		val name = binding.etNameText.text
@@ -82,6 +84,7 @@ class RegisterFragment : Fragment() {
 
 	/**
 	 * Get name, text and password from client and send register account request to API
+	 *
 	 */
 	private fun actionRegister() {
 		binding.loading.visibility = View.VISIBLE

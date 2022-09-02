@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface StoryDao {
 
-	@Query("SELECT * FROM story")
+	@Query("SELECT * FROM story ORDER BY createdAt DESC")
 	fun getAllStories(): Flow<List<StoryEntity>>
 
 	@Query("SELECT * FROM story WHERE id =:id ")

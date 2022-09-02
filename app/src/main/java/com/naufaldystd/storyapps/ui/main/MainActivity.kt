@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
 
 	/**
 	 * Set full screen without default action bar
+	 *
 	 */
 	@Suppress("DEPRECATION")
 	private fun setupFullscreen() {
@@ -48,6 +49,7 @@ class MainActivity : AppCompatActivity() {
 
 	/**
 	 * Check if user session is active, redirect to main screen (story activity)
+	 *
 	 */
 	private fun checkLoggedUser() {
 		mainViewModel.getUser().observe(this) { user ->

@@ -56,6 +56,10 @@ class AddStoryActivity : AppCompatActivity() {
 
 	/**
 	 * Override to check if permissions are granted
+	 *
+	 * @param requestCode
+	 * @param permissions
+	 * @param grantResults
 	 */
 	override fun onRequestPermissionsResult(
 		requestCode: Int,
@@ -109,6 +113,7 @@ class AddStoryActivity : AppCompatActivity() {
 
 	/**
 	 * Set click listener for all button
+	 *
 	 */
 	private fun setupButtonAction() {
 		findViewById<ImageButton>(R.id.btn_back)?.setOnClickListener {
@@ -123,6 +128,7 @@ class AddStoryActivity : AppCompatActivity() {
 
 	/**
 	 * Set validation for button state, only enable button if form are not empty and formats are correct
+	 *
 	 */
 	private fun setButtonEnable() {
 		val description = binding.inputDescription.text
@@ -132,6 +138,7 @@ class AddStoryActivity : AppCompatActivity() {
 
 	/**
 	 * Start CameraX to take a picture
+	 *
 	 */
 	private fun startCameraX() {
 		val intent = Intent(this, CameraXActivity::class.java)
@@ -156,6 +163,7 @@ class AddStoryActivity : AppCompatActivity() {
 
 	/**
 	 * Get image from gallery
+	 *
 	 */
 	private fun startGallery() {
 		val intent = Intent()
@@ -179,6 +187,7 @@ class AddStoryActivity : AppCompatActivity() {
 
 	/**
 	 * Upload request image, description to API to create new story
+	 *
 	 */
 	private fun uploadStory() {
 		if (getFile != null) {
@@ -210,6 +219,13 @@ class AddStoryActivity : AppCompatActivity() {
 		}
 	}
 
+	/**
+	 * Upload new story function for logged in user
+	 *
+	 * @param token
+	 * @param description
+	 * @param imageMultipart
+	 */
 	private fun addStoryUser(
 		token: String,
 		description: RequestBody,
@@ -241,6 +257,12 @@ class AddStoryActivity : AppCompatActivity() {
 		}
 	}
 
+	/**
+	 * Upload new story function for guest
+	 *
+	 * @param description
+	 * @param imageMultipart
+	 */
 	private fun addStoryGuest(description: RequestBody, imageMultipart: MultipartBody.Part) {
 		lifecycleScope.launch {
 			addStoryViewModel.addStoryGuest(description, imageMultipart)
@@ -269,7 +291,10 @@ class AddStoryActivity : AppCompatActivity() {
 	}
 
 	/**
-	 * Reduce file size by compressing bitmap to less than 1 Megabyte
+	 * Reduce file size by compressing bitmap to lesser than 1 Megabyte
+	 *
+	 * @param file
+	 * @return
 	 */
 	private fun reduceFileImage(file: File): File {
 		val bitmap = BitmapFactory.decodeFile(file.path)
@@ -288,6 +313,7 @@ class AddStoryActivity : AppCompatActivity() {
 
 	/**
 	 * Set full screen without default action bar
+	 *
 	 */
 	@Suppress("DEPRECATION")
 	private fun setupFullscreen() {

@@ -51,6 +51,7 @@ class StoryActivity : AppCompatActivity() {
 
 	/**
 	 * Set click listener for all button
+	 *
 	 */
 	private fun setupButtonAction() {
 		findViewById<ImageButton>(R.id.btn_setting)?.setOnClickListener {
@@ -63,6 +64,7 @@ class StoryActivity : AppCompatActivity() {
 
 	/**
 	 * Set adapter for recyclerview
+	 *
 	 */
 	private fun setupAdapter() {
 		storyAdapter = StoryAdapter()
@@ -75,6 +77,7 @@ class StoryActivity : AppCompatActivity() {
 
 	/**
 	 * Set full screen without default action bar
+	 *
 	 */
 	@Suppress("DEPRECATION")
 	private fun setupFullscreen() {

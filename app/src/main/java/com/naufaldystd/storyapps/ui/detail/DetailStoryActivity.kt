@@ -43,6 +43,8 @@ class DetailStoryActivity : AppCompatActivity() {
 
 	/**
 	 * Populate view with data, if extra from previous page exists
+	 *
+	 * @param data
 	 */
 	private fun populateView(data: Story) {
 		with(binding) {
@@ -65,7 +67,8 @@ class DetailStoryActivity : AppCompatActivity() {
 	}
 
 	/**
-	 * Set full screen without default action bar
+	 * Setup fullscreen
+	 *
 	 */
 	@Suppress("DEPRECATION")
 	private fun setupFullscreen() {
