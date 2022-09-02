@@ -37,4 +37,8 @@
     <string name="camera">Kamera</string>
     <string name="gallery">Gallery</string>
     <string name="tambahkan_story">Tambahkan Story</string>
+    <string name="upload">Unggah</string>
+    <string name="deskripsi">Deskripsi</string>
+    <string name="camera_button">Camera Button</string>
+    <string name="switch_camera_view">Switch Camera View</string>
 </resources>

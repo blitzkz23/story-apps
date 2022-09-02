@@ -1,16 +1,23 @@
 package com.naufaldystd.storyapps.ui.story.add
 
 import android.Manifest
+import android.content.Intent
+import android.content.Intent.ACTION_GET_CONTENT
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.naufaldystd.storyapps.databinding.ActivityAddStoryBinding
+import com.naufaldystd.storyapps.utils.rotateBitmap
+import com.naufaldystd.storyapps.utils.uriToFile
 import java.io.File
 
 class AddStoryActivity : AppCompatActivity() {
@@ -61,7 +68,61 @@ class AddStoryActivity : AppCompatActivity() {
 		}
 
 		setupFullscreen()
+		setupButtonAction()
 	}
+
+	private fun setupButtonAction() {
+		with(binding) {
+			btnCamerax.setOnClickListener { startCameraX() }
+			btnGallery.setOnClickListener { startGallery() }
+			btnUpload.setOnClickListener { uploadStory() }
+		}
+	}
+
+	private fun startCameraX() {
+		val intent = Intent(this, CameraXActivity::class.java)
+		launcherIntentCameraX.launch(intent)
+	}
+
+	private val launcherIntentCameraX = registerForActivityResult(
+		ActivityResultContracts.StartActivityForResult()
+	) {
+		if (it.resultCode == CAMERA_X_RESULT) {
+			val myFile = it.data?.getSerializableExtra("picture") as File
+			val isBackCamera = it.data?.getBooleanExtra("isBackCamera", true) as Boolean
+
+			getFile = myFile
+			val result = rotateBitmap(
+				BitmapFactory.decodeFile(myFile.path),
+				isBackCamera
+			)
+			binding.ivPreview.setImageBitmap(result)
+		}
+	}
+
+	private fun startGallery() {
+		val intent = Intent()
+		intent.action = ACTION_GET_CONTENT
+		intent.type = "image/*"
+		val chooser = Intent.createChooser(intent, "Choose a picture")
+		launcherIntentGallery.launch(chooser)
+	}
+
+	private val launcherIntentGallery = registerForActivityResult(
+		ActivityResultContracts.StartActivityForResult()
+	) { result ->
+		if (result.resultCode == RESULT_OK) {
+			val selectedImg: Uri = result.data?.data as Uri
+			val myFile = uriToFile(selectedImg, this@AddStoryActivity)
+
+			getFile = myFile
+			binding.ivPreview.setImageURI(selectedImg)
+		}
+	}
+
+	private fun uploadStory() {
+	}
+
 
 	@Suppress("DEPRECATION")
 	private fun setupFullscreen() {
