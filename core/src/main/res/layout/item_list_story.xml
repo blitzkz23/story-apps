@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="16dp"
+    app:strokeWidth="1dp"
+    app:strokeColor="@color/custom_subtext"
     app:cardCornerRadius="12dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,7 +32,7 @@
             android:id="@+id/view"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@color/custom_black_variant"
+            android:background="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -55,7 +57,7 @@
             android:fontFamily="@font/poppins_regular"
             android:maxLines="2"
             android:text="@string/story_text"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toTopOf="@id/tv_datetime"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
