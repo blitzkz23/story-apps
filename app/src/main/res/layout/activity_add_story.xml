@@ -78,7 +78,7 @@
         app:layout_constraintTop_toBottomOf="@+id/btn_camerax">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/ideal_solution_text"
+            android:id="@+id/input_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:lines="4"
@@ -94,12 +94,24 @@
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_marginStart="@dimen/dimens20"
+        android:clickable="false"
+        android:enabled="false"
         android:text="@string/upload"
         app:cornerRadius="12dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ideal_solution_column" />
+
+    <ProgressBar
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1"

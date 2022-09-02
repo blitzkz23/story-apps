@@ -21,7 +21,11 @@ import javax.inject.Singleton
 class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
 
 	// Register function with flow
-	suspend fun registerAccount(name: String, email: String, password: String) : Flow<StoryApiResponse<String>> {
+	suspend fun registerAccount(
+		name: String,
+		email: String,
+		password: String
+	): Flow<StoryApiResponse<String>> {
 		return flow {
 			try {
 				val response = apiService.registerAccount(name, email, password)
@@ -39,7 +43,7 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
 
 	// Login function with flow
 	@OptIn(ExperimentalCoroutinesApi::class)
-	suspend fun loginAccount(email: String, password: String) : Flow<StoryApiResponse<LoginResult>> {
+	suspend fun loginAccount(email: String, password: String): Flow<StoryApiResponse<LoginResult>> {
 		// Use channel flow instead of flow, because flow doesn't allow emit() concurrently.
 		return channelFlow {
 			try {
@@ -57,34 +61,43 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
 	}
 
 	// Function to add story for registered account
-	suspend fun addStory(token: String, description: RequestBody, photo: MultipartBody.Part): Flow<StoryApiResponse<String>> {
-		return flow {
+	@OptIn(ExperimentalCoroutinesApi::class)
+	suspend fun addStory(
+		token: String,
+		description: RequestBody,
+		photo: MultipartBody.Part
+	): Flow<StoryApiResponse<String>> {
+		return channelFlow {
 			try {
-				val response = apiService.addStory(token, description, photo)
+				val response = apiService.addStory("Bearer $token", description, photo)
 				if (!response.error) {
-					emit(StoryApiResponse.Success(response.message))
+					send(StoryApiResponse.Success(response.message))
 				} else {
-					emit(StoryApiResponse.Empty)
+					send(StoryApiResponse.Empty)
 				}
 			} catch (e: Exception) {
-				emit(StoryApiResponse.Error(e.toString()))
+				send(StoryApiResponse.Error(e.toString()))
 				Log.e(REMOTE_DATA_SOURCE, e.toString())
 			}
 		}
 	}
 
 	// Function to add story for guest user
-	suspend fun addStoryGuest(description: RequestBody, photo: MultipartBody.Part): Flow<StoryApiResponse<String>> {
-		return flow {
+	@OptIn(ExperimentalCoroutinesApi::class)
+	suspend fun addStoryGuest(
+		description: RequestBody,
+		photo: MultipartBody.Part
+	): Flow<StoryApiResponse<String>> {
+		return channelFlow{
 			try {
 				val response = apiService.addStoryGuest(description, photo)
 				if (!response.error) {
-					emit(StoryApiResponse.Success(response.message))
+					send(StoryApiResponse.Success(response.message))
 				} else {
-					emit(StoryApiResponse.Empty)
+					send(StoryApiResponse.Empty)
 				}
 			} catch (e: Exception) {
-				emit(StoryApiResponse.Error(e.toString()))
+				send(StoryApiResponse.Error(e.toString()))
 				Log.e(REMOTE_DATA_SOURCE, e.toString())
 			}
 		}

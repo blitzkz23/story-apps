@@ -20,7 +20,7 @@ interface StoryRepository {
 		token: String,
 		description: RequestBody,
 		photo: MultipartBody.Part
-	): Resource<String>
+	): Flow<Resource<String>>
 
-	suspend fun addStoryGuest(description: RequestBody, photo: MultipartBody.Part): Resource<String>
+	suspend fun addStoryGuest(description: RequestBody, photo: MultipartBody.Part): Flow<Resource<String>>
 }
