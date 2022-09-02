@@ -73,7 +73,7 @@ class StoryRepositoryImpl @Inject constructor(
 			}
 
 			override fun shouldFetch(data: List<Story>?): Boolean =
-				(data == null) || data.isEmpty()
+				(data != null)
 
 			override suspend fun createCall(): Flow<StoryApiResponse<List<StoryResponse>>> =
 				remoteDataSource.getStories(token)
@@ -88,14 +88,18 @@ class StoryRepositoryImpl @Inject constructor(
 		token: String,
 		description: RequestBody,
 		photo: MultipartBody.Part
-	): Resource<String> {
-		return when(val response = remoteDataSource.addStory(token, description, photo).first()) {
-			is StoryApiResponse.Success -> {
-				Resource.Success(response.data)
-			} is StoryApiResponse.Error -> {
-				Resource.Error(response.errorMessage)
-			} else -> {
-				Resource.Loading()
+	): Flow<Resource<String>> {
+		return flow {
+			when (val response = remoteDataSource.addStory(token, description, photo).first()) {
+				is StoryApiResponse.Success -> {
+					emit(Resource.Success(response.data))
+				}
+				is StoryApiResponse.Error -> {
+					emit(Resource.Error(response.errorMessage))
+				}
+				else -> {
+					emit(Resource.Loading())
+				}
 			}
 		}
 	}
@@ -103,14 +107,18 @@ class StoryRepositoryImpl @Inject constructor(
 	override suspend fun addStoryGuest(
 		description: RequestBody,
 		photo: MultipartBody.Part
-	): Resource<String> {
-		return when(val response = remoteDataSource.addStoryGuest(description, photo).first()) {
-			is StoryApiResponse.Success -> {
-				Resource.Success(response.data)
-			} is StoryApiResponse.Error -> {
-				Resource.Error(response.errorMessage)
-			} else -> {
-				Resource.Loading()
+	): Flow<Resource<String>> {
+		return flow {
+			when (val response = remoteDataSource.addStoryGuest(description, photo).first()) {
+				is StoryApiResponse.Success -> {
+					emit(Resource.Success(response.data))
+				}
+				is StoryApiResponse.Error -> {
+					emit(Resource.Error(response.errorMessage))
+				}
+				else -> {
+					emit(Resource.Loading())
+				}
 			}
 		}
 	}

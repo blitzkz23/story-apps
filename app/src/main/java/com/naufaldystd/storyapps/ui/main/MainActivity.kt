@@ -1,5 +1,6 @@
 package com.naufaldystd.storyapps.ui.main
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.WindowInsets
@@ -10,8 +11,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.findNavController
 import com.naufaldystd.storyapps.R
 import com.naufaldystd.storyapps.databinding.ActivityMainBinding
-import com.naufaldystd.storyapps.ui.login.LoginFragment
-import com.naufaldystd.storyapps.ui.story.StoryFragment
+import com.naufaldystd.storyapps.ui.story.StoryActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -27,9 +27,12 @@ class MainActivity : AppCompatActivity() {
 		setContentView(binding.root)
 
 		setupFullscreen()
-		setupViewModel()
+		checkLoggedUser()
 	}
 
+	/**
+	 * Set full screen without default action bar
+	 */
 	@Suppress("DEPRECATION")
 	private fun setupFullscreen() {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -43,13 +46,16 @@ class MainActivity : AppCompatActivity() {
 		supportActionBar?.hide()
 	}
 
-	private fun setupViewModel() {
-		// If user session is active, replace login fragment with story fragment
+	/**
+	 * Check if user session is active, redirect to main screen (story activity)
+	 */
+	private fun checkLoggedUser() {
 		mainViewModel.getUser().observe(this) { user ->
 			if (user.isLogin) {
-				val ft = supportFragmentManager.beginTransaction()
-				ft.replace(R.id.nav_host_fragment, StoryFragment())
-				ft.commit()
+				startActivity(Intent(this@MainActivity, StoryActivity::class.java).also { intent ->
+					intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+				})
+				finish()
 			}
 		}
 	}

@@ -8,9 +8,19 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
 interface StoryRepository {
-	suspend fun registerAccount(name: String, email: String, password: String): Flow<Resource<String>>
+	suspend fun registerAccount(
+		name: String,
+		email: String,
+		password: String
+	): Flow<Resource<String>>
+
 	suspend fun loginAccount(email: String, password: String): Flow<Resource<UserModel>>
 	fun getAllStories(token: String): Flow<Resource<List<Story>>>
-	suspend fun addStory(token: String, description: RequestBody, photo: MultipartBody.Part): Resource<String>
-	suspend fun addStoryGuest(description: RequestBody, photo: MultipartBody.Part): Resource<String>
+	suspend fun addStory(
+		token: String,
+		description: RequestBody,
+		photo: MultipartBody.Part
+	): Flow<Resource<String>>
+
+	suspend fun addStoryGuest(description: RequestBody, photo: MultipartBody.Part): Flow<Resource<String>>
 }

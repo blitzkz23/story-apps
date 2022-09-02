@@ -16,7 +16,7 @@ class UserPreference @Inject constructor(private val dataStore: DataStore<Prefer
 	fun getUser(): Flow<UserModel> {
 		return dataStore.data.map { preference ->
 			UserModel(
-				preference[NAME_KEY] ?: "",
+				preference[NAME_KEY] ?: "Tamu",
 				preference[USERID_KEY] ?: "",
 				preference[TOKEN_KEY] ?: "",
 				preference[STATE_KEY] ?: false,
@@ -34,9 +34,8 @@ class UserPreference @Inject constructor(private val dataStore: DataStore<Prefer
 	}
 
 	suspend fun logout() {
-		dataStore.edit { preferences ->
-			preferences[TOKEN_KEY] = ""
-			preferences[STATE_KEY] = false
+		dataStore.edit {
+			it.clear()
 		}
 	}
 

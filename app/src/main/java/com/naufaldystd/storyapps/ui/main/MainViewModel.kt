@@ -15,10 +15,4 @@ class MainViewModel @Inject constructor(private val pref: UserPreference) : View
 	fun getUser(): LiveData<UserModel> {
 		return pref.getUser().asLiveData()
 	}
-
-	fun logout() {
-		viewModelScope.launch {
-			pref.logout()
-		}
-	}
 }

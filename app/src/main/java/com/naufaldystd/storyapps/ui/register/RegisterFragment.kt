@@ -22,8 +22,6 @@ import kotlinx.coroutines.launch
 class RegisterFragment : Fragment() {
 	private var _binding: FragmentRegisterBinding? = null
 
-	// This property is only valid between onCreateView and
-	// onDestroyView.
 	private val binding get() = _binding!!
 	private val registerViewModel: RegisterViewModel by viewModels()
 
@@ -40,8 +38,9 @@ class RegisterFragment : Fragment() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
-		// Set validation for button state, only enable button if form are not empty and formats are correct
 		setButtonEnable()
+		setupButtonAction()
+
 		binding.etPasswordText.addTextChangedListener(object : TextWatcher {
 			override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
@@ -51,8 +50,12 @@ class RegisterFragment : Fragment() {
 
 			override fun afterTextChanged(s: Editable?) {}
 		})
+	}
 
-		// Set on click listener for all button
+	/**
+	 * Set click listener for all button
+	 */
+	private fun setupButtonAction() {
 		binding.apply {
 			ctaLogin.setOnClickListener {
 				findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
@@ -63,6 +66,9 @@ class RegisterFragment : Fragment() {
 		}
 	}
 
+	/**
+	 * Set validation for button state, only enable button if form are not empty and formats are correct
+	 */
 	private fun setButtonEnable() {
 		val name = binding.etNameText.text
 		val email = binding.etEmailText.text
@@ -74,6 +80,9 @@ class RegisterFragment : Fragment() {
 				.matches() && (password != null) && password.toString().length >= 6
 	}
 
+	/**
+	 * Get name, text and password from client and send register account request to API
+	 */
 	private fun actionRegister() {
 		binding.loading.visibility = View.VISIBLE
 
@@ -85,9 +94,7 @@ class RegisterFragment : Fragment() {
 			registerViewModel.registerAccount(name, email, password)
 				.observe(viewLifecycleOwner) { respond ->
 					when (respond) {
-						is Resource.Loading -> {
-							binding.loading.visibility = View.GONE
-						}
+						is Resource.Loading -> binding.loading.visibility = View.GONE
 						is Resource.Success -> {
 							binding.loading.visibility = View.GONE
 							Toast.makeText(
