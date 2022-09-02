@@ -9,6 +9,7 @@
         <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/app/src/main/res/drawable/ic_baseline_lock_24.xml" value="0.2305" />
         <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/app/src/main/res/drawable/ic_capture.xml" value="0.2215" />
         <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/app/src/main/res/drawable/ic_hidden_eye.xml" value="0.2495" />
+        <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/app/src/main/res/drawable/ic_pen.xml" value="0.2215" />
         <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/app/src/main/res/drawable/ic_settings.xml" value="0.15" />
         <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/app/src/main/res/drawable/ic_switch_camera.xml" value="0.2215" />
         <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/app/src/main/res/drawable/ic_visible_eye.xml" value="0.2495" />
@@ -17,7 +18,7 @@
         <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/app/src/main/res/layout/activity_detail_story.xml" value="0.31614583333333335" />
         <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/app/src/main/res/layout/activity_setting.xml" value="0.31614583333333335" />
-        <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/app/src/main/res/layout/activity_story.xml" value="0.3029891304347826" />
+        <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/app/src/main/res/layout/activity_story.xml" value="0.33" />
         <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/app/src/main/res/layout/custom_toolbar.xml" value="0.3151041666666667" />
         <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/app/src/main/res/layout/custom_toolbar_add_story.xml" value="0.3029891304347826" />
         <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/app/src/main/res/layout/custom_toolbar_home.xml" value="0.7084309133489461" />

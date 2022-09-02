@@ -118,4 +118,5 @@
         <item name="android:textSize">13.5sp</item>
         <item name="fontFamily">@font/poppins_regular</item>
     </style>
+
 </resources>
