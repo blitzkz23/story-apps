@@ -12,9 +12,15 @@ import okhttp3.RequestBody
 import javax.inject.Inject
 
 @HiltViewModel
-class AddStoryViewModel @Inject constructor(private val storyUseCase: StoryUseCase, private val pref: UserPreference) : ViewModel() {
+class AddStoryViewModel @Inject constructor(
+	private val storyUseCase: StoryUseCase,
+	private val pref: UserPreference
+) : ViewModel() {
 	suspend fun addStory(token: String, description: RequestBody, photo: MultipartBody.Part) =
 		storyUseCase.addStory(token, description, photo).asLiveData()
+
+	suspend fun addStoryGuest(description: RequestBody, photo: MultipartBody.Part) =
+		storyUseCase.addStoryGuest(description, photo).asLiveData()
 
 	fun getUser(): LiveData<UserModel> {
 		return pref.getUser().asLiveData()

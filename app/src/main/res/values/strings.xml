@@ -41,4 +41,8 @@
     <string name="deskripsi">Deskripsi</string>
     <string name="camera_button">Camera Button</string>
     <string name="switch_camera_view">Switch Camera View</string>
+    <string name="no_permission">Tidak mendapatkan permission.</string>
+    <string name="upload_success">Berhasil mengupload kisah</string>
+    <string name="upload_failed">Gagal menunggah kisah, silahkan coba lagi</string>
+    <string name="no_image">Silahkan masukkan berkas gambar terlebih dahulu.</string>
 </resources>

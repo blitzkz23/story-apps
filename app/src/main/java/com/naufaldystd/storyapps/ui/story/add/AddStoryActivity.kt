@@ -14,6 +14,7 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -22,6 +23,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.naufaldystd.core.data.source.Resource
+import com.naufaldystd.storyapps.R
 import com.naufaldystd.storyapps.databinding.ActivityAddStoryBinding
 import com.naufaldystd.storyapps.utils.rotateBitmap
 import com.naufaldystd.storyapps.utils.uriToFile
@@ -30,6 +32,7 @@ import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.ByteArrayOutputStream
@@ -51,6 +54,9 @@ class AddStoryActivity : AppCompatActivity() {
 		private const val REQUEST_CODE_PERMISSIONS = 10
 	}
 
+	/**
+	 * Override to check if permissions are granted
+	 */
 	override fun onRequestPermissionsResult(
 		requestCode: Int,
 		permissions: Array<out String>,
@@ -61,7 +67,7 @@ class AddStoryActivity : AppCompatActivity() {
 			if (!allPermissionsGranted()) {
 				Toast.makeText(
 					this,
-					"Tidak mendapatkan permission.",
+					getString(R.string.no_permission),
 					Toast.LENGTH_SHORT
 				).show()
 				finish()
@@ -69,6 +75,9 @@ class AddStoryActivity : AppCompatActivity() {
 		}
 	}
 
+	/**
+	 * Check permissions
+	 */
 	private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
 		ContextCompat.checkSelfPermission(baseContext, it) == PackageManager.PERMISSION_GRANTED
 	}
@@ -98,7 +107,13 @@ class AddStoryActivity : AppCompatActivity() {
 		})
 	}
 
+	/**
+	 * Set click listener for all button
+	 */
 	private fun setupButtonAction() {
+		findViewById<ImageButton>(R.id.btn_back)?.setOnClickListener {
+			onBackPressed()
+		}
 		with(binding) {
 			btnCamerax.setOnClickListener { startCameraX() }
 			btnGallery.setOnClickListener { startGallery() }
@@ -115,6 +130,9 @@ class AddStoryActivity : AppCompatActivity() {
 			(description != null) && description.toString().isNotEmpty() && getFile != null
 	}
 
+	/**
+	 * Start CameraX to take a picture
+	 */
 	private fun startCameraX() {
 		val intent = Intent(this, CameraXActivity::class.java)
 		launcherIntentCameraX.launch(intent)
@@ -136,6 +154,9 @@ class AddStoryActivity : AppCompatActivity() {
 		}
 	}
 
+	/**
+	 * Get image from gallery
+	 */
 	private fun startGallery() {
 		val intent = Intent()
 		intent.action = ACTION_GET_CONTENT
@@ -156,6 +177,9 @@ class AddStoryActivity : AppCompatActivity() {
 		}
 	}
 
+	/**
+	 * Upload request image, description to API to create new story
+	 */
 	private fun uploadStory() {
 		if (getFile != null) {
 			val file = reduceFileImage(getFile as File)
@@ -171,40 +195,82 @@ class AddStoryActivity : AppCompatActivity() {
 
 			binding.loading.visibility = View.VISIBLE
 			addStoryViewModel.getUser().observe(this) { user ->
-				lifecycleScope.launch {
-					addStoryViewModel.addStory(user.token, description, imageMultipart)
-						.observe(this@AddStoryActivity) { respond ->
-							when (respond) {
-
-								is Resource.Success -> {
-									binding.loading.visibility = View.GONE
-									Toast.makeText(
-										this@AddStoryActivity,
-										"Berhasil mengupload kisah",
-										Toast.LENGTH_SHORT
-									).show()
-								}
-								else -> {
-									binding.loading.visibility = View.GONE
-									Toast.makeText(
-										this@AddStoryActivity,
-										"Gagal menunggah kisah, silahkan coba lagi",
-										Toast.LENGTH_SHORT
-									).show()
-								}
-							}
-						}
+				if (user.name != getString(R.string.guest)) {
+					addStoryUser(user.token, description, imageMultipart)
+				} else {
+					addStoryGuest(description, imageMultipart)
 				}
 			}
 		} else {
 			Toast.makeText(
 				this@AddStoryActivity,
-				"Silahkan masukkan berkas gambar terlebih dahulu.",
+				getString(R.string.no_image),
 				Toast.LENGTH_SHORT
 			).show()
 		}
 	}
 
+	private fun addStoryUser(
+		token: String,
+		description: RequestBody,
+		imageMultipart: MultipartBody.Part
+	) {
+		lifecycleScope.launch {
+			addStoryViewModel.addStory(token, description, imageMultipart)
+				.observe(this@AddStoryActivity) { respond ->
+					when (respond) {
+						is Resource.Success -> {
+							binding.loading.visibility = View.GONE
+							Toast.makeText(
+								this@AddStoryActivity,
+								getString(R.string.upload_success),
+								Toast.LENGTH_SHORT
+							).show()
+							finish()
+						}
+						else -> {
+							binding.loading.visibility = View.GONE
+							Toast.makeText(
+								this@AddStoryActivity,
+								getString(R.string.upload_failed),
+								Toast.LENGTH_SHORT
+							).show()
+						}
+					}
+				}
+		}
+	}
+
+	private fun addStoryGuest(description: RequestBody, imageMultipart: MultipartBody.Part) {
+		lifecycleScope.launch {
+			addStoryViewModel.addStoryGuest(description, imageMultipart)
+				.observe(this@AddStoryActivity) { respond ->
+					when (respond) {
+						is Resource.Success -> {
+							binding.loading.visibility = View.GONE
+							Toast.makeText(
+								this@AddStoryActivity,
+								getString(R.string.upload_success),
+								Toast.LENGTH_SHORT
+							).show()
+							finish()
+						}
+						else -> {
+							binding.loading.visibility = View.GONE
+							Toast.makeText(
+								this@AddStoryActivity,
+								getString(R.string.upload_failed),
+								Toast.LENGTH_SHORT
+							).show()
+						}
+					}
+				}
+		}
+	}
+
+	/**
+	 * Reduce file size by compressing bitmap to less than 1 Megabyte
+	 */
 	private fun reduceFileImage(file: File): File {
 		val bitmap = BitmapFactory.decodeFile(file.path)
 		var compressQuality = 100
@@ -219,7 +285,6 @@ class AddStoryActivity : AppCompatActivity() {
 		bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, FileOutputStream(file))
 		return file
 	}
-
 
 	/**
 	 * Set full screen without default action bar
