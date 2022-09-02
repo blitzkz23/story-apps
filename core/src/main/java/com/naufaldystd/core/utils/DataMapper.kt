@@ -14,7 +14,7 @@ object DataMapper {
 		isLogin = true
 	)
 
-	fun mapStoryResponsesToEntities(input: List<StoryResponse>) : List<StoryEntity> =
+	fun mapStoryResponsesToEntities(input: List<StoryResponse>): List<StoryEntity> =
 		input.map {
 			StoryEntity(
 				id = it.id,
@@ -27,7 +27,7 @@ object DataMapper {
 			)
 		}
 
-	fun mapStoryEntitiesToStory(input: List<StoryEntity>) : List<Story> =
+	fun mapStoryEntitiesToStory(input: List<StoryEntity>): List<Story> =
 		input.map {
 			Story(
 				id = it.id,

@@ -28,10 +28,10 @@ class StoryInteractor @Inject constructor(private val storyRepositoryImpl: Story
 		token: String,
 		description: RequestBody,
 		photo: MultipartBody.Part
-	): Resource<String> = storyRepositoryImpl.addStory(token, description, photo)
+	): Flow<Resource<String>> = storyRepositoryImpl.addStory(token, description, photo)
 
 	override suspend fun addStoryGuest(
 		description: RequestBody,
 		photo: MultipartBody.Part
-	): Resource<String> = storyRepositoryImpl.addStoryGuest(description, photo)
+	): Flow<Resource<String>> = storyRepositoryImpl.addStoryGuest(description, photo)
 }
