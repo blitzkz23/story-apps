@@ -1,6 +1,5 @@
 package com.naufaldystd.core.ui
 
-import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,15 +50,15 @@ class StoryAdapter : RecyclerView.Adapter<StoryAdapter.ListViewHolder>() {
 						RequestOptions.placeholderOf(R.drawable.ic_loading)
 							.error(R.drawable.ic_error)
 					)
-					.into(ivItemImage)
-				tvUserAndParagraph.text = HtmlCompat.fromHtml(
+					.into(ivItemImageList)
+				tvUserAndParagraphList.text = HtmlCompat.fromHtml(
 					itemView.context.getString(
 						R.string.story_text_format,
 						data.name,
 						data.description
 					), HtmlCompat.FROM_HTML_MODE_LEGACY
 				)
-				tvDatetime.text = data.createdAt
+				tvDatetimeList.text = data.createdAt
 			}
 		}
 

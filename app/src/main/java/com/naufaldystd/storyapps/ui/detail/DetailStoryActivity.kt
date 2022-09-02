@@ -33,7 +33,6 @@ class DetailStoryActivity : AppCompatActivity() {
 		setupFullscreen()
 		val data = intent.getParcelableExtra<Story>(EXTRA_PARCEL)
 		if (data != null) {
-			Log.d("Cobaintent", data.description)
 			populateView(data)
 		}
 		findViewById<ImageButton>(com.naufaldystd.storyapps.R.id.btn_back)?.setOnClickListener {

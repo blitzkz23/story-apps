@@ -14,7 +14,7 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/iv_item_image"
+            android:id="@+id/iv_item_image_list"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:adjustViewBounds="true"
@@ -43,11 +43,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toTopOf="@+id/tv_user_and_paragraph"
+            app:layout_constraintBottom_toTopOf="@+id/tv_user_and_paragraph_list"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/tv_user_and_paragraph"
+            android:id="@+id/tv_user_and_paragraph_list"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -58,12 +58,12 @@
             android:maxLines="2"
             android:text="@string/story_text"
             android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@id/tv_datetime"
+            app:layout_constraintBottom_toTopOf="@id/tv_datetime_list"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/tv_datetime"
+            android:id="@+id/tv_datetime_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"

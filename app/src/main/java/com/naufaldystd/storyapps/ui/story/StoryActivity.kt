@@ -8,8 +8,12 @@ import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.util.Pair
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.naufaldystd.core.data.source.Resource
 import com.naufaldystd.core.ui.StoryAdapter
@@ -69,9 +73,19 @@ class StoryActivity : AppCompatActivity() {
 	private fun setupAdapter() {
 		storyAdapter = StoryAdapter()
 		storyAdapter.onItemClick = { intentData ->
+			val image = findViewById<ImageView>(com.naufaldystd.core.R.id.iv_item_image_list)
+			val text = findViewById<TextView>(com.naufaldystd.core.R.id.tv_user_and_paragraph_list)
+			val datetime = findViewById<TextView>(com.naufaldystd.core.R.id.tv_datetime_list)
+			val optionsCompat: ActivityOptionsCompat =
+				ActivityOptionsCompat.makeSceneTransitionAnimation(
+					this@StoryActivity,
+					Pair(image, "image"),
+					Pair(text, "text"),
+					Pair(datetime, "datetime")
+				)
 			val intent = Intent(this@StoryActivity, DetailStoryActivity::class.java)
 			intent.putExtra(DetailStoryActivity.EXTRA_PARCEL, intentData)
-			startActivity(intent)
+			startActivity(intent, optionsCompat.toBundle())
 		}
 	}
 
