@@ -7,13 +7,11 @@ import android.graphics.Bitmap
 import android.graphics.Matrix
 import android.net.Uri
 import android.os.Environment
-import android.widget.TextView
 import com.naufaldystd.storyapps.R
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
 import java.io.OutputStream
-import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
