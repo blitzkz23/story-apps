@@ -2,7 +2,6 @@ package com.naufaldystd.storyapps.ui.story
 
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.WindowInsets
@@ -12,10 +11,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.naufaldystd.core.data.source.Resource
 import com.naufaldystd.core.ui.StoryAdapter
@@ -121,11 +119,12 @@ class StoryActivity : AppCompatActivity() {
 	 */
 	private fun setupHeaderTokenAndStoryData() {
 		binding.rvStory.visibility = View.VISIBLE
+		binding.loading.visibility = View.VISIBLE
 		storyViewModel.getUser().observe(this) { user ->
 			storyViewModel.getAllStories(user.token).observe(this) { story ->
 				if (story != null) {
 					when (story) {
-						is Resource.Loading -> binding.rvStory.visibility = View.VISIBLE
+						is Resource.Loading -> binding.loading.visibility = View.VISIBLE
 						is Resource.Success -> {
 							binding.loading.visibility = View.GONE
 							storyAdapter.setData(story.data)

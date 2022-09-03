@@ -18,4 +18,5 @@
     <color name="custom_linktext">#FF6E5DE7</color>
     <color name="custom_white">#FFFAFAFA</color>
     <color name="placeholder">#6FB6B6B6</color>
+    <color name="shimmer_gray1">#DDDDDD</color>
 </resources>
