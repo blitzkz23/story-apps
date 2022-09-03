@@ -30,7 +30,6 @@ class StoryAdapter : RecyclerView.Adapter<StoryAdapter.ListViewHolder>() {
 		listStory.clear()
 		listStory.addAll(newListData)
 		diffResult.dispatchUpdatesTo(this)
-
 	}
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoryAdapter.ListViewHolder =

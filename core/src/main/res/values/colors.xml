@@ -9,8 +9,11 @@
     <color name="white">#FFFFFFFF</color>
 
     <!-- font color -->
+    <color name="dicoding_black">#FF2D3E50</color>
+    <color name="dicoding_black_variant">#FF3E3E3E</color>
+    <color name="dicoding_teal">#FF11C5C6</color>
+    <color name="dicoding_teal_variant">#FF0C9BAB</color>
     <color name="custom_blacktext">#FF404040</color>
-    <color name="custom_black_variant">#FF282838</color>
     <color name="custom_subtext">#FFC7C9D9</color>
     <color name="custom_linktext">#FF6E5DE7</color>
     <color name="custom_white">#FFFAFAFA</color>

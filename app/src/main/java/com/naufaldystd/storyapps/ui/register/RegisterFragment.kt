@@ -1,5 +1,6 @@
 package com.naufaldystd.storyapps.ui.register
 
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -38,6 +39,7 @@ class RegisterFragment : Fragment() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
+		setupAnimation()
 		setButtonEnable()
 		setupButtonAction()
 
@@ -50,6 +52,14 @@ class RegisterFragment : Fragment() {
 
 			override fun afterTextChanged(s: Editable?) {}
 		})
+	}
+
+	private fun setupAnimation() {
+		ObjectAnimator.ofFloat(binding.ivRegisterImage, View.TRANSLATION_X, -30f, 30f).apply {
+			duration = 6000
+			repeatCount = ObjectAnimator.INFINITE
+			repeatMode = ObjectAnimator.REVERSE
+		}.start()
 	}
 
 	/**

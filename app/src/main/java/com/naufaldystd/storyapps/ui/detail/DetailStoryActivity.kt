@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.ImageButton
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.HtmlCompat
 import com.bumptech.glide.Glide
@@ -13,6 +14,7 @@ import com.naufaldystd.core.R
 import com.naufaldystd.core.domain.model.Story
 import com.naufaldystd.core.utils.Constants.EXTRA
 import com.naufaldystd.storyapps.databinding.ActivityDetailStoryBinding
+import com.naufaldystd.storyapps.utils.setLocalDateFormat
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -60,8 +62,14 @@ class DetailStoryActivity : AppCompatActivity() {
 					data.description
 				), HtmlCompat.FROM_HTML_MODE_LEGACY
 			)
-			tvDatetime.text = data.createdAt
+			tvDatetime.setLocalDateFormat(data.createdAt)
 		}
+		findViewById<TextView>(com.naufaldystd.storyapps.R.id.tv_toolbar_txt).text =
+			buildString {
+				append(getString(com.naufaldystd.storyapps.R.string.story))
+				append(" ")
+				append(data.name)
+			}
 	}
 
 	/**

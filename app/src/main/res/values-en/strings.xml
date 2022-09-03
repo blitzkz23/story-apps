@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Dico-toori</string>
+    <!-- Strings related to login -->
+    <string name="prompt_name">Name</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_login">Login</string>
+    <string name="action_register">Register</string>
+    <string name="welcome">"Welcome!"</string>
+    <string name="header_welcome">Welcome to Dico-toori!</string>
+    <string name="subheading_login">Share your experience, success story, or read through others successful story!</string>
+    <string name="register_cta">Register here!</string>
+    <string name="no_account">Dont have account?</string>
+    <string name="login_illust">Login Illustration</string>
+    <string name="action_login_guest">Login as guest</string>
+    <string name="header_register">Get started by completing these forms below!</string>
+    <string name="have_account">Already have account?</string>
+    <string name="login_cta">Login here!</string>
+    <string name="reg_success_msg">Account successfully create, you can now login using that account.</string>
+    <string name="reg_failed_msg">Account have already been registered.</string>
+    <string name="login_failed_msg">Incorrect e-mail or password!</string>
+    <string name="login_welcome">Welcome </string>
+    <string name="error_message_password">Password need to be minimum of 6 characters.</string>
+    <string name="prompt_hint_password">Please enter password…</string>
+    <string name="prompt_hint_email">Please enter email…</string>
+    <string name="error_message_email">Entered e-mail format are still incorrect</string>
+    <string name="error_message_name">Name can\'t be empty</string>
+    <string name="image_button_setting">Image Button Setting</string>
+    <string name="logo_image">Logo Image</string>
+    <string name="user_profile_image">User profile image</string>
+    <string name="nama_user">User\'s name</string>
+    <string name="logout">Log Out</string>
+    <string name="message_for_guest">Sorry, in order to read the content in this page you need to create an account.\n\nBut you can still share your story, for others by tapping Share button or tap below button in order to create an account and start reading!</string>
+    <string name="share">Share</string>
+    <string name="tamu">Tamu</string>
+    <string name="guest">Guest</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="tambahkan_story">Add New Story</string>
+    <string name="upload">Upload</string>
+    <string name="deskripsi">Description</string>
+    <string name="camera_button">Camera Button</string>
+    <string name="switch_camera_view">Switch Camera View</string>
+    <string name="no_permission">Permission not acquired.</string>
+    <string name="upload_success">Successfully uploaded a story</string>
+    <string name="upload_failed">Failed to upload story, please try again later</string>
+    <string name="no_image">Please upload an image first</string>
+    <string name="dicoding_sutoori">Dicoding Sutoori</string>
+    <string name="setting">Setting</string>
+    <string name="story">Story</string>
+    <string name="sorry_guest">Sorry guest</string>
+    <string name="fail_load_data">Failed to retrieve data, please try again later</string>
+    <string name="data_not_available">Sorry, data is currently not available</string>
+</resources>

@@ -41,14 +41,15 @@ class StoryActivity : AppCompatActivity() {
 		setupButtonAction()
 
 		storyViewModel.getUser().observe(this) { user ->
-			if (user.name != getString(R.string.guest)) {
-				setupHeaderTokenAndStoryData()
-			} else {
+			if (user.name == getString(R.string.tamu) || user.name == getString(R.string.guest)) {
 				with(binding) {
+					imageSorry.visibility = View.VISIBLE
 					messageForGuest.visibility = View.VISIBLE
 					btnRegister2.visibility = View.VISIBLE
 					rvStory.visibility = View.GONE
 				}
+			} else {
+				setupHeaderTokenAndStoryData()
 			}
 		}
 	}
@@ -115,7 +116,7 @@ class StoryActivity : AppCompatActivity() {
 			storyViewModel.getAllStories(user.token).observe(this) { story ->
 				if (story != null) {
 					when (story) {
-						is Resource.Loading -> binding.loading.visibility = View.GONE
+						is Resource.Loading -> binding.rvStory.visibility = View.VISIBLE
 						is Resource.Success -> {
 							binding.loading.visibility = View.GONE
 							storyAdapter.setData(story.data)
@@ -124,9 +125,14 @@ class StoryActivity : AppCompatActivity() {
 							binding.loading.visibility = View.GONE
 							Toast.makeText(
 								this,
-								"Gagal menampilkan data, mohon coba lagi nanti",
+								getString(R.string.fail_load_data),
 								Toast.LENGTH_SHORT
 							).show()
+							with(binding) {
+								imageSorry.visibility = View.VISIBLE
+								messageForGuest.visibility = View.VISIBLE
+								messageForGuest.text = getString(R.string.data_not_available)
+							}
 						}
 					}
 				}

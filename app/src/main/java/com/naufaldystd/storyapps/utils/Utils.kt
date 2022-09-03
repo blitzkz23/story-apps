@@ -7,11 +7,13 @@ import android.graphics.Bitmap
 import android.graphics.Matrix
 import android.net.Uri
 import android.os.Environment
+import android.widget.TextView
 import com.naufaldystd.storyapps.R
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
 import java.io.OutputStream
+import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -106,4 +108,17 @@ fun uriToFile(selectedImg: Uri, context: Context): File {
 	inputStream.close()
 
 	return myFile
+}
+
+/**
+ * Set TextView text attribute to locale date format
+ *
+ * @param datetime Timestamp
+ */
+fun TextView.setLocalDateFormat(datetime: String) {
+	val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US)
+	val date = sdf.parse(datetime) as Date
+
+	val formattedDate = DateFormat.getDateInstance(DateFormat.FULL).format(date)
+	this.text = formattedDate
 }

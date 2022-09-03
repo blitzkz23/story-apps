@@ -15,6 +15,13 @@
         <item name="fontFamily">@font/poppins_regular</item>
         <item name="android:textColor">@color/black</item>
         <item name="background">@color/custom_white</item>
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="android:windowEnterTransition">@android:transition/explode</item>
+        <item name="android:windowExitTransition">@android:transition/explode</item>
+        <item name="android:windowSharedElementEnterTransition">
+            @transition/change_transform</item>
+        <item name="android:windowSharedElementExitTransition">
+            @transition/change_transform</item>
     </style>
 
     <!-- SplashScreen Theme -->
@@ -36,7 +43,7 @@
     <style name="Text">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/custom_blacktext</item>
+        <item name="android:textColor">@color/dicoding_black</item>
     </style>
 
     <style name="Text2">
@@ -53,7 +60,7 @@
 
     <style name="Text.Header2">
         <item name="fontFamily">@font/poppins_bold</item>
-        <item name="android:textSize">24sp</item>
+        <item name="android:textSize">22sp</item>
     </style>
 
     <style name="Text.Header3">
@@ -104,8 +111,8 @@
         <item name="fontFamily">@font/poppins_bold</item>
         <item name="android:textSize">14sp</item>
         <item name="android:letterSpacing">-0.013</item>
-        <item name="android:textColor">@color/custom_linktext</item>
-    </style>
+        <item name="android:textColor">@color/dicoding_teal</item>
+    </style>x
 
     <style name="Text.Button">
         <item name="fontFamily">@font/poppins_bold</item>
@@ -118,5 +125,4 @@
         <item name="android:textSize">13.5sp</item>
         <item name="fontFamily">@font/poppins_regular</item>
     </style>
-
 </resources>

@@ -1,5 +1,6 @@
 package com.naufaldystd.storyapps.ui.login
 
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -40,6 +41,7 @@ class LoginFragment : Fragment() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
+		setupAnimation()
 		setButtonEnable()
 		setupButtonAction()
 		binding.etPasswordText.addTextChangedListener(object : TextWatcher {
@@ -51,6 +53,14 @@ class LoginFragment : Fragment() {
 			override fun afterTextChanged(s: Editable?) {}
 		})
 
+	}
+
+	private fun setupAnimation() {
+		ObjectAnimator.ofFloat(binding.ivLoginImage, View.TRANSLATION_X, -30f, 30f).apply {
+			duration = 6000
+			repeatCount = ObjectAnimator.INFINITE
+			repeatMode = ObjectAnimator.REVERSE
+		}.start()
 	}
 
 	/**
@@ -95,12 +105,12 @@ class LoginFragment : Fragment() {
 		binding.apply {
 			val email = etEmailText.text.toString()
 			val password = etPasswordText.text.toString()
-			loading.visibility = View.VISIBLE
 
+			loading.visibility = View.VISIBLE
 			lifecycleScope.launch {
 				loginViewModel.loginAccount(email, password).observe(viewLifecycleOwner) { user ->
 					when (user) {
-						is Resource.Loading -> loading.visibility = View.GONE
+						is Resource.Loading -> loading.visibility = View.VISIBLE
 						is Resource.Success -> {
 							loading.visibility = View.GONE
 							Toast.makeText(

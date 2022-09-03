@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="16dp"
-    app:strokeWidth="1dp"
+    android:layout_marginBottom="8dp"
+    android:layout_marginTop="8dp"
+    app:cardCornerRadius="12dp"
     app:strokeColor="@color/custom_subtext"
-    app:cardCornerRadius="12dp">
+    app:strokeWidth="1dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -57,7 +58,7 @@
             android:fontFamily="@font/poppins_regular"
             android:maxLines="2"
             android:text="@string/story_text"
-            android:textColor="@color/black"
+            android:textColor="@color/dicoding_black"
             app:layout_constraintBottom_toTopOf="@id/tv_datetime_list"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
