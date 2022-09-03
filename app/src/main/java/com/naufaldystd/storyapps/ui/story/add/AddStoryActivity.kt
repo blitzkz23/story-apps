@@ -204,10 +204,10 @@ class AddStoryActivity : AppCompatActivity() {
 
 			binding.loading.visibility = View.VISIBLE
 			addStoryViewModel.getUser().observe(this) { user ->
-				if (user.name != getString(R.string.guest)) {
-					addStoryUser(user.token, description, imageMultipart)
-				} else {
+				if (user.name == getString(R.string.tamu) || user.name == getString(R.string.guest)) {
 					addStoryGuest(description, imageMultipart)
+				} else {
+					addStoryUser(user.token, description, imageMultipart)
 				}
 			}
 		} else {

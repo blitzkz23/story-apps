@@ -22,7 +22,7 @@
         style="@style/Text.Header3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimens16"
+        android:layout_marginTop="@dimen/dimens8"
         android:text="@string/header_register"
         app:layout_constraintEnd_toEndOf="@id/guideline2"
         app:layout_constraintHorizontal_bias="0.0"
@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         style="@style/Text.Header4"
         android:text="@string/prompt_name"
-        android:layout_marginTop="@dimen/dimens16"
+        android:layout_marginTop="@dimen/dimens8"
         app:layout_constraintTop_toBottomOf="@id/header_login"
         app:layout_constraintStart_toStartOf="@id/guideline1" />
 

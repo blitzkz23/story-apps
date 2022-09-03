@@ -55,7 +55,7 @@ class RegisterFragment : Fragment() {
 	}
 
 	private fun setupAnimation() {
-		ObjectAnimator.ofFloat(binding.ivRegisterImage, View.TRANSLATION_X, -30f, 30f).apply {
+		ObjectAnimator.ofFloat(binding.ivRegisterImage, View.TRANSLATION_X, -50f, 50f).apply {
 			duration = 6000
 			repeatCount = ObjectAnimator.INFINITE
 			repeatMode = ObjectAnimator.REVERSE

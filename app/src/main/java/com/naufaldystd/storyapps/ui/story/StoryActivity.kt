@@ -14,12 +14,15 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.naufaldystd.core.data.source.Resource
 import com.naufaldystd.core.ui.StoryAdapter
 import com.naufaldystd.storyapps.R
 import com.naufaldystd.storyapps.databinding.ActivityStoryBinding
 import com.naufaldystd.storyapps.ui.detail.DetailStoryActivity
+import com.naufaldystd.storyapps.ui.main.MainActivity
 import com.naufaldystd.storyapps.ui.setting.SettingActivity
 import com.naufaldystd.storyapps.ui.story.add.AddStoryActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -64,6 +67,12 @@ class StoryActivity : AppCompatActivity() {
 		}
 		binding.btnAddStory.setOnClickListener {
 			startActivity(Intent(this@StoryActivity, AddStoryActivity::class.java))
+		}
+		binding.btnRegister2.setOnClickListener {
+			startActivity(Intent(this@StoryActivity, MainActivity::class.java).also { intent ->
+				intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+			})
+			finish()
 		}
 	}
 
