@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Story Apps</string>
+    <string name="app_name">Dico-toori</string>
     <!-- Strings related to login -->
     <string name="prompt_name">Name</string>
     <string name="prompt_email">Email</string>

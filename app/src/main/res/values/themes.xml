@@ -21,7 +21,7 @@
     <style name="Theme.StoryApps.App.Starting" parent="Theme.SplashScreen">
         <!-- Splash screen theme -->
         <item name="windowSplashScreenBackground">@color/dicoding_black</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/dicoding_logo_variant</item>
         <item name="postSplashScreenTheme">@style/Theme.StoryApps</item>
     </style>
 
