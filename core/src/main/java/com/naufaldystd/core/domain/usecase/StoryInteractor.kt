@@ -10,6 +10,12 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import javax.inject.Inject
 
+/**
+ * Implementation of use case, using the function from Repository Implementation for cleaner flow.
+ *
+ * @property storyRepositoryImpl
+ * @constructor Create empty Story interactor
+ */
 class StoryInteractor @Inject constructor(private val storyRepositoryImpl: StoryRepositoryImpl) :
 	StoryUseCase {
 	override suspend fun registerAccount(

@@ -13,6 +13,11 @@ import javax.inject.Inject
 
 class UserPreference @Inject constructor(private val dataStore: DataStore<Preferences>) {
 
+	/**
+	 * Get user data from shared pref.
+	 *
+	 * @return
+	 */
 	fun getUser(): Flow<UserModel> {
 		return dataStore.data.map { preference ->
 			UserModel(
@@ -24,6 +29,11 @@ class UserPreference @Inject constructor(private val dataStore: DataStore<Prefer
 		}
 	}
 
+	/**
+	 * Save user session when logging in.
+	 *
+	 * @param user
+	 */
 	suspend fun saveUserSession(user: UserModel) {
 		dataStore.edit { preferences ->
 			preferences[NAME_KEY] = user.name
@@ -33,6 +43,10 @@ class UserPreference @Inject constructor(private val dataStore: DataStore<Prefer
 		}
 	}
 
+	/**
+	 * Clear shared pref data when logging out.
+	 *
+	 */
 	suspend fun logout() {
 		dataStore.edit {
 			it.clear()

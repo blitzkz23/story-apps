@@ -6,11 +6,15 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
+/**
+ * Local data source, connect local data from room database and repository.
+ *
+ * @property storyDao
+ * @constructor Create empty Local data source
+ */
 @Singleton
-class LocalDataSource @Inject constructor(private val storyDao: StoryDao){
+class LocalDataSource @Inject constructor(private val storyDao: StoryDao) {
 
 	fun getAllStories(): Flow<List<StoryEntity>> = storyDao.getAllStories()
-	fun getStoryById(id: String): Flow<StoryEntity>? = storyDao.getStoryById(id)
 	suspend fun insertStories(stories: List<StoryEntity>) = storyDao.insertStories(stories)
-	suspend fun insertStory(story: StoryEntity) = storyDao.insertStory(story)
 }

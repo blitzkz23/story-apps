@@ -17,10 +17,23 @@ import okhttp3.RequestBody
 import javax.inject.Inject
 import javax.inject.Singleton
 
+/**
+ * Remote data source, connect API service from retrofit and repository.
+ *
+ * @property apiService
+ * @constructor Create empty Remote data source
+ */
 @Singleton
 class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
 
-	// Register function with flow
+	/**
+	 * Register account request by sending name, email, and password to API endpoint.
+	 *
+	 * @param name
+	 * @param email
+	 * @param password
+	 * @return
+	 */
 	suspend fun registerAccount(
 		name: String,
 		email: String,
@@ -41,7 +54,13 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
 		}.flowOn(Dispatchers.IO)
 	}
 
-	// Login function with flow
+	/**
+	 * Login account request by sending email, and password to API endpoint.
+	 *
+	 * @param email
+	 * @param password
+	 * @return
+	 */
 	@OptIn(ExperimentalCoroutinesApi::class)
 	suspend fun loginAccount(email: String, password: String): Flow<StoryApiResponse<LoginResult>> {
 		// Use channel flow instead of flow, because flow doesn't allow emit() concurrently.
@@ -60,6 +79,14 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
 		}
 	}
 
+	/**
+	 * Add new story request for logged in account.
+	 *
+	 * @param token
+	 * @param description
+	 * @param photo
+	 * @return
+	 */
 	// Function to add story for registered account
 	@OptIn(ExperimentalCoroutinesApi::class)
 	suspend fun addStory(
@@ -82,13 +109,19 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
 		}
 	}
 
-	// Function to add story for guest user
+	/**
+	 * Add new story request for guest.
+	 *
+	 * @param description
+	 * @param photo
+	 * @return
+	 */
 	@OptIn(ExperimentalCoroutinesApi::class)
 	suspend fun addStoryGuest(
 		description: RequestBody,
 		photo: MultipartBody.Part
 	): Flow<StoryApiResponse<String>> {
-		return channelFlow{
+		return channelFlow {
 			try {
 				val response = apiService.addStoryGuest(description, photo)
 				if (!response.error) {
@@ -103,7 +136,12 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
 		}
 	}
 
-	// function to get all stories from API for main page
+	/**
+	 * Get all stories data from API.
+	 *
+	 * @param token
+	 * @return
+	 */
 	@OptIn(ExperimentalCoroutinesApi::class)
 	suspend fun getStories(token: String): Flow<StoryApiResponse<List<StoryResponse>>> {
 		return channelFlow {
