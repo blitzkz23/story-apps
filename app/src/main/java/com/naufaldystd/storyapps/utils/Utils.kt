@@ -7,14 +7,23 @@ import android.graphics.Bitmap
 import android.graphics.Matrix
 import android.net.Uri
 import android.os.Environment
+import android.widget.TextView
 import com.naufaldystd.storyapps.R
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
 import java.io.OutputStream
+import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
+/**
+ * Rotate bitmap of camera X result
+ *
+ * @param bitmap
+ * @param isBackCamera
+ * @return
+ */
 fun rotateBitmap(bitmap: Bitmap, isBackCamera: Boolean = false): Bitmap {
 	val matrix = Matrix()
 	return if (isBackCamera) {
@@ -50,11 +59,23 @@ val timeStamp: String = SimpleDateFormat(
 	Locale.US
 ).format(System.currentTimeMillis())
 
+/**
+ * Create custom temp file
+ *
+ * @param context
+ * @return
+ */
 fun createCustomTempFile(context: Context): File {
 	val storageDir: File? = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
 	return File.createTempFile(timeStamp, ".jpg", storageDir)
 }
 
+/**
+ * Create file
+ *
+ * @param application
+ * @return
+ */
 fun createFile(application: Application): File {
 	val mediaDir = application.externalMediaDirs.firstOrNull()?.let {
 		File(it, application.resources.getString(R.string.app_name)).apply { mkdirs() }
@@ -67,6 +88,13 @@ fun createFile(application: Application): File {
 	return File(outputDirectory, "$timeStamp.jpg")
 }
 
+/**
+ * Uri to file
+ *
+ * @param selectedImg
+ * @param context
+ * @return
+ */
 fun uriToFile(selectedImg: Uri, context: Context): File {
 	val contentResolver: ContentResolver = context.contentResolver
 	val myFile = createCustomTempFile(context)

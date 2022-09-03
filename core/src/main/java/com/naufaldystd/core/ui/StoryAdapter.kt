@@ -3,6 +3,7 @@ package com.naufaldystd.core.ui
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +13,10 @@ import com.naufaldystd.core.R
 import com.naufaldystd.core.databinding.ItemListStoryBinding
 import com.naufaldystd.core.domain.model.Story
 import com.naufaldystd.core.utils.DiffUtils
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class StoryAdapter : RecyclerView.Adapter<StoryAdapter.ListViewHolder>() {
 
@@ -58,7 +63,7 @@ class StoryAdapter : RecyclerView.Adapter<StoryAdapter.ListViewHolder>() {
 						data.description
 					), HtmlCompat.FROM_HTML_MODE_LEGACY
 				)
-				tvDatetimeList.text = data.createdAt
+				tvDatetimeList.setLocalDateFormat(data.createdAt)
 			}
 		}
 
@@ -67,6 +72,19 @@ class StoryAdapter : RecyclerView.Adapter<StoryAdapter.ListViewHolder>() {
 				onItemClick?.invoke(listStory[adapterPosition])
 			}
 		}
+	}
+
+	/**
+	 * Set TextView text attribute to locale date format
+	 *
+	 * @param datetime Timestamp
+	 */
+	fun TextView.setLocalDateFormat(datetime: String) {
+		val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US)
+		val date = sdf.parse(datetime) as Date
+
+		val formattedDate = DateFormat.getDateInstance(DateFormat.FULL).format(date)
+		this.text = formattedDate
 	}
 
 }
