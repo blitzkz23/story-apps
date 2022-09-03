@@ -110,6 +110,7 @@ class StoryActivity : AppCompatActivity() {
 	 * Set header token for data request and set the returned data into adapter and eventually recyclerview
 	 */
 	private fun setupHeaderTokenAndStoryData() {
+		binding.rvStory.visibility = View.VISIBLE
 		storyViewModel.getUser().observe(this) { user ->
 			storyViewModel.getAllStories(user.token).observe(this) { story ->
 				if (story != null) {
@@ -131,7 +132,6 @@ class StoryActivity : AppCompatActivity() {
 				}
 			}
 		}
-		binding.rvStory.visibility = View.VISIBLE
 		with(binding.rvStory) {
 			layoutManager = LinearLayoutManager(context)
 			setHasFixedSize(true)

@@ -10,9 +10,19 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface StoryDao {
 
+	/**
+	 * Get all stories from darabase.
+	 *
+	 * @return
+	 */
 	@Query("SELECT * FROM story ORDER BY createdAt DESC")
 	fun getAllStories(): Flow<List<StoryEntity>>
 
+	/**
+	 * Insert stories to database for caching purposes.
+	 *
+	 * @param stories
+	 */
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	suspend fun insertStories(stories: List<StoryEntity>)
 }
