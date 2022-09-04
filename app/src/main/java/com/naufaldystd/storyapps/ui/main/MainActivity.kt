@@ -8,8 +8,6 @@ import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.navigation.findNavController
-import com.naufaldystd.storyapps.R
 import com.naufaldystd.storyapps.databinding.ActivityMainBinding
 import com.naufaldystd.storyapps.ui.story.StoryActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,6 +30,7 @@ class MainActivity : AppCompatActivity() {
 
 	/**
 	 * Set full screen without default action bar
+	 *
 	 */
 	@Suppress("DEPRECATION")
 	private fun setupFullscreen() {
@@ -48,6 +47,7 @@ class MainActivity : AppCompatActivity() {
 
 	/**
 	 * Check if user session is active, redirect to main screen (story activity)
+	 *
 	 */
 	private fun checkLoggedUser() {
 		mainViewModel.getUser().observe(this) { user ->

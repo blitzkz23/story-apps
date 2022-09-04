@@ -10,6 +10,7 @@
     <dimen name="dimens24">24dp</dimen>
     <dimen name="dimens32">32dp</dimen>
     <dimen name="dimens40">40dp</dimen>
+    <dimen name="dimens48">48dp</dimen>
 
     <!-- Guideline -->
     <dimen name="constraint_guide_left_percent">0.05</dimen>

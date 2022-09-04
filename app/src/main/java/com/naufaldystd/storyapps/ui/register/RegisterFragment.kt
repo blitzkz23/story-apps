@@ -1,5 +1,6 @@
 package com.naufaldystd.storyapps.ui.register
 
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -38,6 +39,7 @@ class RegisterFragment : Fragment() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
+		setupAnimation()
 		setButtonEnable()
 		setupButtonAction()
 
@@ -52,8 +54,17 @@ class RegisterFragment : Fragment() {
 		})
 	}
 
+	private fun setupAnimation() {
+		ObjectAnimator.ofFloat(binding.ivRegisterImage, View.TRANSLATION_X, -50f, 50f).apply {
+			duration = 6000
+			repeatCount = ObjectAnimator.INFINITE
+			repeatMode = ObjectAnimator.REVERSE
+		}.start()
+	}
+
 	/**
 	 * Set click listener for all button
+	 *
 	 */
 	private fun setupButtonAction() {
 		binding.apply {
@@ -68,6 +79,7 @@ class RegisterFragment : Fragment() {
 
 	/**
 	 * Set validation for button state, only enable button if form are not empty and formats are correct
+	 *
 	 */
 	private fun setButtonEnable() {
 		val name = binding.etNameText.text
@@ -82,6 +94,7 @@ class RegisterFragment : Fragment() {
 
 	/**
 	 * Get name, text and password from client and send register account request to API
+	 *
 	 */
 	private fun actionRegister() {
 		binding.loading.visibility = View.VISIBLE

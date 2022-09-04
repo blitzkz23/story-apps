@@ -1,9 +1,9 @@
 package com.naufaldystd.core.ui
 
-import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +13,11 @@ import com.naufaldystd.core.R
 import com.naufaldystd.core.databinding.ItemListStoryBinding
 import com.naufaldystd.core.domain.model.Story
 import com.naufaldystd.core.utils.DiffUtils
+import com.naufaldystd.core.utils.setLocalDateFormat
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class StoryAdapter : RecyclerView.Adapter<StoryAdapter.ListViewHolder>() {
 
@@ -26,7 +31,6 @@ class StoryAdapter : RecyclerView.Adapter<StoryAdapter.ListViewHolder>() {
 		listStory.clear()
 		listStory.addAll(newListData)
 		diffResult.dispatchUpdatesTo(this)
-
 	}
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoryAdapter.ListViewHolder =
@@ -51,15 +55,15 @@ class StoryAdapter : RecyclerView.Adapter<StoryAdapter.ListViewHolder>() {
 						RequestOptions.placeholderOf(R.drawable.ic_loading)
 							.error(R.drawable.ic_error)
 					)
-					.into(ivItemImage)
-				tvUserAndParagraph.text = HtmlCompat.fromHtml(
+					.into(ivItemImageList)
+				tvUserAndParagraphList.text = HtmlCompat.fromHtml(
 					itemView.context.getString(
 						R.string.story_text_format,
 						data.name,
 						data.description
 					), HtmlCompat.FROM_HTML_MODE_LEGACY
 				)
-				tvDatetime.text = data.createdAt
+				tvDatetimeList.setLocalDateFormat(data.createdAt)
 			}
 		}
 
@@ -69,5 +73,6 @@ class StoryAdapter : RecyclerView.Adapter<StoryAdapter.ListViewHolder>() {
 			}
 		}
 	}
+
 
 }

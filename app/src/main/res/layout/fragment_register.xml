@@ -8,13 +8,13 @@
     tools:context=".ui.login.LoginFragment">
 
     <ImageView
-        android:id="@+id/login_image"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:id="@+id/iv_register_image"
+        android:layout_width="0dp"
+        android:layout_height="240dp"
         android:contentDescription="@string/login_illust"
-        android:src="@mipmap/ic_launcher"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:src="@drawable/image_signup"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="@+id/guideline1"
         app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
     <TextView
@@ -22,12 +22,12 @@
         style="@style/Text.Header3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimens16"
+        android:layout_marginTop="@dimen/dimens8"
         android:text="@string/header_register"
         app:layout_constraintEnd_toEndOf="@id/guideline2"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/guideline1"
-        app:layout_constraintTop_toBottomOf="@id/login_image" />
+        app:layout_constraintTop_toBottomOf="@id/iv_register_image" />
 
     <TextView
         android:id="@+id/tv_name"
@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         style="@style/Text.Header4"
         android:text="@string/prompt_name"
-        android:layout_marginTop="@dimen/dimens16"
+        android:layout_marginTop="@dimen/dimens8"
         app:layout_constraintTop_toBottomOf="@id/header_login"
         app:layout_constraintStart_toStartOf="@id/guideline1" />
 

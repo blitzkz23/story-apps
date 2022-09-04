@@ -46,6 +46,10 @@ class CameraXActivity : AppCompatActivity() {
 		cameraExecutor.shutdown()
 	}
 
+	/**
+	 * Setup button action
+	 *
+	 */
 	private fun setupButtonAction() {
 		with(binding) {
 			captureImage.setOnClickListener { takePhoto() }
@@ -58,6 +62,10 @@ class CameraXActivity : AppCompatActivity() {
 		}
 	}
 
+	/**
+	 * Take photo
+	 *
+	 */
 	private fun takePhoto() {
 		val imageCapture = imageCapture ?: return
 
@@ -90,6 +98,10 @@ class CameraXActivity : AppCompatActivity() {
 		)
 	}
 
+	/**
+	 * Start camera
+	 *
+	 */
 	private fun startCamera() {
 		val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
 
@@ -122,6 +134,10 @@ class CameraXActivity : AppCompatActivity() {
 		}, ContextCompat.getMainExecutor(this))
 	}
 
+	/**
+	 * Hide system UI
+	 *
+	 */
 	private fun hideSystemUI() {
 		@Suppress("DEPRECATION")
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
