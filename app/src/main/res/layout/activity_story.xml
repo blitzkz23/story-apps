@@ -48,50 +48,85 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_end="@dimen/dimens32" />
+        app:layout_constraintGuide_end="@dimen/dimens48" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_story"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/guideline1"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_story_layout"
         tools:listitem="@layout/item_list_story" />
 
-    <ProgressBar
+    <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/loading"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:visibility="invisible"
+        android:layout_marginTop="96dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="@id/guideline2"
+        app:layout_constraintStart_toStartOf="@id/guideline1"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_story_layout"
+        app:shimmer_auto_start="true">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/item_list_placeholder" />
+
+                <include layout="@layout/item_list_placeholder" />
+
+                <include layout="@layout/item_list_placeholder" />
+
+                <include layout="@layout/item_list_placeholder" />
+
+                <include layout="@layout/item_list_placeholder" />
+
+                <include layout="@layout/item_list_placeholder" />
+            </LinearLayout>
+        </ScrollView>
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <ImageView
+        android:id="@+id/image_sorry"
+        android:layout_width="0dp"
+        android:layout_height="300dp"
+        android:contentDescription="@string/sorry_guest"
+        android:src="@drawable/ic_sorry_bro"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/guideline2"
+        app:layout_constraintStart_toStartOf="@id/guideline1"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_story_layout" />
 
     <TextView
         android:id="@+id/message_for_guest"
-        style="@style/Text.Header4"
+        style="@style/Text.Header5"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/message_for_guest"
         android:layout_marginTop="20dp"
+        android:text="@string/message_for_guest"
         android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/guideline1"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_story_layout" />
+        app:layout_constraintTop_toBottomOf="@+id/image_sorry" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_register2"
         style="@style/Text.Button"
         android:layout_width="0dp"
         android:layout_height="60dp"
-        android:text="@string/action_register"
-        app:cornerRadius="12dp"
-        android:visibility="gone"
         android:layout_marginTop="@dimen/dimens20"
+        android:text="@string/action_register"
+        android:visibility="gone"
+        app:cornerRadius="12dp"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/guideline1"
         app:layout_constraintTop_toBottomOf="@+id/message_for_guest" />
@@ -101,8 +136,8 @@
         style="@style/Text.Button"
         android:layout_width="0dp"
         android:layout_height="60dp"
+        android:background="@drawable/rounded_berbagi_button"
         android:text="@string/share"
-        app:cornerRadius="12dp"
         app:icon="@drawable/ic_pen"
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toEndOf="parent" />

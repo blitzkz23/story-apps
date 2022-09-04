@@ -23,7 +23,11 @@ class CustomEmailField : AppCompatEditText {
 		init()
 	}
 
-	constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+	constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(
+		context,
+		attrs,
+		defStyleAttr
+	) {
 		init()
 	}
 
@@ -43,12 +47,14 @@ class CustomEmailField : AppCompatEditText {
 		setAutofillHints(AUTOFILL_HINT_PASSWORD)
 
 		addTextChangedListener(object : TextWatcher {
-			override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
+			override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
-			override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { }
+			override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
 			override fun afterTextChanged(s: Editable?) {
-				if (!s?.let { Patterns.EMAIL_ADDRESS.matcher(it).matches() }!! && !s.isNullOrEmpty()) setErrorMsg()
+				if (!s?.let {
+						Patterns.EMAIL_ADDRESS.matcher(it).matches()
+					}!! && !s.isNullOrEmpty()) setErrorMsg()
 			}
 		})
 	}

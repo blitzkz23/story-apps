@@ -1,5 +1,6 @@
 package com.naufaldystd.core.di
 
+import com.naufaldystd.core.BuildConfig
 import com.naufaldystd.core.data.source.remote.network.ApiService
 import com.naufaldystd.core.utils.Constants.BASE_URL
 import dagger.Module
@@ -18,6 +19,12 @@ class NetworkModule {
 
 	@Provides
 	fun provideOkHttpClient(): OkHttpClient {
+		val loggingInterceptor =
+			if (BuildConfig.DEBUG) {
+				HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+			} else {
+				HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE)
+			}
 		return OkHttpClient.Builder()
 			.addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
 			.connectTimeout(30, TimeUnit.SECONDS)

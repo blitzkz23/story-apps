@@ -7,7 +7,6 @@ import com.naufaldystd.core.data.source.remote.response.StoryResponse
 import com.naufaldystd.core.domain.model.Story
 import com.naufaldystd.core.domain.model.UserModel
 import com.naufaldystd.core.domain.repository.StoryRepository
-import com.naufaldystd.core.utils.AppExecutors
 import com.naufaldystd.core.utils.DataMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -18,12 +17,27 @@ import okhttp3.RequestBody
 import javax.inject.Inject
 import javax.inject.Singleton
 
+/**
+ * Story repository implementation that extends interface from Story Repository interfaces, also connect to data from remote and local source.
+ *
+ * @property remoteDataSource
+ * @property localDataSource
+ * @constructor Create empty Story repository impl
+ */
 @Singleton
 class StoryRepositoryImpl @Inject constructor(
 	private val remoteDataSource: RemoteDataSource,
-	private val localDataSource: LocalDataSource,
-	private val appExecutors: AppExecutors
+	private val localDataSource: LocalDataSource
 ) : StoryRepository {
+
+	/**
+	 * Register account request that send request to remote data source and connect it to API endpoint.
+	 *
+	 * @param name
+	 * @param email
+	 * @param password
+	 * @return
+	 */
 	override suspend fun registerAccount(
 		name: String,
 		email: String,
@@ -45,6 +59,13 @@ class StoryRepositoryImpl @Inject constructor(
 		}
 	}
 
+	/**
+	 * Login account send request to remote data source and connect it to API endpoint.
+	 *
+	 * @param email
+	 * @param password
+	 * @return
+	 */
 	override suspend fun loginAccount(email: String, password: String): Flow<Resource<UserModel>> {
 		return flow {
 			when (val response = remoteDataSource.loginAccount(email, password).first()) {
@@ -64,6 +85,12 @@ class StoryRepositoryImpl @Inject constructor(
 		}
 	}
 
+	/**
+	 * Get all stories request to remote data source and connect it to API endpoint.
+	 *
+	 * @param token
+	 * @return
+	 */
 	override fun getAllStories(token: String): Flow<Resource<List<Story>>> =
 		object : NetworkBoundResource<List<Story>, List<StoryResponse>>() {
 			override fun loadFromDB(): Flow<List<Story>> {
@@ -84,6 +111,14 @@ class StoryRepositoryImpl @Inject constructor(
 			}
 		}.asFlow()
 
+	/**
+	 * Add story send request to remote data source and connect it to API endpoint for logged in user.
+	 *
+	 * @param token
+	 * @param description
+	 * @param photo
+	 * @return
+	 */
 	override suspend fun addStory(
 		token: String,
 		description: RequestBody,
@@ -104,6 +139,13 @@ class StoryRepositoryImpl @Inject constructor(
 		}
 	}
 
+	/**
+	 * Add story send request to remote data source and connect it to API endpoint for guest user.
+	 *
+	 * @param description
+	 * @param photo
+	 * @return
+	 */
 	override suspend fun addStoryGuest(
 		description: RequestBody,
 		photo: MultipartBody.Part

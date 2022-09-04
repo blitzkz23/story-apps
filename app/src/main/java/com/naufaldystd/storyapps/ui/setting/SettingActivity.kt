@@ -32,6 +32,7 @@ class SettingActivity : AppCompatActivity() {
 
 	/**
 	 * Set click listener for all button
+	 *
 	 */
 	private fun setupButtonAction() {
 		findViewById<ImageButton>(R.id.btn_back)?.setOnClickListener {
@@ -48,6 +49,7 @@ class SettingActivity : AppCompatActivity() {
 
 	/**
 	 * Set the user's name text if shared pref active, if not set to name as guest
+	 *
 	 */
 	private fun setupUserInfo() {
 		settingViewModel.getUser().observe(this) { user ->
@@ -57,6 +59,7 @@ class SettingActivity : AppCompatActivity() {
 
 	/**
 	 * Set full screen without default action bar
+	 *
 	 */
 	@Suppress("DEPRECATION")
 	private fun setupFullscreen() {

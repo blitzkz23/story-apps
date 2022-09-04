@@ -4,12 +4,17 @@ import com.naufaldystd.core.data.source.Resource
 import com.naufaldystd.core.data.source.StoryRepositoryImpl
 import com.naufaldystd.core.domain.model.Story
 import com.naufaldystd.core.domain.model.UserModel
-import com.naufaldystd.core.domain.repository.StoryRepository
 import kotlinx.coroutines.flow.Flow
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import javax.inject.Inject
 
+/**
+ * Implementation of use case, using the function from Repository Implementation for cleaner flow.
+ *
+ * @property storyRepositoryImpl
+ * @constructor Create empty Story interactor
+ */
 class StoryInteractor @Inject constructor(private val storyRepositoryImpl: StoryRepositoryImpl) :
 	StoryUseCase {
 	override suspend fun registerAccount(

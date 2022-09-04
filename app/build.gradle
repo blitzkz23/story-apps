@@ -8,12 +8,12 @@ plugins {
 apply from: '../shared_dependencies.gradle'
 
 android {
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.naufaldystd.storyapps"
         minSdk 21
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -48,7 +48,7 @@ dependencies {
     implementation "androidx.core:core-splashscreen:$core_splashscreen_version"
     implementation 'androidx.appcompat:appcompat:1.5.0'
     implementation 'com.google.android.material:material:1.6.1'
-    implementation 'androidx.annotation:annotation:1.2.0'
+    implementation 'androidx.annotation:annotation:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
@@ -56,4 +56,5 @@ dependencies {
     implementation "androidx.camera:camera-camera2:$camerax_version"
     implementation "androidx.camera:camera-lifecycle:$camerax_version"
     implementation "androidx.camera:camera-view:$camerax_version"
+    implementation "com.facebook.shimmer:shimmer:$shimmer_version"
 }

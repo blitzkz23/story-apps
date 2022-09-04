@@ -2,20 +2,25 @@ package com.naufaldystd.storyapps.ui.story
 
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.util.Pair
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.naufaldystd.core.data.source.Resource
 import com.naufaldystd.core.ui.StoryAdapter
 import com.naufaldystd.storyapps.R
 import com.naufaldystd.storyapps.databinding.ActivityStoryBinding
 import com.naufaldystd.storyapps.ui.detail.DetailStoryActivity
+import com.naufaldystd.storyapps.ui.main.MainActivity
 import com.naufaldystd.storyapps.ui.setting.SettingActivity
 import com.naufaldystd.storyapps.ui.story.add.AddStoryActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,20 +42,22 @@ class StoryActivity : AppCompatActivity() {
 		setupButtonAction()
 
 		storyViewModel.getUser().observe(this) { user ->
-			if (user.name != getString(R.string.guest)) {
-				setupHeaderTokenAndStoryData()
-			} else {
+			if (user.name == getString(R.string.tamu) || user.name == getString(R.string.guest)) {
 				with(binding) {
+					imageSorry.visibility = View.VISIBLE
 					messageForGuest.visibility = View.VISIBLE
 					btnRegister2.visibility = View.VISIBLE
 					rvStory.visibility = View.GONE
 				}
+			} else {
+				setupHeaderTokenAndStoryData()
 			}
 		}
 	}
 
 	/**
 	 * Set click listener for all button
+	 *
 	 */
 	private fun setupButtonAction() {
 		findViewById<ImageButton>(R.id.btn_setting)?.setOnClickListener {
@@ -59,22 +66,40 @@ class StoryActivity : AppCompatActivity() {
 		binding.btnAddStory.setOnClickListener {
 			startActivity(Intent(this@StoryActivity, AddStoryActivity::class.java))
 		}
+		binding.btnRegister2.setOnClickListener {
+			startActivity(Intent(this@StoryActivity, MainActivity::class.java).also { intent ->
+				intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+			})
+			finish()
+		}
 	}
 
 	/**
 	 * Set adapter for recyclerview
+	 *
 	 */
 	private fun setupAdapter() {
 		storyAdapter = StoryAdapter()
 		storyAdapter.onItemClick = { intentData ->
+			val image = findViewById<ImageView>(com.naufaldystd.core.R.id.iv_item_image_list)
+			val text = findViewById<TextView>(com.naufaldystd.core.R.id.tv_user_and_paragraph_list)
+			val datetime = findViewById<TextView>(com.naufaldystd.core.R.id.tv_datetime_list)
+			val optionsCompat: ActivityOptionsCompat =
+				ActivityOptionsCompat.makeSceneTransitionAnimation(
+					this@StoryActivity,
+					Pair(image, "image"),
+					Pair(text, "text"),
+					Pair(datetime, "datetime")
+				)
 			val intent = Intent(this@StoryActivity, DetailStoryActivity::class.java)
 			intent.putExtra(DetailStoryActivity.EXTRA_PARCEL, intentData)
-			startActivity(intent)
+			startActivity(intent, optionsCompat.toBundle())
 		}
 	}
 
 	/**
 	 * Set full screen without default action bar
+	 *
 	 */
 	@Suppress("DEPRECATION")
 	private fun setupFullscreen() {
@@ -93,11 +118,13 @@ class StoryActivity : AppCompatActivity() {
 	 * Set header token for data request and set the returned data into adapter and eventually recyclerview
 	 */
 	private fun setupHeaderTokenAndStoryData() {
+		binding.rvStory.visibility = View.VISIBLE
+		binding.loading.visibility = View.VISIBLE
 		storyViewModel.getUser().observe(this) { user ->
 			storyViewModel.getAllStories(user.token).observe(this) { story ->
 				if (story != null) {
 					when (story) {
-						is Resource.Loading -> binding.loading.visibility = View.GONE
+						is Resource.Loading -> binding.loading.visibility = View.VISIBLE
 						is Resource.Success -> {
 							binding.loading.visibility = View.GONE
 							storyAdapter.setData(story.data)
@@ -106,15 +133,19 @@ class StoryActivity : AppCompatActivity() {
 							binding.loading.visibility = View.GONE
 							Toast.makeText(
 								this,
-								"Gagal menampilkan data, mohon coba lagi nanti",
+								getString(R.string.fail_load_data),
 								Toast.LENGTH_SHORT
 							).show()
+							with(binding) {
+								imageSorry.visibility = View.VISIBLE
+								messageForGuest.visibility = View.VISIBLE
+								messageForGuest.text = getString(R.string.data_not_available)
+							}
 						}
 					}
 				}
 			}
 		}
-		binding.rvStory.visibility = View.VISIBLE
 		with(binding.rvStory) {
 			layoutManager = LinearLayoutManager(context)
 			setHasFixedSize(true)
