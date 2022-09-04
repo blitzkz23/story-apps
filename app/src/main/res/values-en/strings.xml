@@ -48,7 +48,7 @@
     <string name="no_image">Please upload an image first</string>
     <string name="dicoding_sutoori">Dicoding Sutoori</string>
     <string name="setting">Setting</string>
-    <string name="story">Story</string>
+    <string name="story">Story of</string>
     <string name="sorry_guest">Sorry guest</string>
     <string name="fail_load_data">Failed to retrieve data, please try again later</string>
     <string name="data_not_available">Sorry, data is currently not available</string>
