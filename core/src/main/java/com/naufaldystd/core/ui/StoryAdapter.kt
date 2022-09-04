@@ -13,6 +13,7 @@ import com.naufaldystd.core.R
 import com.naufaldystd.core.databinding.ItemListStoryBinding
 import com.naufaldystd.core.domain.model.Story
 import com.naufaldystd.core.utils.DiffUtils
+import com.naufaldystd.core.utils.setLocalDateFormat
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -73,17 +74,5 @@ class StoryAdapter : RecyclerView.Adapter<StoryAdapter.ListViewHolder>() {
 		}
 	}
 
-	/**
-	 * Set TextView text attribute to locale date format
-	 *
-	 * @param datetime Timestamp
-	 */
-	fun TextView.setLocalDateFormat(datetime: String) {
-		val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US)
-		val date = sdf.parse(datetime) as Date
-
-		val formattedDate = DateFormat.getDateInstance(DateFormat.FULL).format(date)
-		this.text = formattedDate
-	}
 
 }
