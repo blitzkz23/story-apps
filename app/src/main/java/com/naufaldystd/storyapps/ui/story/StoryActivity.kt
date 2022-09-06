@@ -118,7 +118,6 @@ class StoryActivity : AppCompatActivity() {
 	 * Set header token for data request and set the returned data into adapter and eventually recyclerview
 	 */
 	private fun setupHeaderTokenAndStoryData() {
-		binding.rvStory.visibility = View.VISIBLE
 		binding.loading.visibility = View.VISIBLE
 		storyViewModel.getUser().observe(this) { user ->
 			storyViewModel.getAllStories(user.token).observe(this) { story ->
@@ -131,12 +130,14 @@ class StoryActivity : AppCompatActivity() {
 						}
 						is Resource.Error -> {
 							binding.loading.visibility = View.GONE
+							binding.rvStory.visibility = View.VISIBLE
 							Toast.makeText(
 								this,
 								getString(R.string.fail_load_data),
 								Toast.LENGTH_SHORT
 							).show()
 							with(binding) {
+								binding.rvStory.visibility = View.GONE
 								imageSorry.visibility = View.VISIBLE
 								messageForGuest.visibility = View.VISIBLE
 								messageForGuest.text = getString(R.string.data_not_available)
