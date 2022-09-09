@@ -14,7 +14,12 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomnavigation.BottomNavigationItemView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.naufaldystd.core.data.source.Resource
 import com.naufaldystd.core.ui.StoryAdapter
 import com.naufaldystd.storyapps.R
@@ -30,71 +35,26 @@ class StoryActivity : AppCompatActivity() {
 	private val binding: ActivityStoryBinding by lazy {
 		ActivityStoryBinding.inflate(layoutInflater)
 	}
-	private val storyViewModel: StoryViewModel by viewModels()
-	private lateinit var storyAdapter: StoryAdapter
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(binding.root)
 
 		setupFullscreen()
-		setupAdapter()
-		setupButtonAction()
-
-		storyViewModel.getUser().observe(this) { user ->
-			if (user.name == getString(R.string.tamu) || user.name == getString(R.string.guest)) {
-				with(binding) {
-					imageSorry.visibility = View.VISIBLE
-					messageForGuest.visibility = View.VISIBLE
-					btnRegister2.visibility = View.VISIBLE
-					rvStory.visibility = View.GONE
-				}
-			} else {
-				setupHeaderTokenAndStoryData()
-			}
-		}
+		setupBottomNav()
 	}
 
 	/**
-	 * Set click listener for all button
+	 * Setup bottom navigation controller
 	 *
 	 */
-	private fun setupButtonAction() {
-		findViewById<ImageButton>(R.id.btn_setting)?.setOnClickListener {
-			startActivity(Intent(this@StoryActivity, SettingActivity::class.java))
-		}
-		binding.btnAddStory.setOnClickListener {
-			startActivity(Intent(this@StoryActivity, AddStoryActivity::class.java))
-		}
-		binding.btnRegister2.setOnClickListener {
-			startActivity(Intent(this@StoryActivity, MainActivity::class.java).also { intent ->
-				intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-			})
-			finish()
-		}
-	}
-
-	/**
-	 * Set adapter for recyclerview
-	 *
-	 */
-	private fun setupAdapter() {
-		storyAdapter = StoryAdapter()
-		storyAdapter.onItemClick = { intentData ->
-			val image = findViewById<ImageView>(com.naufaldystd.core.R.id.iv_item_image_list)
-			val text = findViewById<TextView>(com.naufaldystd.core.R.id.tv_user_and_paragraph_list)
-			val datetime = findViewById<TextView>(com.naufaldystd.core.R.id.tv_datetime_list)
-			val optionsCompat: ActivityOptionsCompat =
-				ActivityOptionsCompat.makeSceneTransitionAnimation(
-					this@StoryActivity,
-					Pair(image, "image"),
-					Pair(text, "text"),
-					Pair(datetime, "datetime")
-				)
-			val intent = Intent(this@StoryActivity, DetailStoryActivity::class.java)
-			intent.putExtra(DetailStoryActivity.EXTRA_PARCEL, intentData)
-			startActivity(intent, optionsCompat.toBundle())
-		}
+	private fun setupBottomNav() {
+		val bottomNav: BottomNavigationView = binding.bottomNavView
+		val navHostFragment =
+			supportFragmentManager.findFragmentById(R.id.nav_host_fragment_story) as NavHostFragment
+		val navController = navHostFragment.navController
+		// In order for this to work, the ids in the nav_graph must be the same as the one in the menu
+		bottomNav.setupWithNavController(navController)
 	}
 
 	/**
@@ -114,43 +74,4 @@ class StoryActivity : AppCompatActivity() {
 		supportActionBar?.hide()
 	}
 
-	/**
-	 * Set header token for data request and set the returned data into adapter and eventually recyclerview
-	 */
-	private fun setupHeaderTokenAndStoryData() {
-		binding.loading.visibility = View.VISIBLE
-		storyViewModel.getUser().observe(this) { user ->
-			storyViewModel.getAllStories(user.token).observe(this) { story ->
-				if (story != null) {
-					when (story) {
-						is Resource.Loading -> binding.loading.visibility = View.VISIBLE
-						is Resource.Success -> {
-							binding.loading.visibility = View.GONE
-							storyAdapter.setData(story.data)
-						}
-						is Resource.Error -> {
-							binding.loading.visibility = View.GONE
-							binding.rvStory.visibility = View.VISIBLE
-							Toast.makeText(
-								this,
-								getString(R.string.fail_load_data),
-								Toast.LENGTH_SHORT
-							).show()
-							with(binding) {
-								binding.rvStory.visibility = View.GONE
-								imageSorry.visibility = View.VISIBLE
-								messageForGuest.visibility = View.VISIBLE
-								messageForGuest.text = getString(R.string.data_not_available)
-							}
-						}
-					}
-				}
-			}
-		}
-		with(binding.rvStory) {
-			layoutManager = LinearLayoutManager(context)
-			setHasFixedSize(true)
-			adapter = storyAdapter
-		}
-	}
 }

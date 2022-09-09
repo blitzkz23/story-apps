@@ -52,4 +52,7 @@
     <string name="sorry_guest">Sorry guest</string>
     <string name="fail_load_data">Failed to retrieve data, please try again later</string>
     <string name="data_not_available">Sorry, data is currently not available</string>
+    <string name="home_menu">Home</string>
+    <string name="location_menu">Location</string>
+    <string name="setting_menu">Setting</string>
 </resources>
