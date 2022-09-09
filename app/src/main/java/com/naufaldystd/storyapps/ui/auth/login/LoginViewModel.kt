@@ -1,4 +1,4 @@
-package com.naufaldystd.storyapps.ui.login
+package com.naufaldystd.storyapps.ui.auth.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData

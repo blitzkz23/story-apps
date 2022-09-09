@@ -1,4 +1,4 @@
-package com.naufaldystd.storyapps.ui.main
+package com.naufaldystd.storyapps.ui.auth
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -9,7 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val pref: UserPreference) : ViewModel() {
+class AuthViewModel @Inject constructor(private val pref: UserPreference) : ViewModel() {
 	fun getUser(): LiveData<UserModel> {
 		return pref.getUser().asLiveData()
 	}

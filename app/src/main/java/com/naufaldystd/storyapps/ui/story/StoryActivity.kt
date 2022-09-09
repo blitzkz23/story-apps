@@ -1,33 +1,15 @@
 package com.naufaldystd.storyapps.ui.story
 
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityOptionsCompat
-import androidx.core.util.Pair
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.naufaldystd.core.data.source.Resource
-import com.naufaldystd.core.ui.StoryAdapter
 import com.naufaldystd.storyapps.R
 import com.naufaldystd.storyapps.databinding.ActivityStoryBinding
-import com.naufaldystd.storyapps.ui.detail.DetailStoryActivity
-import com.naufaldystd.storyapps.ui.main.MainActivity
-import com.naufaldystd.storyapps.ui.setting.SettingActivity
-import com.naufaldystd.storyapps.ui.story.add.AddStoryActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

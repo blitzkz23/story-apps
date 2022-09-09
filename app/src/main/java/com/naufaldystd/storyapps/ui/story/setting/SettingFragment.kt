@@ -6,12 +6,10 @@ import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.naufaldystd.storyapps.R
 import com.naufaldystd.storyapps.databinding.FragmentSettingBinding
-import com.naufaldystd.storyapps.ui.main.MainActivity
+import com.naufaldystd.storyapps.ui.auth.AuthActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -57,7 +55,7 @@ class SettingFragment : Fragment() {
 		}
 		binding.btnLogout.setOnClickListener {
 			settingViewModel.logOutUser()
-			val intent = Intent(requireActivity(), MainActivity::class.java)
+			val intent = Intent(requireActivity(), AuthActivity::class.java)
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
 			startActivity(intent)
 			activity?.finish()

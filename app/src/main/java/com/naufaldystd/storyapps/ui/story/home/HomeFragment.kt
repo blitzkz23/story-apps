@@ -18,7 +18,7 @@ import com.naufaldystd.core.ui.StoryAdapter
 import com.naufaldystd.storyapps.R
 import com.naufaldystd.storyapps.databinding.FragmentHomeBinding
 import com.naufaldystd.storyapps.ui.detail.DetailStoryActivity
-import com.naufaldystd.storyapps.ui.main.MainActivity
+import com.naufaldystd.storyapps.ui.auth.AuthActivity
 import com.naufaldystd.storyapps.ui.story.add.AddStoryActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -63,7 +63,7 @@ class HomeFragment : Fragment() {
 			startActivity(Intent(requireActivity(), AddStoryActivity::class.java))
 		}
 		binding.btnRegister2.setOnClickListener {
-			startActivity(Intent(requireActivity(), MainActivity::class.java).also { intent ->
+			startActivity(Intent(requireActivity(), AuthActivity::class.java).also { intent ->
 				intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
 			})
 			activity?.finish()

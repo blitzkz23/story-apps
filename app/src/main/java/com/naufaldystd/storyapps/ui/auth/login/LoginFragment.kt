@@ -1,4 +1,4 @@
-package com.naufaldystd.storyapps.ui.login
+package com.naufaldystd.storyapps.ui.auth.login
 
 import android.animation.ObjectAnimator
 import android.content.Intent

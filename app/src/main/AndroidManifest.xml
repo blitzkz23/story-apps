@@ -39,7 +39,7 @@
             android:name=".ui.setting.SettingActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name=".ui.auth.AuthActivity"
             android:exported="true"
             android:theme="@style/Theme.StoryApps.App.Starting">
             <intent-filter>

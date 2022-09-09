@@ -1,4 +1,4 @@
-package com.naufaldystd.storyapps.ui.main
+package com.naufaldystd.storyapps.ui.auth
 
 import android.content.Intent
 import android.os.Build
@@ -8,16 +8,16 @@ import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.naufaldystd.storyapps.databinding.ActivityMainBinding
+import com.naufaldystd.storyapps.databinding.ActivityAuthBinding
 import com.naufaldystd.storyapps.ui.story.StoryActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
-	private val binding: ActivityMainBinding by lazy {
-		ActivityMainBinding.inflate(layoutInflater)
+class AuthActivity : AppCompatActivity() {
+	private val binding: ActivityAuthBinding by lazy {
+		ActivityAuthBinding.inflate(layoutInflater)
 	}
-	private val mainViewModel: MainViewModel by viewModels()
+	private val authViewModel: AuthViewModel by viewModels()
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		installSplashScreen()
@@ -50,9 +50,9 @@ class MainActivity : AppCompatActivity() {
 	 *
 	 */
 	private fun checkLoggedUser() {
-		mainViewModel.getUser().observe(this) { user ->
+		authViewModel.getUser().observe(this) { user ->
 			if (user.isLogin) {
-				startActivity(Intent(this@MainActivity, StoryActivity::class.java).also { intent ->
+				startActivity(Intent(this@AuthActivity, StoryActivity::class.java).also { intent ->
 					intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
 				})
 				finish()
