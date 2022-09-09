@@ -2,6 +2,7 @@ package com.naufaldystd.storyapps.ui.story.setting
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,8 +52,8 @@ class SettingFragment : Fragment() {
 	 *
 	 */
 	private fun setupButtonAction() {
-		activity?.findViewById<ImageButton>(R.id.btn_back)?.setOnClickListener {
-			activity?.onBackPressed()
+		binding.settingLanguage.setOnClickListener {
+			startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
 		}
 		binding.btnLogout.setOnClickListener {
 			settingViewModel.logOutUser()

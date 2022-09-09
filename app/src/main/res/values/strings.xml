@@ -51,7 +51,8 @@
     <string name="sorry_guest">Maaf Tamu</string>
     <string name="fail_load_data">Gagal menampilkan data, mohon coba lagi nanti</string>
     <string name="data_not_available">Mohon maaf, data sedang tidak tersedia.</string>
-    <string name="home_menu">Home</string>
-    <string name="location_menu">Location</string>
-    <string name="setting_menu">Setting</string>
+    <string name="home_menu">Beranda</string>
+    <string name="location_menu">Lokasi</string>
+    <string name="setting_menu">Pengaturan</string>
+    <string name="language">Bahasa</string>
 </resources>
