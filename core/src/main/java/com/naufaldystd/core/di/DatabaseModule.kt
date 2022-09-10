@@ -2,6 +2,7 @@ package com.naufaldystd.core.di
 
 import android.content.Context
 import androidx.room.Room
+import com.naufaldystd.core.data.source.local.room.RemoteKeysDao
 import com.naufaldystd.core.data.source.local.room.StoryDao
 import com.naufaldystd.core.data.source.local.room.StoryDatabase
 import com.naufaldystd.core.utils.Constants.DB_NAME
@@ -30,4 +31,7 @@ class DatabaseModule {
 
 	@Provides
 	fun provideStoryDao(database: StoryDatabase): StoryDao = database.storyDao()
+
+	@Provides
+	fun provideRemoteKeysDao(database: StoryDatabase): RemoteKeysDao = database.remoteKeysDao()
 }

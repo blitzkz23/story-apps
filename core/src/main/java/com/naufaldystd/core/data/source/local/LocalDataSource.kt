@@ -15,6 +15,6 @@ import javax.inject.Singleton
 @Singleton
 class LocalDataSource @Inject constructor(private val storyDao: StoryDao) {
 
-	fun getAllStories(): Flow<List<StoryEntity>> = storyDao.getAllStories()
-	suspend fun insertStories(stories: List<StoryEntity>) = storyDao.insertStories(stories)
+//	fun getAllStories(): Flow<List<StoryEntity>> = storyDao.getAllStories()
+//	suspend fun insertStories(stories: List<StoryEntity>) = storyDao.insertStories(stories)
 }

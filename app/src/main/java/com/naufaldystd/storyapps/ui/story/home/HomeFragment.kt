@@ -7,18 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.naufaldystd.core.data.source.Resource
+import com.naufaldystd.core.data.source.remote.response.StoryResponse
 import com.naufaldystd.core.ui.StoryAdapter
 import com.naufaldystd.storyapps.R
 import com.naufaldystd.storyapps.databinding.FragmentHomeBinding
-import com.naufaldystd.storyapps.ui.detail.DetailStoryActivity
 import com.naufaldystd.storyapps.ui.auth.AuthActivity
+import com.naufaldystd.storyapps.ui.detail.DetailStoryActivity
 import com.naufaldystd.storyapps.ui.story.add.AddStoryActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -103,37 +103,23 @@ class HomeFragment : Fragment() {
 		binding.loading.visibility = View.VISIBLE
 		homeViewModel.getUser().observe(viewLifecycleOwner) { user ->
 			homeViewModel.getAllStories(user.token).observe(viewLifecycleOwner) { story ->
-				if (story != null) {
-					when (story) {
-						is Resource.Loading -> binding.loading.visibility = View.VISIBLE
-						is Resource.Success -> {
-							binding.loading.visibility = View.GONE
-							storyAdapter.setData(story.data)
-						}
-						is Resource.Error -> {
-							binding.loading.visibility = View.GONE
-							binding.rvStory.visibility = View.VISIBLE
-							Toast.makeText(
-								activity,
-								getString(R.string.fail_load_data),
-								Toast.LENGTH_SHORT
-							).show()
-							with(binding) {
-								binding.rvStory.visibility = View.GONE
-								imageSorry.visibility = View.VISIBLE
-								messageForGuest.visibility = View.VISIBLE
-								messageForGuest.text = getString(R.string.data_not_available)
-							}
-						}
-					}
-				}
+				binding.loading.visibility = View.GONE
+				updateRecyclerViewData(story)
 			}
 		}
+
 		with(binding.rvStory) {
 			layoutManager = LinearLayoutManager(context)
-			setHasFixedSize(true)
-			adapter = storyAdapter
+			adapter = storyAdapter.withLoadStateFooter(
+				footer = LoadingStateAdapter {
+					storyAdapter.retry()
+				}
+			)
 		}
+	}
+
+	private fun updateRecyclerViewData(story: PagingData<StoryResponse>) {
+		storyAdapter.submitData(lifecycle, story)
 	}
 
 	override fun onDestroyView() {

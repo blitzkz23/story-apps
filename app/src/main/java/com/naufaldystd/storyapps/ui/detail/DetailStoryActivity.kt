@@ -11,6 +11,7 @@ import androidx.core.text.HtmlCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.naufaldystd.core.R
+import com.naufaldystd.core.data.source.remote.response.StoryResponse
 import com.naufaldystd.core.domain.model.Story
 import com.naufaldystd.core.utils.Constants.EXTRA
 import com.naufaldystd.storyapps.databinding.ActivityDetailStoryBinding
@@ -32,7 +33,7 @@ class DetailStoryActivity : AppCompatActivity() {
 		setContentView(binding.root)
 
 		setupFullscreen()
-		val data = intent.getParcelableExtra<Story>(EXTRA_PARCEL)
+		val data = intent.getParcelableExtra<StoryResponse>(EXTRA_PARCEL)
 		if (data != null) {
 			populateView(data)
 		}
@@ -46,10 +47,10 @@ class DetailStoryActivity : AppCompatActivity() {
 	 *
 	 * @param data
 	 */
-	private fun populateView(data: Story) {
+	private fun populateView(data: StoryResponse) {
 		with(binding) {
 			Glide.with(this@DetailStoryActivity)
-				.load(data.photoURL)
+				.load(data.photoUrl)
 				.apply(
 					RequestOptions.placeholderOf(R.drawable.ic_loading)
 						.error(R.drawable.ic_error)

@@ -3,6 +3,10 @@ package com.naufaldystd.storyapps.ui.story.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.naufaldystd.core.data.source.remote.response.StoryResponse
 import com.naufaldystd.core.domain.model.UserModel
 import com.naufaldystd.core.domain.model.UserPreference
 import com.naufaldystd.core.domain.usecase.StoryUseCase
@@ -18,5 +22,6 @@ class HomeViewModel @Inject constructor(
 		return pref.getUser().asLiveData()
 	}
 
-	fun getAllStories(token: String) = storyUseCase.getAllStories(token).asLiveData()
+	fun getAllStories(token: String): LiveData<PagingData<StoryResponse>> =
+		storyUseCase.getAllStories(token).cachedIn(viewModelScope).asLiveData()
 }

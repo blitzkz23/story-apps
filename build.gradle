@@ -15,7 +15,7 @@ buildscript {
         livedata_ktx_version = "2.5.1"
         viewmodel_ktx_version = "2.5.1"
         navigation_fragment_ktx_version = '2.5.2'
-        navigation_ui_ktx_version = '2.5.1'
+        navigation_ui_ktx_version = '2.5.2'
         fragment_version = "1.5.2"
         activity_ktx_version = "1.5.1"
         fragment_ktx_version = '1.5.2'
@@ -65,6 +65,10 @@ buildscript {
         // Google maps
         service_map_version = "18.0.1"
         service_location_version = "20.0.0"
+
+        // Paging 3
+        paging3_version = "3.1.1"
+        room_paging_version = "2.5.0-alpha01"
     }
 
 

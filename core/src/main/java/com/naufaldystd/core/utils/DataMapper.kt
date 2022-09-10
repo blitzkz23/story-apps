@@ -20,7 +20,7 @@ object DataMapper {
 				id = it.id,
 				name = it.name,
 				description = it.description,
-				photoURL = it.photoUrl,
+				photoUrl = it.photoUrl,
 				createdAt = it.createdAt,
 				lat = it.lat,
 				lon = it.lon
@@ -33,7 +33,7 @@ object DataMapper {
 				id = it.id,
 				name = it.name,
 				description = it.description,
-				photoURL = it.photoURL,
+				photoURL = it.photoUrl,
 				createdAt = it.createdAt,
 				lat = it.lat,
 				lon = it.lon

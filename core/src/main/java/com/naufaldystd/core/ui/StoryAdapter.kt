@@ -4,29 +4,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.text.HtmlCompat
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.naufaldystd.core.R
+import com.naufaldystd.core.data.source.remote.response.StoryResponse
 import com.naufaldystd.core.databinding.ItemListStoryBinding
 import com.naufaldystd.core.domain.model.Story
-import com.naufaldystd.core.utils.DiffUtils
 import com.naufaldystd.core.utils.setLocalDateFormat
 
-class StoryAdapter : RecyclerView.Adapter<StoryAdapter.ListViewHolder>() {
+class StoryAdapter : PagingDataAdapter<StoryResponse, StoryAdapter.ListViewHolder>(DIFF_CALLBACK) {
 
 	private var listStory = ArrayList<Story>()
-	var onItemClick: ((Story) -> Unit)? = null
-
-	fun setData(newListData: List<Story>?) {
-		if (newListData == null) return
-		val diffUtilCallback = DiffUtils(listStory, newListData)
-		val diffResult = DiffUtil.calculateDiff(diffUtilCallback)
-		listStory.clear()
-		listStory.addAll(newListData)
-		diffResult.dispatchUpdatesTo(this)
-	}
+	var onItemClick: ((StoryResponse) -> Unit)? = null
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoryAdapter.ListViewHolder =
 		ListViewHolder(
@@ -34,18 +26,18 @@ class StoryAdapter : RecyclerView.Adapter<StoryAdapter.ListViewHolder>() {
 		)
 
 	override fun onBindViewHolder(holder: StoryAdapter.ListViewHolder, position: Int) {
-		val data = listStory[position]
-		holder.bind(data)
+		val data = getItem(position)
+		if (data != null) {
+			holder.bind(data)
+		}
 	}
-
-	override fun getItemCount(): Int = listStory.size
 
 	inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 		private val binding = ItemListStoryBinding.bind(itemView)
-		fun bind(data: Story) {
+		fun bind(data: StoryResponse) {
 			with(binding) {
 				Glide.with(itemView.context)
-					.load(data.photoURL)
+					.load(data.photoUrl)
 					.apply(
 						RequestOptions.placeholderOf(R.drawable.ic_loading)
 							.error(R.drawable.ic_error)
@@ -60,11 +52,26 @@ class StoryAdapter : RecyclerView.Adapter<StoryAdapter.ListViewHolder>() {
 				)
 				tvDatetimeList.setLocalDateFormat(data.createdAt)
 			}
-		}
-
-		init {
 			binding.root.setOnClickListener {
-				onItemClick?.invoke(listStory[adapterPosition])
+				onItemClick?.invoke(data)
+			}
+		}
+	}
+
+	companion object {
+		val DIFF_CALLBACK = object : DiffUtil.ItemCallback<StoryResponse>() {
+			override fun areItemsTheSame(
+				oldItem: StoryResponse,
+				newItem: StoryResponse
+			): Boolean {
+				return oldItem == newItem
+			}
+
+			override fun areContentsTheSame(
+				oldItem: StoryResponse,
+				newItem: StoryResponse
+			): Boolean {
+				return oldItem.id == newItem.id
 			}
 		}
 	}
