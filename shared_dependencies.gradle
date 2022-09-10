@@ -40,7 +40,11 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
     androidTestImplementation "org.mockito:mockito-core:$mockito_core_version"
 
-    // Shared pref
-    implementation "androidx.datastore:datastore-preferences:1.0.0"
-    implementation 'androidx.datastore:datastore-preferences-core:1.0.0'
+    // Datastore pref
+    implementation "androidx.datastore:datastore-preferences:$datastore_version"
+    implementation "androidx.datastore:datastore-preferences-core:$datastore_version"
+
+    // Google maps
+    implementation "com.google.android.gms:play-services-maps:$service_map_version"
+    implementation "com.google.android.gms:play-services-location:$service_location_version"
 }

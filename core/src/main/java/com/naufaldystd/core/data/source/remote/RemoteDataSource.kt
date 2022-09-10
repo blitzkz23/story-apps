@@ -7,7 +7,6 @@ import com.naufaldystd.core.data.source.remote.response.LoginResult
 import com.naufaldystd.core.data.source.remote.response.StoryResponse
 import com.naufaldystd.core.utils.Constants.CONSTANT_RDS
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.flow
@@ -61,7 +60,6 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
 	 * @param password
 	 * @return
 	 */
-	@OptIn(ExperimentalCoroutinesApi::class)
 	suspend fun loginAccount(email: String, password: String): Flow<StoryApiResponse<LoginResult>> {
 		// Use channel flow instead of flow, because flow doesn't allow emit() concurrently.
 		return channelFlow {
@@ -88,15 +86,17 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
 	 * @return
 	 */
 	// Function to add story for registered account
-	@OptIn(ExperimentalCoroutinesApi::class)
 	suspend fun addStory(
 		token: String,
 		description: RequestBody,
-		photo: MultipartBody.Part
+		photo: MultipartBody.Part,
+		lat: RequestBody? = null,
+		lon: RequestBody? = null
 	): Flow<StoryApiResponse<String>> {
 		return channelFlow {
 			try {
-				val response = apiService.addStory("Bearer $token", description, photo)
+				val response =
+					apiService.addStory("Bearer $token", description, photo, lat = lat, lon = lon)
 				if (!response.error) {
 					send(StoryApiResponse.Success(response.message))
 				} else {
@@ -116,14 +116,15 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
 	 * @param photo
 	 * @return
 	 */
-	@OptIn(ExperimentalCoroutinesApi::class)
 	suspend fun addStoryGuest(
 		description: RequestBody,
-		photo: MultipartBody.Part
+		photo: MultipartBody.Part,
+		lat: RequestBody? = null,
+		lon: RequestBody? = null
 	): Flow<StoryApiResponse<String>> {
 		return channelFlow {
 			try {
-				val response = apiService.addStoryGuest(description, photo)
+				val response = apiService.addStoryGuest(description, photo, lat = lat, lon = lon)
 				if (!response.error) {
 					send(StoryApiResponse.Success(response.message))
 				} else {
@@ -142,11 +143,13 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
 	 * @param token
 	 * @return
 	 */
-	@OptIn(ExperimentalCoroutinesApi::class)
-	suspend fun getStories(token: String): Flow<StoryApiResponse<List<StoryResponse>>> {
+	suspend fun getAllStories(
+		token: String,
+		location: Int? = null
+	): Flow<StoryApiResponse<List<StoryResponse>>> {
 		return channelFlow {
 			try {
-				val response = apiService.getStories("Bearer $token")
+				val response = apiService.getAllStories("Bearer $token", location = location)
 				val dataArray = response.listStory
 				if (dataArray.isNotEmpty()) {
 					send(StoryApiResponse.Success(response.listStory))

@@ -6,6 +6,7 @@ import android.content.Intent.ACTION_GET_CONTENT
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.location.Location
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -22,6 +23,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.naufaldystd.core.data.source.Resource
 import com.naufaldystd.storyapps.R
 import com.naufaldystd.storyapps.databinding.ActivityAddStoryBinding
@@ -46,6 +49,8 @@ class AddStoryActivity : AppCompatActivity() {
 	}
 	private val addStoryViewModel: AddStoryViewModel by viewModels()
 	private var getFile: File? = null
+	private var location: Location? = null
+	private lateinit var fusedLocationClient: FusedLocationProviderClient
 
 	companion object {
 		const val CAMERA_X_RESULT = 200
@@ -90,6 +95,7 @@ class AddStoryActivity : AppCompatActivity() {
 		super.onCreate(savedInstanceState)
 		setContentView(binding.root)
 
+		fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 		if (!allPermissionsGranted()) {
 			ActivityCompat.requestPermissions(
 				this,
@@ -100,7 +106,9 @@ class AddStoryActivity : AppCompatActivity() {
 
 		setupFullscreen()
 		setupButtonAction()
-
+		binding.checkBoxShareloc.setOnCheckedChangeListener { _, isChecked ->
+			if (isChecked) getLastLocation() else this.location = null
+		}
 		binding.inputDescription.addTextChangedListener(object : TextWatcher {
 			override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 			override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -109,6 +117,65 @@ class AddStoryActivity : AppCompatActivity() {
 
 			override fun afterTextChanged(s: Editable?) {}
 		})
+	}
+
+	/**
+	 * Launch request permission
+	 */
+	private val requestPermissionLauncher =
+		registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+			when {
+				permissions[Manifest.permission.ACCESS_FINE_LOCATION] ?: false -> {
+					// Precise location access granted
+					getLastLocation()
+				}
+				permissions[Manifest.permission.ACCESS_COARSE_LOCATION] ?: false -> {
+					// Only approximate location access granted
+					getLastLocation()
+				}
+				else -> {
+					// No location access granted
+				}
+			}
+		}
+
+	/**
+	 * Check if permission granted
+	 *
+	 * @param permission
+	 * @return
+	 */
+	private fun checkPermission(permission: String): Boolean {
+		return ContextCompat.checkSelfPermission(
+			this, permission
+		) == PackageManager.PERMISSION_GRANTED
+	}
+
+	/**
+	 * Get last location of the device
+	 *
+	 */
+	private fun getLastLocation() {
+		if (checkPermission(Manifest.permission.ACCESS_FINE_LOCATION) && checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION)) {
+			fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+				if (location != null) {
+					this.location = location
+				} else {
+					Toast.makeText(
+						this,
+						getString(R.string.loc_not_found),
+						Toast.LENGTH_SHORT
+					).show()
+				}
+			}
+		} else {
+			requestPermissionLauncher.launch(
+				arrayOf(
+					Manifest.permission.ACCESS_FINE_LOCATION,
+					Manifest.permission.ACCESS_COARSE_LOCATION
+				)
+			)
+		}
 	}
 
 	/**
@@ -190,6 +257,13 @@ class AddStoryActivity : AppCompatActivity() {
 	 *
 	 */
 	private fun uploadStory() {
+		var lat: RequestBody? = null
+		var lon: RequestBody? = null
+		if (location != null) {
+			lat = location?.latitude.toString().toRequestBody("text/plain".toMediaType())
+			lon = location?.longitude.toString().toRequestBody("text/plain".toMediaType())
+		}
+
 		if (getFile != null) {
 			val file = reduceFileImage(getFile as File)
 
@@ -205,9 +279,9 @@ class AddStoryActivity : AppCompatActivity() {
 			binding.loading.visibility = View.VISIBLE
 			addStoryViewModel.getUser().observe(this) { user ->
 				if (user.name == getString(R.string.tamu) || user.name == getString(R.string.guest)) {
-					addStoryGuest(description, imageMultipart)
+					addStoryGuest(description, imageMultipart, lat, lon)
 				} else {
-					addStoryUser(user.token, description, imageMultipart)
+					addStoryUser(user.token, description, imageMultipart, lat, lon)
 				}
 			}
 		} else {
@@ -225,14 +299,18 @@ class AddStoryActivity : AppCompatActivity() {
 	 * @param token
 	 * @param description
 	 * @param imageMultipart
+	 * @param lat
+	 * @param lon
 	 */
 	private fun addStoryUser(
 		token: String,
 		description: RequestBody,
-		imageMultipart: MultipartBody.Part
+		imageMultipart: MultipartBody.Part,
+		lat: RequestBody? = null,
+		lon: RequestBody? = null
 	) {
 		lifecycleScope.launch {
-			addStoryViewModel.addStory(token, description, imageMultipart)
+			addStoryViewModel.addStory(token, description, imageMultipart, lat, lon)
 				.observe(this@AddStoryActivity) { respond ->
 					when (respond) {
 						is Resource.Success -> {
@@ -262,10 +340,17 @@ class AddStoryActivity : AppCompatActivity() {
 	 *
 	 * @param description
 	 * @param imageMultipart
+	 * @param lat
+	 * @param lon
 	 */
-	private fun addStoryGuest(description: RequestBody, imageMultipart: MultipartBody.Part) {
+	private fun addStoryGuest(
+		description: RequestBody,
+		imageMultipart: MultipartBody.Part,
+		lat: RequestBody? = null,
+		lon: RequestBody? = null
+	) {
 		lifecycleScope.launch {
-			addStoryViewModel.addStoryGuest(description, imageMultipart)
+			addStoryViewModel.addStoryGuest(description, imageMultipart, lat, lon)
 				.observe(this@AddStoryActivity) { respond ->
 					when (respond) {
 						is Resource.Success -> {

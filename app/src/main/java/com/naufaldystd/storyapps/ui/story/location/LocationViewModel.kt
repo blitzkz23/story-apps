@@ -1,4 +1,4 @@
-package com.naufaldystd.storyapps.ui.story.home
+package com.naufaldystd.storyapps.ui.story.location
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -10,13 +10,14 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
-	private val storyUseCase: StoryUseCase,
-	private val pref: UserPreference
+class LocationViewModel @Inject constructor(
+	private val pref: UserPreference,
+	private val storyUseCase: StoryUseCase
 ) : ViewModel() {
 	fun getUser(): LiveData<UserModel> {
 		return pref.getUser().asLiveData()
 	}
 
-	fun getAllStories(token: String) = storyUseCase.getAllStories(token).asLiveData()
+	fun getStoriesWithLocation(token: String) =
+		storyUseCase.getAllStories(token, location = 1).asLiveData()
 }
