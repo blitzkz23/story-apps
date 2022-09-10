@@ -3,7 +3,6 @@ package com.naufaldystd.core.ui
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -14,10 +13,6 @@ import com.naufaldystd.core.databinding.ItemListStoryBinding
 import com.naufaldystd.core.domain.model.Story
 import com.naufaldystd.core.utils.DiffUtils
 import com.naufaldystd.core.utils.setLocalDateFormat
-import java.text.DateFormat
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.ArrayList
 
 class StoryAdapter : RecyclerView.Adapter<StoryAdapter.ListViewHolder>() {
 

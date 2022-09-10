@@ -52,4 +52,14 @@
     <string name="sorry_guest">Sorry guest</string>
     <string name="fail_load_data">Failed to retrieve data, please try again later</string>
     <string name="data_not_available">Sorry, data is currently not available</string>
+    <string name="home_menu">Home</string>
+    <string name="location_menu">Location</string>
+    <string name="setting_menu">Setting</string>
+    <string name="language">Language</string>
+    <string name="error_resources">\"Can\'t find style. Error: \"</string>
+    <string name="error_parse_style">Style parsing failed</string>
+    <string name="cant_load_loc">Can\'t load story\'s location</string>
+    <string name="your_location">Your location</string>
+    <string name="share_loc">Share location?</string>
+    <string name="loc_not_found">Lokasi not found. Please try again</string>
 </resources>

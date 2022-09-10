@@ -7,7 +7,7 @@
     tools:context=".ui.detail.DetailStoryActivity">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/toolbar_setting_layout"
+        android:id="@+id/toolbar_detail_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -17,7 +17,7 @@
 
         <include
             android:id="@+id/toolbar_setting"
-            layout="@layout/custom_toolbar_setting" />
+            layout="@layout/custom_toolbar_detail" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -27,7 +27,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_setting_layout">
+        app:layout_constraintTop_toBottomOf="@id/toolbar_detail_layout">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -40,8 +40,8 @@
                 android:adjustViewBounds="true"
                 android:background="@android:color/white"
                 android:contentDescription="@string/story_image"
+                android:scaleType="fitXY"
                 android:transitionName="image"
-                android:scaleType="matrix"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -56,9 +56,9 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/poppins_regular"
-                android:transitionName="text"
                 android:text="@string/story_text"
                 android:textSize="20sp"
+                android:transitionName="text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/iv_item_image" />
@@ -72,8 +72,8 @@
                 android:fontFamily="@font/poppins_regular"
                 android:text="@string/story_datetime"
                 android:textColor="@color/custom_subtext"
-                android:transitionName="datetime"
                 android:textSize="16sp"
+                android:transitionName="datetime"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_user_and_paragraph" />
         </androidx.constraintlayout.widget.ConstraintLayout>

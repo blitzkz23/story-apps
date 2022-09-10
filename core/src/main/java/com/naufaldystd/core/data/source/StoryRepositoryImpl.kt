@@ -91,7 +91,7 @@ class StoryRepositoryImpl @Inject constructor(
 	 * @param token
 	 * @return
 	 */
-	override fun getAllStories(token: String): Flow<Resource<List<Story>>> =
+	override fun getAllStories(token: String, location: Int?): Flow<Resource<List<Story>>> =
 		object : NetworkBoundResource<List<Story>, List<StoryResponse>>() {
 			override fun loadFromDB(): Flow<List<Story>> {
 				return localDataSource.getAllStories().map {
@@ -103,7 +103,7 @@ class StoryRepositoryImpl @Inject constructor(
 				(data != null)
 
 			override suspend fun createCall(): Flow<StoryApiResponse<List<StoryResponse>>> =
-				remoteDataSource.getStories(token)
+				remoteDataSource.getAllStories(token, location = location)
 
 			override suspend fun saveCallResult(data: List<StoryResponse>) {
 				val stories = DataMapper.mapStoryResponsesToEntities(data)
@@ -122,10 +122,14 @@ class StoryRepositoryImpl @Inject constructor(
 	override suspend fun addStory(
 		token: String,
 		description: RequestBody,
-		photo: MultipartBody.Part
+		photo: MultipartBody.Part,
+		lat: RequestBody?,
+		lon: RequestBody?
 	): Flow<Resource<String>> {
 		return flow {
-			when (val response = remoteDataSource.addStory(token, description, photo).first()) {
+			when (val response =
+				remoteDataSource.addStory(token, description, photo, lat = lat, lon = lon)
+					.first()) {
 				is StoryApiResponse.Success -> {
 					emit(Resource.Success(response.data))
 				}
@@ -148,10 +152,13 @@ class StoryRepositoryImpl @Inject constructor(
 	 */
 	override suspend fun addStoryGuest(
 		description: RequestBody,
-		photo: MultipartBody.Part
+		photo: MultipartBody.Part,
+		lat: RequestBody?,
+		lon: RequestBody?
 	): Flow<Resource<String>> {
 		return flow {
-			when (val response = remoteDataSource.addStoryGuest(description, photo).first()) {
+			when (val response =
+				remoteDataSource.addStoryGuest(description, photo, lat = lat, lon = lon).first()) {
 				is StoryApiResponse.Success -> {
 					emit(Resource.Success(response.data))
 				}

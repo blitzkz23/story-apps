@@ -16,11 +16,22 @@ class AddStoryViewModel @Inject constructor(
 	private val storyUseCase: StoryUseCase,
 	private val pref: UserPreference
 ) : ViewModel() {
-	suspend fun addStory(token: String, description: RequestBody, photo: MultipartBody.Part) =
-		storyUseCase.addStory(token, description, photo).asLiveData()
+	suspend fun addStory(
+		token: String,
+		description: RequestBody,
+		photo: MultipartBody.Part,
+		lat: RequestBody? = null,
+		lon: RequestBody? = null
+	) =
+		storyUseCase.addStory(token, description, photo, lat = lat, lon = lon).asLiveData()
 
-	suspend fun addStoryGuest(description: RequestBody, photo: MultipartBody.Part) =
-		storyUseCase.addStoryGuest(description, photo).asLiveData()
+	suspend fun addStoryGuest(
+		description: RequestBody,
+		photo: MultipartBody.Part,
+		lat: RequestBody? = null,
+		lon: RequestBody? = null
+	) =
+		storyUseCase.addStoryGuest(description, photo, lat = lat, lon = lon).asLiveData()
 
 	fun getUser(): LiveData<UserModel> {
 		return pref.getUser().asLiveData()

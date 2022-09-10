@@ -7,7 +7,7 @@
     tools:context=".ui.detail.DetailStoryActivity">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/toolbar_setting_layout"
+        android:id="@+id/toolbar_detail_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -33,7 +33,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline1"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_setting_layout" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_detail_layout" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_camerax"
@@ -68,7 +68,6 @@
         style="@style/TextInputLayoutStyle1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimens16"
         android:hint="@string/deskripsi"
         app:boxCornerRadiusBottomEnd="@dimen/dimens12"
         app:boxCornerRadiusBottomStart="@dimen/dimens12"
@@ -76,7 +75,7 @@
         app:boxCornerRadiusTopStart="@dimen/dimens12"
         app:layout_constraintEnd_toEndOf="@id/guideline2"
         app:layout_constraintStart_toStartOf="@id/guideline1"
-        app:layout_constraintTop_toBottomOf="@+id/btn_camerax">
+        app:layout_constraintTop_toBottomOf="@+id/check_box_shareloc">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/input_description"
@@ -141,4 +140,13 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_end="@dimen/dimens32" />
+
+    <CheckBox
+        android:id="@+id/check_box_shareloc"
+        style="@style/Text.Header4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/share_loc"
+        app:layout_constraintStart_toStartOf="@+id/guideline1"
+        app:layout_constraintTop_toBottomOf="@+id/btn_camerax" />
 </androidx.constraintlayout.widget.ConstraintLayout>

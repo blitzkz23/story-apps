@@ -1,4 +1,4 @@
-package com.naufaldystd.storyapps.ui.register
+package com.naufaldystd.storyapps.ui.auth.register
 
 import android.animation.ObjectAnimator
 import android.os.Bundle

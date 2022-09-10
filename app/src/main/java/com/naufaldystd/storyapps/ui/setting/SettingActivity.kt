@@ -10,7 +10,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.naufaldystd.storyapps.R
 import com.naufaldystd.storyapps.databinding.ActivitySettingBinding
-import com.naufaldystd.storyapps.ui.main.MainActivity
+import com.naufaldystd.storyapps.ui.auth.AuthActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -40,7 +40,7 @@ class SettingActivity : AppCompatActivity() {
 		}
 		binding.btnLogout.setOnClickListener {
 			settingViewModel.logOutUser()
-			val intent = Intent(this@SettingActivity, MainActivity::class.java)
+			val intent = Intent(this@SettingActivity, AuthActivity::class.java)
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
 			startActivity(intent)
 			finish()
