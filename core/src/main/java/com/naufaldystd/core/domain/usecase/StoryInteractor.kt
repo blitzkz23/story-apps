@@ -32,11 +32,17 @@ class StoryInteractor @Inject constructor(private val storyRepositoryImpl: Story
 	override suspend fun addStory(
 		token: String,
 		description: RequestBody,
-		photo: MultipartBody.Part
-	): Flow<Resource<String>> = storyRepositoryImpl.addStory(token, description, photo)
+		photo: MultipartBody.Part,
+		lat: RequestBody?,
+		lon: RequestBody?
+	): Flow<Resource<String>> =
+		storyRepositoryImpl.addStory(token, description, photo, lat = lat, lon = lon)
 
 	override suspend fun addStoryGuest(
 		description: RequestBody,
-		photo: MultipartBody.Part
-	): Flow<Resource<String>> = storyRepositoryImpl.addStoryGuest(description, photo)
+		photo: MultipartBody.Part,
+		lat: RequestBody?,
+		lon: RequestBody?
+	): Flow<Resource<String>> =
+		storyRepositoryImpl.addStoryGuest(description, photo, lat = lat, lon = lon)
 }

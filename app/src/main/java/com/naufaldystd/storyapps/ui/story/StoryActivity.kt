@@ -55,5 +55,4 @@ class StoryActivity : AppCompatActivity() {
 		}
 		supportActionBar?.hide()
 	}
-
 }

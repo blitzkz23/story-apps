@@ -89,11 +89,14 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
 	suspend fun addStory(
 		token: String,
 		description: RequestBody,
-		photo: MultipartBody.Part
+		photo: MultipartBody.Part,
+		lat: RequestBody? = null,
+		lon: RequestBody? = null
 	): Flow<StoryApiResponse<String>> {
 		return channelFlow {
 			try {
-				val response = apiService.addStory("Bearer $token", description, photo)
+				val response =
+					apiService.addStory("Bearer $token", description, photo, lat = lat, lon = lon)
 				if (!response.error) {
 					send(StoryApiResponse.Success(response.message))
 				} else {
@@ -115,11 +118,13 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
 	 */
 	suspend fun addStoryGuest(
 		description: RequestBody,
-		photo: MultipartBody.Part
+		photo: MultipartBody.Part,
+		lat: RequestBody? = null,
+		lon: RequestBody? = null
 	): Flow<StoryApiResponse<String>> {
 		return channelFlow {
 			try {
-				val response = apiService.addStoryGuest(description, photo)
+				val response = apiService.addStoryGuest(description, photo, lat = lat, lon = lon)
 				if (!response.error) {
 					send(StoryApiResponse.Success(response.message))
 				} else {

@@ -1,23 +1,31 @@
 package com.naufaldystd.storyapps.ui.story.location
 
-import android.content.ContentValues.TAG
+ import android.content.ContentValues.TAG
 import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.android.gms.location.FusedLocationProviderClient
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MapStyleOptions
+import com.google.android.gms.maps.model.MarkerOptions
+import com.naufaldystd.core.data.source.Resource
 import com.naufaldystd.storyapps.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LocationFragment : Fragment() {
 	private lateinit var mMap: GoogleMap
-	private lateinit var fusedLocationClient: FusedLocationProviderClient
+	private val locationViewModel: LocationViewModel by viewModels()
 
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +42,9 @@ class LocationFragment : Fragment() {
 		mapFragment?.getMapAsync(callback)
 	}
 
+	/**
+	 * GoogleMap callback for fragment
+	 */
 	private val callback = OnMapReadyCallback { googleMap ->
 		mMap = googleMap
 		mMap.uiSettings.apply {
@@ -42,9 +53,15 @@ class LocationFragment : Fragment() {
 			isIndoorLevelPickerEnabled = true
 			isMapToolbarEnabled = true
 		}
+
 		setMapStyle()
+		setMarkerStoryLocation()
 	}
 
+	/**
+	 * Set map style using custom style
+	 *
+	 */
 	private fun setMapStyle() {
 		try {
 			val success = mMap.setMapStyle(context?.let {
@@ -61,4 +78,52 @@ class LocationFragment : Fragment() {
 		}
 	}
 
+	// Used to zoom in location in the marker
+	private val boundsBuilder = LatLngBounds.builder()
+	/**
+	 * Set marker based on the lat, lng coordinate of the stories's data
+	 *
+	 */
+	private fun setMarkerStoryLocation() {
+		locationViewModel.getUser().observe(viewLifecycleOwner) { user ->
+			locationViewModel.getStoriesWithLocation(token = user.token)
+				.observe(viewLifecycleOwner) { stories ->
+					if (stories != null) {
+						when (stories) {
+							is Resource.Success -> {
+								stories.data?.forEach { story ->
+									if (story.lat != 0.0) {
+										val latLng = LatLng(story.lat, story.lon)
+										mMap.addMarker(
+											MarkerOptions()
+												.position(latLng)
+												.title(story.name)
+												.snippet("Lat: ${story.lat}, Lon: ${story.lon}")
+										)
+										boundsBuilder.include(latLng)
+									}
+								}
+
+								val bounds: LatLngBounds = boundsBuilder.build()
+								mMap.animateCamera(
+									CameraUpdateFactory.newLatLngBounds(
+										bounds, resources.displayMetrics.widthPixels,
+										resources.displayMetrics.heightPixels,
+										300
+									)
+								)
+							}
+							is Resource.Error -> {
+								Toast.makeText(
+									context,
+									getString(R.string.cant_load_loc),
+									Toast.LENGTH_SHORT
+								).show()
+							}
+							else -> {}
+						}
+					}
+				}
+		}
+	}
 }

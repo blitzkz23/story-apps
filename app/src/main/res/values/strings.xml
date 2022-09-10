@@ -57,4 +57,8 @@
     <string name="language">Bahasa</string>
     <string name="error_resources">Style tidak ditemukan. Error: </string>
     <string name="error_parse_style">Gagal parse style</string>
+    <string name="cant_load_loc">Tidak bisa memuat lokasi cerita</string>
+    <string name="your_location">Lokasi kamu</string>
+    <string name="share_loc">Bagikan lokasi?</string>
+    <string name="loc_not_found">Lokasi tidak ditemukan. Coba lagi</string>
 </resources>

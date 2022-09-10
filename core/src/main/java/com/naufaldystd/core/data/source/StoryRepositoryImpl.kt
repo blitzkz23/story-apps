@@ -122,10 +122,14 @@ class StoryRepositoryImpl @Inject constructor(
 	override suspend fun addStory(
 		token: String,
 		description: RequestBody,
-		photo: MultipartBody.Part
+		photo: MultipartBody.Part,
+		lat: RequestBody?,
+		lon: RequestBody?
 	): Flow<Resource<String>> {
 		return flow {
-			when (val response = remoteDataSource.addStory(token, description, photo).first()) {
+			when (val response =
+				remoteDataSource.addStory(token, description, photo, lat = lat, lon = lon)
+					.first()) {
 				is StoryApiResponse.Success -> {
 					emit(Resource.Success(response.data))
 				}
@@ -148,10 +152,13 @@ class StoryRepositoryImpl @Inject constructor(
 	 */
 	override suspend fun addStoryGuest(
 		description: RequestBody,
-		photo: MultipartBody.Part
+		photo: MultipartBody.Part,
+		lat: RequestBody?,
+		lon: RequestBody?
 	): Flow<Resource<String>> {
 		return flow {
-			when (val response = remoteDataSource.addStoryGuest(description, photo).first()) {
+			when (val response =
+				remoteDataSource.addStoryGuest(description, photo, lat = lat, lon = lon).first()) {
 				is StoryApiResponse.Success -> {
 					emit(Resource.Success(response.data))
 				}

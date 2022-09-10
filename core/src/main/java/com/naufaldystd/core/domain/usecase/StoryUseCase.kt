@@ -26,11 +26,15 @@ interface StoryUseCase {
 	suspend fun addStory(
 		token: String,
 		description: RequestBody,
-		photo: MultipartBody.Part
+		photo: MultipartBody.Part,
+		lat: RequestBody? = null,
+		lon: RequestBody? = null
 	): Flow<Resource<String>>
 
 	suspend fun addStoryGuest(
 		description: RequestBody,
-		photo: MultipartBody.Part
+		photo: MultipartBody.Part,
+		lat: RequestBody? = null,
+		lon: RequestBody? = null
 	): Flow<Resource<String>>
 }
