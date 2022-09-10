@@ -3,6 +3,7 @@ package com.naufaldystd.core.domain.usecase
 import androidx.paging.PagingData
 import com.naufaldystd.core.data.source.Resource
 import com.naufaldystd.core.data.source.remote.response.StoryResponse
+import com.naufaldystd.core.domain.model.Story
 import com.naufaldystd.core.domain.model.UserModel
 import kotlinx.coroutines.flow.Flow
 import okhttp3.MultipartBody
@@ -23,6 +24,8 @@ interface StoryUseCase {
 	suspend fun loginAccount(email: String, password: String): Flow<Resource<UserModel>>
 
 	fun getAllStories(token: String, location: Int? = null): Flow<PagingData<StoryResponse>>
+
+	fun getStoriesWithLocation(token: String): Flow<Resource<List<Story>>>
 
 	suspend fun addStory(
 		token: String,

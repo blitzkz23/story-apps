@@ -25,6 +25,8 @@ interface StoryRepository {
 
 	fun getAllStories(token: String, location: Int? = null): Flow<PagingData<StoryResponse>>
 
+	fun getStoriesWithLocation(token: String): Flow<Resource<List<Story>>>
+
 	suspend fun addStory(
 		token: String,
 		description: RequestBody,

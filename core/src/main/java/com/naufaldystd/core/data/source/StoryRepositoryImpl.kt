@@ -11,6 +11,7 @@ import com.naufaldystd.core.data.source.remote.StoryRemoteMediator
 import com.naufaldystd.core.data.source.remote.network.ApiService
 import com.naufaldystd.core.data.source.remote.network.StoryApiResponse
 import com.naufaldystd.core.data.source.remote.response.StoryResponse
+import com.naufaldystd.core.domain.model.Story
 import com.naufaldystd.core.domain.model.UserModel
 import com.naufaldystd.core.domain.repository.StoryRepository
 import com.naufaldystd.core.utils.DataMapper
@@ -36,6 +37,7 @@ class StoryRepositoryImpl @Inject constructor(
 	private val storyDatabase: StoryDatabase,
 	private val apiService: ApiService,
 ) : StoryRepository {
+	private val pagingSourceFactory = { storyDatabase.storyDao().getAllStories() }
 
 	/**
 	 * Register account request that send request to remote data source and connect it to API endpoint.
@@ -105,17 +107,30 @@ class StoryRepositoryImpl @Inject constructor(
 	): Flow<PagingData<StoryResponse>> {
 		return Pager(
 			config = PagingConfig(
-				pageSize = 10,
+				pageSize = NETWORK_PAGE_SIZE,
 			),
 			remoteMediator = StoryRemoteMediator(
 				storyDatabase,
 				apiService,
 				"Bearer $token"
 			),
-			pagingSourceFactory = {
-				storyDatabase.storyDao().getAllStories()
-			}
+			pagingSourceFactory = pagingSourceFactory
 		).flow
+	}
+
+	override fun getStoriesWithLocation(token: String): Flow<Resource<List<Story>>> = flow {
+		when (val response = remoteDataSource.getAllStories(token, location = 1).first()) {
+			is StoryApiResponse.Success -> {
+				val story = DataMapper.mapResponsesToStory(response.data)
+				emit(Resource.Success(story))
+			}
+			is StoryApiResponse.Error -> {
+				emit(Resource.Error(response.errorMessage))
+			}
+			else -> {
+				emit(Resource.Loading())
+			}
+		}
 	}
 
 	/**
@@ -155,6 +170,8 @@ class StoryRepositoryImpl @Inject constructor(
 	 *
 	 * @param description
 	 * @param photo
+	 * @param lat
+	 * @param lon
 	 * @return
 	 */
 	override suspend fun addStoryGuest(
@@ -177,6 +194,10 @@ class StoryRepositoryImpl @Inject constructor(
 				}
 			}
 		}
+	}
+
+	companion object {
+		private const val NETWORK_PAGE_SIZE = 10
 	}
 
 }

@@ -23,7 +23,6 @@ class CameraXActivity : AppCompatActivity() {
 		ActivityCameraXactivityBinding.inflate(layoutInflater)
 	}
 	private lateinit var cameraExecutor: ExecutorService
-
 	private var cameraSelector: CameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 	private var imageCapture: ImageCapture? = null
 

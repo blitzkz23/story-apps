@@ -39,4 +39,17 @@ object DataMapper {
 				lon = it.lon
 			)
 		}
+
+	fun mapResponsesToStory(input: List<StoryResponse>): List<Story> =
+		input.map {
+			Story(
+				id = it.id,
+				name = it.name,
+				description = it.description,
+				photoURL = it.photoUrl,
+				createdAt = it.createdAt,
+				lat = it.lat,
+				lon = it.lon
+			)
+		}
 }

@@ -19,5 +19,5 @@ class LocationViewModel @Inject constructor(
 	}
 
 	fun getStoriesWithLocation(token: String) =
-		storyUseCase.getAllStories(token, location = 1).asLiveData()
+		storyUseCase.getStoriesWithLocation(token).asLiveData()
 }

@@ -31,6 +31,9 @@ class StoryInteractor @Inject constructor(private val storyRepositoryImpl: Story
 	override fun getAllStories(token: String, location: Int?): Flow<PagingData<StoryResponse>> =
 		storyRepositoryImpl.getAllStories(token, location = location)
 
+	override fun getStoriesWithLocation(token: String): Flow<Resource<List<Story>>> =
+		storyRepositoryImpl.getStoriesWithLocation(token)
+
 	override suspend fun addStory(
 		token: String,
 		description: RequestBody,
