@@ -56,4 +56,6 @@
     <string name="location_menu">Location</string>
     <string name="setting_menu">Setting</string>
     <string name="language">Language</string>
+    <string name="error_resources">\"Can\'t find style. Error: \"</string>
+    <string name="error_parse_style">Style parsing failed</string>
 </resources>

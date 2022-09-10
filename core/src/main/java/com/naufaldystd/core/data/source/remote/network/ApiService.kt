@@ -13,9 +13,9 @@ interface ApiService {
 	/**
 	 * Send register account request to API.
 	 *
-	 * @param name
-	 * @param email
-	 * @param password
+	 * @param name User's name
+	 * @param email User's email
+	 * @param password User's password'
 	 * @return
 	 */
 	@FormUrlEncoded
@@ -29,8 +29,8 @@ interface ApiService {
 	/**
 	 * Send login account request to API.
 	 *
-	 * @param email
-	 * @param password
+	 * @param email User's email
+	 * @param password User's password
 	 * @return
 	 */
 	@FormUrlEncoded
@@ -43,9 +43,9 @@ interface ApiService {
 	/**
 	 * Send create new story request to API for logged in user.
 	 *
-	 * @param token
-	 * @param description
-	 * @param file
+	 * @param token Authentication token
+	 * @param description Description of the image
+	 * @param file Multipart image
 	 * @return
 	 */
 	@Multipart
@@ -59,8 +59,8 @@ interface ApiService {
 	/**
 	 * Send create new story request to API for guest user.
 	 *
-	 * @param description
-	 * @param file
+	 * @param description Description of the image
+	 * @param file Multipart image
 	 * @return
 	 */
 	@Multipart
@@ -74,11 +74,17 @@ interface ApiService {
 	/**
 	 * Send get data request from API.
 	 *
-	 * @param token
+	 * @param token Authentication token from API
+	 * @param page Page of data from API
+	 * @param size Size of data from API
+	 * @param location Location of story from API
 	 * @return
 	 */
 	@GET("stories")
-	suspend fun getStories(
-		@Header("Authorization") token: String
+	suspend fun getAllStories(
+		@Header("Authorization") token: String,
+		@Query("page") page: Int? = null,
+		@Query("size") size: Int? = null,
+		@Query("location") location: Int? = null
 	): ListStoryResponse
 }

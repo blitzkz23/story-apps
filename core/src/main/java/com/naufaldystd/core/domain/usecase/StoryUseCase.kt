@@ -21,7 +21,7 @@ interface StoryUseCase {
 
 	suspend fun loginAccount(email: String, password: String): Flow<Resource<UserModel>>
 
-	fun getAllStories(token: String): Flow<Resource<List<Story>>>
+	fun getAllStories(token: String, location: Int? = null): Flow<Resource<List<Story>>>
 
 	suspend fun addStory(
 		token: String,

@@ -26,8 +26,8 @@ class StoryInteractor @Inject constructor(private val storyRepositoryImpl: Story
 	override suspend fun loginAccount(email: String, password: String): Flow<Resource<UserModel>> =
 		storyRepositoryImpl.loginAccount(email, password)
 
-	override fun getAllStories(token: String): Flow<Resource<List<Story>>> =
-		storyRepositoryImpl.getAllStories(token)
+	override fun getAllStories(token: String, location: Int?): Flow<Resource<List<Story>>> =
+		storyRepositoryImpl.getAllStories(token, location = location)
 
 	override suspend fun addStory(
 		token: String,

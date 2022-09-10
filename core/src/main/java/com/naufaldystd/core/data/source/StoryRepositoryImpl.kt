@@ -91,7 +91,7 @@ class StoryRepositoryImpl @Inject constructor(
 	 * @param token
 	 * @return
 	 */
-	override fun getAllStories(token: String): Flow<Resource<List<Story>>> =
+	override fun getAllStories(token: String, location: Int?): Flow<Resource<List<Story>>> =
 		object : NetworkBoundResource<List<Story>, List<StoryResponse>>() {
 			override fun loadFromDB(): Flow<List<Story>> {
 				return localDataSource.getAllStories().map {
@@ -103,7 +103,7 @@ class StoryRepositoryImpl @Inject constructor(
 				(data != null)
 
 			override suspend fun createCall(): Flow<StoryApiResponse<List<StoryResponse>>> =
-				remoteDataSource.getStories(token)
+				remoteDataSource.getAllStories(token, location = location)
 
 			override suspend fun saveCallResult(data: List<StoryResponse>) {
 				val stories = DataMapper.mapStoryResponsesToEntities(data)

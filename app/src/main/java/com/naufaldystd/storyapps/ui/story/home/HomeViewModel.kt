@@ -10,7 +10,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val storyUseCase: StoryUseCase, private val pref: UserPreference): ViewModel() {
+class HomeViewModel @Inject constructor(
+	private val storyUseCase: StoryUseCase,
+	private val pref: UserPreference
+) : ViewModel() {
 	fun getUser(): LiveData<UserModel> {
 		return pref.getUser().asLiveData()
 	}
