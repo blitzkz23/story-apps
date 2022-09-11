@@ -37,6 +37,8 @@
                 android:id="@+id/iv_item_image"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:clipChildren="false"
                 android:contentDescription="@string/story_image"
                 android:scaleType="matrix"
                 android:transitionName="image"

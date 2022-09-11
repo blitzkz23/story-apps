@@ -1,23 +1,35 @@
 package com.naufaldystd.storyapps.ui.story.home.adapter
 
+import android.app.Activity
+import android.app.ActivityOptions
+import android.content.Context
+import android.content.ContextWrapper
+import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.core.text.HtmlCompat
+import android.util.Pair
+import androidx.core.app.ActivityCompat.startPostponedEnterTransition
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.Target
 import com.naufaldystd.core.R
 import com.naufaldystd.core.data.source.remote.response.StoryResponse
 import com.naufaldystd.core.databinding.ItemListStoryBinding
-import com.naufaldystd.core.domain.model.Story
 import com.naufaldystd.core.utils.setLocalDateFormat
+import com.naufaldystd.storyapps.ui.detail.DetailStoryActivity
 
 class StoryAdapter : PagingDataAdapter<StoryResponse, StoryAdapter.ListViewHolder>(DIFF_CALLBACK) {
-
-	var onItemClick: ((StoryResponse) -> Unit)? = null
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder =
 		ListViewHolder(
@@ -41,6 +53,7 @@ class StoryAdapter : PagingDataAdapter<StoryResponse, StoryAdapter.ListViewHolde
 						RequestOptions.placeholderOf(R.drawable.ic_loading)
 							.error(R.drawable.ic_error)
 					)
+
 					.into(ivItemImageList)
 				tvUserAndParagraphList.text = HtmlCompat.fromHtml(
 					itemView.context.getString(
@@ -50,10 +63,21 @@ class StoryAdapter : PagingDataAdapter<StoryResponse, StoryAdapter.ListViewHolde
 					), HtmlCompat.FROM_HTML_MODE_LEGACY
 				)
 				tvDatetimeList.setLocalDateFormat(data.createdAt)
+				val context = (itemView.context as ContextWrapper).baseContext
+				val optionsCompat: ActivityOptions =
+					ActivityOptions.makeSceneTransitionAnimation(
+						context as Activity,
+						Pair(ivItemImageList, "image"),
+						Pair(tvUserAndParagraphList, "text"),
+						Pair(tvDatetimeList, "datetime")
+					)
+				root.setOnClickListener {
+					val intent = Intent(context, DetailStoryActivity::class.java)
+					intent.putExtra(DetailStoryActivity.EXTRA_PARCEL, data)
+					context.startActivity(intent, optionsCompat.toBundle())
+				}
 			}
-			binding.root.setOnClickListener {
-				onItemClick?.invoke(data)
-			}
+
 		}
 	}
 

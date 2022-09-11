@@ -1,22 +1,29 @@
 package com.naufaldystd.storyapps.ui.detail
 
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
 import android.view.WindowInsets
 import android.view.WindowManager
+import android.view.animation.DecelerateInterpolator
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.text.HtmlCompat
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.Target
 import com.naufaldystd.core.R
 import com.naufaldystd.core.data.source.remote.response.StoryResponse
-import com.naufaldystd.core.domain.model.Story
 import com.naufaldystd.core.utils.Constants.EXTRA
 import com.naufaldystd.storyapps.databinding.ActivityDetailStoryBinding
 import com.naufaldystd.storyapps.utils.setLocalDateFormat
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class DetailStoryActivity : AppCompatActivity() {
@@ -30,6 +37,7 @@ class DetailStoryActivity : AppCompatActivity() {
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
+//		postponeEnterTransition()
 		setContentView(binding.root)
 
 		setupFullscreen()
@@ -38,7 +46,7 @@ class DetailStoryActivity : AppCompatActivity() {
 			populateView(data)
 		}
 		findViewById<ImageButton>(com.naufaldystd.storyapps.R.id.btn_back)?.setOnClickListener {
-			onBackPressed()
+			finishAfterTransition()
 		}
 	}
 
@@ -55,6 +63,28 @@ class DetailStoryActivity : AppCompatActivity() {
 					RequestOptions.placeholderOf(R.drawable.ic_loading)
 						.error(R.drawable.ic_error)
 				)
+				.listener(object : RequestListener<Drawable> {
+					override fun onLoadFailed(
+						e: GlideException?,
+						model: Any?,
+						target: Target<Drawable>?,
+						isFirstResource: Boolean
+					): Boolean {
+						return false
+					}
+
+					override fun onResourceReady(
+						resource: Drawable?,
+						model: Any?,
+						target: Target<Drawable>?,
+						dataSource: DataSource?,
+						isFirstResource: Boolean
+					): Boolean {
+						ActivityCompat.startPostponedEnterTransition(this@DetailStoryActivity)
+						return false;
+					}
+
+				})
 				.into(ivItemImage)
 			tvUserAndParagraph.text = HtmlCompat.fromHtml(
 				getString(
@@ -71,6 +101,11 @@ class DetailStoryActivity : AppCompatActivity() {
 				append(" ")
 				append(data.name)
 			}
+	}
+
+	override fun onBackPressed() {
+		finishAfterTransition()
+		super.onBackPressed()
 	}
 
 	/**

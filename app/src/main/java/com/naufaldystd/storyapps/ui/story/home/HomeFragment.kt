@@ -79,24 +79,6 @@ class HomeFragment : Fragment() {
 	 */
 	private fun setupAdapter() {
 		storyAdapter = StoryAdapter()
-		storyAdapter.onItemClick = { intentData ->
-			val image =
-				activity?.findViewById<ImageView>(com.naufaldystd.core.R.id.iv_item_image_list)
-			val text =
-				activity?.findViewById<TextView>(com.naufaldystd.core.R.id.tv_user_and_paragraph_list)
-			val datetime =
-				activity?.findViewById<TextView>(com.naufaldystd.core.R.id.tv_datetime_list)
-			val optionsCompat: ActivityOptionsCompat =
-				ActivityOptionsCompat.makeSceneTransitionAnimation(
-					requireActivity(),
-					Pair(image, "image"),
-					Pair(text, "text"),
-					Pair(datetime, "datetime")
-				)
-			val intent = Intent(requireActivity(), DetailStoryActivity::class.java)
-			intent.putExtra(DetailStoryActivity.EXTRA_PARCEL, intentData)
-			startActivity(intent, optionsCompat.toBundle())
-		}
 	}
 
 	/**
