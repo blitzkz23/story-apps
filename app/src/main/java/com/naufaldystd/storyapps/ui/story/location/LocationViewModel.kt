@@ -7,6 +7,7 @@ import com.naufaldystd.core.domain.model.UserModel
 import com.naufaldystd.core.domain.model.UserPreference
 import com.naufaldystd.core.domain.usecase.StoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -14,10 +15,10 @@ class LocationViewModel @Inject constructor(
 	private val pref: UserPreference,
 	private val storyUseCase: StoryUseCase
 ) : ViewModel() {
-	fun getUser(): LiveData<UserModel> {
-		return pref.getUser().asLiveData()
+	fun getUser(): Flow<UserModel> {
+		return pref.getUser()
 	}
 
 	fun getStoriesWithLocation(token: String) =
-		storyUseCase.getAllStories(token, location = 1).asLiveData()
+		storyUseCase.getStoriesWithLocation(token)
 }

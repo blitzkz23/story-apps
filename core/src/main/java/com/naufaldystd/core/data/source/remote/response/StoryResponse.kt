@@ -1,7 +1,10 @@
 package com.naufaldystd.core.data.source.remote.response
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class StoryResponse(
 
 	@field:SerializedName("photoUrl")
@@ -24,4 +27,4 @@ data class StoryResponse(
 
 	@field:SerializedName("lat")
 	val lat: Double
-)
+): Parcelable
