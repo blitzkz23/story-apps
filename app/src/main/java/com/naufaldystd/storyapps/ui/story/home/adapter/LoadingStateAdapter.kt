@@ -1,4 +1,4 @@
-package com.naufaldystd.storyapps.ui.story.home
+package com.naufaldystd.storyapps.ui.story.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

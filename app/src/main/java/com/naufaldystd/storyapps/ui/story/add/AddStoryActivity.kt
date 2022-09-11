@@ -277,11 +277,13 @@ class AddStoryActivity : AppCompatActivity() {
 			)
 
 			binding.loading.visibility = View.VISIBLE
-			addStoryViewModel.getUser().observe(this) { user ->
-				if (user.name == getString(R.string.tamu) || user.name == getString(R.string.guest)) {
-					addStoryGuest(description, imageMultipart, lat, lon)
-				} else {
-					addStoryUser(user.token, description, imageMultipart, lat, lon)
+			lifecycleScope.launch {
+				addStoryViewModel.getUser().collect { user ->
+					if (user.name == getString(R.string.tamu) || user.name == getString(R.string.guest)) {
+						addStoryGuest(description, imageMultipart, lat, lon)
+					} else {
+						addStoryUser(user.token, description, imageMultipart, lat, lon)
+					}
 				}
 			}
 		} else {
@@ -311,7 +313,7 @@ class AddStoryActivity : AppCompatActivity() {
 	) {
 		lifecycleScope.launch {
 			addStoryViewModel.addStory(token, description, imageMultipart, lat, lon)
-				.observe(this@AddStoryActivity) { respond ->
+				.collect { respond ->
 					when (respond) {
 						is Resource.Success -> {
 							binding.loading.visibility = View.GONE
@@ -351,7 +353,7 @@ class AddStoryActivity : AppCompatActivity() {
 	) {
 		lifecycleScope.launch {
 			addStoryViewModel.addStoryGuest(description, imageMultipart, lat, lon)
-				.observe(this@AddStoryActivity) { respond ->
+				.collect { respond ->
 					when (respond) {
 						is Resource.Success -> {
 							binding.loading.visibility = View.GONE

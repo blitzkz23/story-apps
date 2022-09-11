@@ -41,25 +41,26 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
-    // room
+    // Room, room-runtime sengaja tidak diupdate karena ada potensi bug yang menganggu development pada targetSDK 33
     api "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
     androidTestImplementation "androidx.room:room-testing:$room_version"
-
-    // retrofit
-    api "com.squareup.retrofit2:retrofit:$retrofit_version"
-    api "com.squareup.retrofit2:converter-gson:$retrofit_version"
-    //noinspection GradleDependency
-    api "com.squareup.okhttp3:logging-interceptor:$logging_interceptor_version"
-
-    // coroutine
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutines_version"
-
-    // noinspection GradleDependency
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines_version"
     implementation "androidx.room:room-ktx:$room_version"
 
-    // jetpack-ktx
+    // Retrofit
+    api "com.squareup.retrofit2:retrofit:$retrofit_version"
+    api "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    // noinspection GradleDependency
+    api "com.squareup.okhttp3:logging-interceptor:$logging_interceptor_version"
+
+    // Coroutine
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutines_version"
+
+    // Noinspection GradleDependency
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines_version"
+
+
+    // Jetpack-ktx
     api "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
     api "androidx.activity:activity-ktx:$activity_ktx_version"
     api "androidx.fragment:fragment-ktx:$fragment_ktx_version"

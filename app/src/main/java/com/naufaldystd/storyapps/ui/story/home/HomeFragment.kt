@@ -11,16 +11,17 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.paging.PagingData
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.naufaldystd.core.data.source.remote.response.StoryResponse
-import com.naufaldystd.core.ui.StoryAdapter
 import com.naufaldystd.storyapps.R
 import com.naufaldystd.storyapps.databinding.FragmentHomeBinding
 import com.naufaldystd.storyapps.ui.auth.AuthActivity
 import com.naufaldystd.storyapps.ui.detail.DetailStoryActivity
 import com.naufaldystd.storyapps.ui.story.add.AddStoryActivity
+import com.naufaldystd.storyapps.ui.story.home.adapter.LoadingStateAdapter
+import com.naufaldystd.storyapps.ui.story.home.adapter.StoryAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -44,16 +45,18 @@ class HomeFragment : Fragment() {
 
 		setupButtonAction()
 		setupAdapter()
-		homeViewModel.getUser().observe(viewLifecycleOwner) { user ->
-			if (user.name == getString(R.string.tamu) || user.name == getString(R.string.guest)) {
-				with(binding) {
-					imageSorry.visibility = View.VISIBLE
-					messageForGuest.visibility = View.VISIBLE
-					btnRegister2.visibility = View.VISIBLE
-					rvStory.visibility = View.GONE
+		lifecycleScope.launch {
+			homeViewModel.getUser().observe(viewLifecycleOwner) { user ->
+				if (user.name == getString(R.string.tamu) || user.name == getString(R.string.guest)) {
+					with(binding) {
+						imageSorry.visibility = View.VISIBLE
+						messageForGuest.visibility = View.VISIBLE
+						btnRegister2.visibility = View.VISIBLE
+						rvStory.visibility = View.GONE
+					}
+				} else {
+					setupHeaderTokenAndStoryData()
 				}
-			} else {
-				setupHeaderTokenAndStoryData()
 			}
 		}
 	}
@@ -101,10 +104,12 @@ class HomeFragment : Fragment() {
 	 */
 	private fun setupHeaderTokenAndStoryData() {
 		binding.loading.visibility = View.VISIBLE
-		homeViewModel.getUser().observe(viewLifecycleOwner) { user ->
-			homeViewModel.getAllStories(user.token).observe(viewLifecycleOwner) { story ->
-				binding.loading.visibility = View.GONE
-				updateRecyclerViewData(story)
+		lifecycleScope.launch {
+			homeViewModel.getUser().observe(viewLifecycleOwner) { user ->
+				homeViewModel.getAllStories(user.token).observe(viewLifecycleOwner) { story ->
+					binding.loading.visibility = View.GONE
+					storyAdapter.submitData(lifecycle, story)
+				}
 			}
 		}
 
@@ -116,10 +121,6 @@ class HomeFragment : Fragment() {
 				}
 			)
 		}
-	}
-
-	private fun updateRecyclerViewData(story: PagingData<StoryResponse>) {
-		storyAdapter.submitData(lifecycle, story)
 	}
 
 	override fun onDestroyView() {

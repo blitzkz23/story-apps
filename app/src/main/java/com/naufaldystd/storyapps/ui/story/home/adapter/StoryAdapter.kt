@@ -1,4 +1,4 @@
-package com.naufaldystd.core.ui
+package com.naufaldystd.storyapps.ui.story.home.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -17,15 +17,14 @@ import com.naufaldystd.core.utils.setLocalDateFormat
 
 class StoryAdapter : PagingDataAdapter<StoryResponse, StoryAdapter.ListViewHolder>(DIFF_CALLBACK) {
 
-	private var listStory = ArrayList<Story>()
 	var onItemClick: ((StoryResponse) -> Unit)? = null
 
-	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoryAdapter.ListViewHolder =
+	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder =
 		ListViewHolder(
 			LayoutInflater.from(parent.context).inflate(R.layout.item_list_story, parent, false)
 		)
 
-	override fun onBindViewHolder(holder: StoryAdapter.ListViewHolder, position: Int) {
+	override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
 		val data = getItem(position)
 		if (data != null) {
 			holder.bind(data)

@@ -8,9 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.naufaldystd.storyapps.databinding.FragmentSettingBinding
 import com.naufaldystd.storyapps.ui.auth.AuthActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SettingFragment : Fragment() {
@@ -40,8 +42,10 @@ class SettingFragment : Fragment() {
 	 *
 	 */
 	private fun setupUserInfo() {
-		settingViewModel.getUser().observe(viewLifecycleOwner) { user ->
-			binding.userName.text = user.name
+		lifecycleScope.launch {
+			settingViewModel.getUser().collect { user ->
+				binding.userName.text = user.name
+			}
 		}
 	}
 

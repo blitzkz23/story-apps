@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -21,6 +22,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.naufaldystd.core.data.source.Resource
 import com.naufaldystd.storyapps.R
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LocationFragment : Fragment() {
@@ -86,45 +88,44 @@ class LocationFragment : Fragment() {
 	 *
 	 */
 	private fun setMarkerStoryLocation() {
-		locationViewModel.getUser().observe(viewLifecycleOwner) { user ->
-			locationViewModel.getStoriesWithLocation(user.token)
-				.observe(viewLifecycleOwner) { stories ->
-					if (stories != null) {
-						when (stories) {
-							is Resource.Success -> {
-								stories.data?.forEach { story ->
-									if (story.lat != 0.0) {
-										val latLng = LatLng(story.lat, story.lon)
-										mMap.addMarker(
-											MarkerOptions()
-												.position(latLng)
-												.title(story.name)
-												.snippet("Lat: ${story.lat}, Lon: ${story.lon}")
-										)
-										boundsBuilder.include(latLng)
-									}
-								}
-
-								val bounds: LatLngBounds = boundsBuilder.build()
-								mMap.animateCamera(
-									CameraUpdateFactory.newLatLngBounds(
-										bounds, resources.displayMetrics.widthPixels,
-										resources.displayMetrics.heightPixels,
-										300
+		lifecycleScope.launch {
+			locationViewModel.getUser().collect { user ->
+				locationViewModel.getStoriesWithLocation(user.token).collect { stories ->
+					when (stories) {
+						is Resource.Success -> {
+							stories.data?.forEach { story ->
+								if (story.lat != 0.0) {
+									val latLng = LatLng(story.lat, story.lon)
+									mMap.addMarker(
+										MarkerOptions()
+											.position(latLng)
+											.title(story.name)
+											.snippet("Lat: ${story.lat}, Lon: ${story.lon}")
 									)
+									boundsBuilder.include(latLng)
+								}
+							}
+
+							val bounds: LatLngBounds = boundsBuilder.build()
+							mMap.animateCamera(
+								CameraUpdateFactory.newLatLngBounds(
+									bounds, resources.displayMetrics.widthPixels,
+									resources.displayMetrics.heightPixels,
+									300
 								)
-							}
-							is Resource.Error -> {
-								Toast.makeText(
-									context,
-									getString(R.string.cant_load_loc),
-									Toast.LENGTH_SHORT
-								).show()
-							}
-							else -> {}
+							)
 						}
+						is Resource.Error -> {
+							Toast.makeText(
+								context,
+								getString(R.string.cant_load_loc),
+								Toast.LENGTH_SHORT
+							).show()
+						}
+						else -> {}
 					}
 				}
+			}
 		}
 	}
 }
