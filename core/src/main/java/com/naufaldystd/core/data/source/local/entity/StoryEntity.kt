@@ -18,8 +18,8 @@ data class StoryEntity(
 	@ColumnInfo(name = "description")
 	val description: String,
 
-	@ColumnInfo(name = "photoURL")
-	val photoURL: String,
+	@ColumnInfo(name = "photoUrl")
+	val photoUrl: String,
 
 	@ColumnInfo(name = "createdAt")
 	val createdAt: String,

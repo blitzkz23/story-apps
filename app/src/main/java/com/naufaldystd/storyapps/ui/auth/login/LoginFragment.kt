@@ -108,7 +108,7 @@ class LoginFragment : Fragment() {
 
 			loading.visibility = View.VISIBLE
 			lifecycleScope.launch {
-				loginViewModel.loginAccount(email, password).observe(viewLifecycleOwner) { user ->
+				loginViewModel.loginAccount(email, password).collect { user ->
 					when (user) {
 						is Resource.Loading -> loading.visibility = View.VISIBLE
 						is Resource.Success -> {

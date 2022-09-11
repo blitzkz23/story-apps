@@ -47,4 +47,8 @@ dependencies {
     // Google maps
     implementation "com.google.android.gms:play-services-maps:$service_map_version"
     implementation "com.google.android.gms:play-services-location:$service_location_version"
+
+    // Paging 3
+    implementation "androidx.paging:paging-runtime-ktx:$paging3_version"
+    implementation "androidx.room:room-paging:$room_paging_version"
 }

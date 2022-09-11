@@ -20,6 +20,7 @@
         <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/app/src/main/res/drawable/ic_visible_eye.xml" value="0.2495" />
         <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/app/src/main/res/drawable/rounded_berbagi_button.xml" value="0.2215" />
         <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/app/src/main/res/layout/activity_add_story.xml" value="0.3029891304347826" />
+        <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/app/src/main/res/layout/activity_auth.xml" value="0.2667572463768116" />
         <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/app/src/main/res/layout/activity_camera_xactivity.xml" value="0.29791666666666666" />
         <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/app/src/main/res/layout/activity_detail_story.xml" value="0.31614583333333335" />
         <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/app/src/main/res/layout/activity_main.xml" value="0.25" />
@@ -38,6 +39,7 @@
         <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/app/src/main/res/layout/fragment_register.xml" value="0.25" />
         <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/app/src/main/res/layout/fragment_setting.xml" value="0.31614583333333335" />
         <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/app/src/main/res/layout/fragment_story.xml" value="0.31614583333333335" />
+        <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/app/src/main/res/layout/item_loading.xml" value="0.2644927536231884" />
         <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/app/src/main/res/menu/bottom_nav_menu.xml" value="0.3151041666666667" />
         <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/app/src/main/res/menu/mobile_navigation.xml" value="0.3151041666666667" />
         <entry key="..\:/Dicoding/Android Path/android-developer-intermediate/submissions/core/src/main/res/drawable/ic_broken_image_black.xml" value="0.2375" />

@@ -145,11 +145,13 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
 	 */
 	suspend fun getAllStories(
 		token: String,
+		page: Int? = null,
+		size: Int? = null,
 		location: Int? = null
 	): Flow<StoryApiResponse<List<StoryResponse>>> {
 		return channelFlow {
 			try {
-				val response = apiService.getAllStories("Bearer $token", location = location)
+				val response = apiService.getAllStories("Bearer $token", page = page, size = size, location = location)
 				val dataArray = response.listStory
 				if (dataArray.isNotEmpty()) {
 					send(StoryApiResponse.Success(response.listStory))

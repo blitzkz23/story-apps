@@ -50,6 +50,8 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$livedata_ktx_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$viewmodel_ktx_version"
     implementation "androidx.fragment:fragment:$fragment_version"
+
+    // Camerax sengaja tidak diupdate karena ada potensi bug yang menganggu development pada targetSdk 33
     implementation "androidx.camera:camera-camera2:$camerax_version"
     implementation "androidx.camera:camera-lifecycle:$camerax_version"
     implementation "androidx.camera:camera-view:$camerax_version"

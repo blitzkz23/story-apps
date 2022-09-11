@@ -9,5 +9,5 @@ import javax.inject.Inject
 @HiltViewModel
 class RegisterViewModel @Inject constructor(private val storyUseCase: StoryUseCase) : ViewModel() {
 	suspend fun registerAccount(name: String, email: String, password: String) =
-		storyUseCase.registerAccount(name, email, password).asLiveData()
+		storyUseCase.registerAccount(name, email, password)
 }

@@ -105,7 +105,7 @@ class RegisterFragment : Fragment() {
 
 		lifecycleScope.launch {
 			registerViewModel.registerAccount(name, email, password)
-				.observe(viewLifecycleOwner) { respond ->
+				.collect { respond ->
 					when (respond) {
 						is Resource.Loading -> binding.loading.visibility = View.GONE
 						is Resource.Success -> {
