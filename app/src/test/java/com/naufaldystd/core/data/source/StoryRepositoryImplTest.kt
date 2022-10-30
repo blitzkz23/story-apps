@@ -1,28 +1,35 @@
 package com.naufaldystd.core.data.source
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.paging.AsyncPagingDataDiffer
+import androidx.recyclerview.widget.ListUpdateCallback
 import androidx.test.filters.SmallTest
 import com.naufaldystd.core.data.source.local.LocalDataSource
 import com.naufaldystd.core.data.source.local.room.StoryDatabase
 import com.naufaldystd.core.data.source.remote.RemoteDataSource
 import com.naufaldystd.core.data.source.remote.network.ApiService
 import com.naufaldystd.core.data.source.remote.network.StoryApiResponse
+import com.naufaldystd.core.domain.repository.StoryRepository
+import com.naufaldystd.storyapps.ui.story.home.adapter.StoryAdapter
 import com.naufaldystd.storyapps.util.DataDummy.generateDummyErrorMessage
 import com.naufaldystd.storyapps.util.DataDummy.generateDummyLoginRequest
 import com.naufaldystd.storyapps.util.DataDummy.generateDummyLoginResult
 import com.naufaldystd.storyapps.util.DataDummy.generateDummyRegisterRequest
+import com.naufaldystd.storyapps.util.DataDummy.generateDummyStories
 import com.naufaldystd.storyapps.util.DataDummy.generateDummyStoriesWithLocation
 import com.naufaldystd.storyapps.util.DataDummy.generateDummyStoryRequest
 import com.naufaldystd.storyapps.util.DataDummy.generateDummySuccessMessage
 import com.naufaldystd.storyapps.util.DataDummy.generateDummyToken
 import com.naufaldystd.storyapps.util.DataDummy.generateDummyUserCreatedMessage
 import com.naufaldystd.storyapps.util.MainDispatcherRule
+import com.naufaldystd.storyapps.util.StoryPagingSource
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertNotNull
-import org.junit.Assert.assertTrue
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -43,15 +50,15 @@ class StoryRepositoryImplTest {
 
 	@Mock
 	private lateinit var remoteDataSource: RemoteDataSource
-
 	@Mock
 	private lateinit var localDataSource: LocalDataSource
-
 	@Mock
 	private lateinit var storyDatabase: StoryDatabase
-
 	@Mock
 	private lateinit var apiService: ApiService
+	@Mock
+	private lateinit var storyRepositoryMock: StoryRepository
+
 	private lateinit var storyRepositoryImpl: StoryRepositoryImpl
 
 	private var dummyLoginResult = generateDummyLoginResult()
@@ -59,6 +66,7 @@ class StoryRepositoryImplTest {
 	private var dummyRegisterRequest = generateDummyRegisterRequest()
 	private var dummyStoryRequest = generateDummyStoryRequest()
 
+	private var dummyStories = generateDummyStories()
 	private var dummyStoriesWithLocation = generateDummyStoriesWithLocation()
 
 	private var dummyToken = generateDummyToken()
@@ -197,6 +205,29 @@ class StoryRepositoryImplTest {
 			dummyLoginRequest.email,
 			dummyLoginRequest.password
 		)
+	}
+
+	@Test
+	fun `when getAllStories should not null and return success`() = runTest {
+		val pagedData = StoryPagingSource.snapshot(dummyStories)
+		val expectedResult = flowOf(pagedData)
+
+		Mockito.`when`(storyRepositoryMock.getAllStories(dummyToken)).thenReturn(expectedResult)
+
+		storyRepositoryMock.getAllStories(dummyToken).collect { response ->
+			val differ = AsyncPagingDataDiffer(
+				diffCallback = StoryAdapter.DIFF_CALLBACK,
+				updateCallback = noopListUpdateCallback,
+				mainDispatcher = Dispatchers.Main
+			)
+			differ.submitData(response)
+
+			assertNotNull(differ.snapshot())
+			assertEquals(
+				dummyStories.size,
+				differ.snapshot().size
+			)
+		}
 	}
 
 	@Test
@@ -375,4 +406,10 @@ class StoryRepositoryImplTest {
 			Mockito.verify(remoteDataSource).getAllStories(dummyToken, location = 1)
 		}
 
+	private val noopListUpdateCallback = object : ListUpdateCallback {
+		override fun onInserted(position: Int, count: Int) {}
+		override fun onRemoved(position: Int, count: Int) {}
+		override fun onMoved(fromPosition: Int, toPosition: Int) {}
+		override fun onChanged(position: Int, count: Int, payload: Any?) {}
+	}
 }
