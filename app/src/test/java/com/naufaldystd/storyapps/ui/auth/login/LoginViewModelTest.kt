@@ -56,12 +56,12 @@ class LoginViewModelTest {
 		}
 
 		// Act
-		loginViewModel.loginAccount(dummyEmail, dummyPassword).collect { user ->
+		loginViewModel.loginAccount(dummyEmail, dummyPassword).collect { response ->
 
 			// Assert
-			assertNotNull(user)
-			assertTrue(user is Resource.Success)
-			assertSame(expectedResult, user)
+			assertNotNull(response)
+			assertTrue(response is Resource.Success)
+			assertSame(expectedResult, response)
 		}
 	}
 
@@ -79,19 +79,19 @@ class LoginViewModelTest {
 	}
 
 	@Test
-	fun `when Network error should return error`() = runTest {
+	fun `when loginAccount error occured should throw exception`() = runTest {
 		// Arrange expected result
 		val expectedResult = flow {
 			emit(Resource.Error<String>("Error"))
 		}
 
 		// Act
-		loginViewModel.loginAccount(dummyEmail, dummyPassword).collect { user ->
+		loginViewModel.loginAccount(dummyEmail, dummyPassword).collect { response ->
 
 			// Assert
-			assertNotNull(user)
-			assertTrue(user is Resource.Error)
-			assertSame(expectedResult, user)
+			assertNotNull(response)
+			assertTrue(response is Resource.Error)
+			assertSame(expectedResult, response)
 		}
 	}
 }

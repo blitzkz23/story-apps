@@ -57,7 +57,7 @@ class StoryRepositoryImplTest {
 	@Mock
 	private lateinit var apiService: ApiService
 	@Mock
-	private lateinit var storyRepositoryMock: StoryRepository
+	private lateinit var storyRepository: StoryRepository
 
 	private lateinit var storyRepositoryImpl: StoryRepositoryImpl
 
@@ -212,9 +212,9 @@ class StoryRepositoryImplTest {
 		val pagedData = StoryPagingSource.snapshot(dummyStories)
 		val expectedResult = flowOf(pagedData)
 
-		Mockito.`when`(storyRepositoryMock.getAllStories(dummyToken)).thenReturn(expectedResult)
+		Mockito.`when`(storyRepository.getAllStories(dummyToken)).thenReturn(expectedResult)
 
-		storyRepositoryMock.getAllStories(dummyToken).collect { response ->
+		storyRepository.getAllStories(dummyToken).collect { response ->
 			val differ = AsyncPagingDataDiffer(
 				diffCallback = StoryAdapter.DIFF_CALLBACK,
 				updateCallback = noopListUpdateCallback,

@@ -83,8 +83,8 @@ class AddStoryViewModelTest {
 
 			// Assert
 			assertNotNull(response)
-			assertSame(expectedResult, response)
 			assertTrue(response is Resource.Success)
+			assertSame(expectedResult, response)
 		}
 	}
 

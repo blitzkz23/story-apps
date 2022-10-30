@@ -44,10 +44,10 @@ class HomeViewModelTest {
 	@Mock
 	private lateinit var mockPref: UserPreference
 	private lateinit var fakeUseCase: FakeStoryInteractor
-	private lateinit var homeViewModel: HomeViewModel
+	private lateinit var viewModel: HomeViewModel
 
 	@Mock
-	private lateinit var homeViewModelMock: HomeViewModel
+	private lateinit var homeViewModel: HomeViewModel
 
 	private val dummyUser = generateDummyUserModel()
 	private val dummyStories = generateDummyStories()
@@ -56,7 +56,7 @@ class HomeViewModelTest {
 	@Before
 	fun setUp() {
 		fakeUseCase = FakeStoryInteractor()
-		homeViewModel = HomeViewModel(fakeUseCase, mockPref)
+		viewModel = HomeViewModel(fakeUseCase, mockPref)
 	}
 
 
@@ -67,14 +67,13 @@ class HomeViewModelTest {
 
 		// Act
 		Mockito.`when`(mockPref.getUser()).thenReturn(prefResponse)
-		val actualResult = homeViewModel.getUser().getOrAwaitValue()
+		val actualResult = viewModel.getUser().getOrAwaitValue()
 
 		// Assert
 		Mockito.verify(mockPref).getUser()
 		assertNotNull(actualResult)
 	}
 
-	@OptIn(ExperimentalCoroutinesApi::class)
 	@Test
 	fun `when getAllStories should return StoryResponse data and not null`() = runTest {
 		// Arrange
@@ -84,8 +83,8 @@ class HomeViewModelTest {
 		val stories = MutableLiveData<PagingData<StoryResponse>>()
 		stories.value = data
 
-		Mockito.`when`(homeViewModelMock.getAllStories(dummyToken)).thenReturn(stories)
-		val actualStories = homeViewModelMock.getAllStories(dummyToken).getOrAwaitValue()
+		Mockito.`when`(homeViewModel.getAllStories(dummyToken)).thenReturn(stories)
+		val actualStories = homeViewModel.getAllStories(dummyToken).getOrAwaitValue()
 
 		val differ = AsyncPagingDataDiffer(
 			diffCallback = StoryAdapter.DIFF_CALLBACK,
@@ -95,7 +94,7 @@ class HomeViewModelTest {
 		differ.submitData(actualStories)
 		advanceUntilIdle()
 
-		Mockito.verify(homeViewModelMock).getAllStories(dummyToken)
+		Mockito.verify(homeViewModel).getAllStories(dummyToken)
 		assertNotNull(differ.snapshot())
 		assertEquals(storyResponse.size, differ.snapshot().size)
 	}

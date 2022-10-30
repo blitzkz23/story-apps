@@ -4,7 +4,9 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.filters.SmallTest
 import com.naufaldystd.core.data.source.Resource
 import com.naufaldystd.storyapps.data.FakeStoryInteractor
+import com.naufaldystd.storyapps.util.DataDummy.generateDummyErrorMessage
 import com.naufaldystd.storyapps.util.DataDummy.generateDummyRegisterRequest
+import com.naufaldystd.storyapps.util.DataDummy.generateDummySuccessMessage
 import com.naufaldystd.storyapps.util.MainDispatcherRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
@@ -29,7 +31,8 @@ class RegisterViewModelTest {
 
 	private lateinit var viewModel: RegisterViewModel
 	private lateinit var fakeUseCase: FakeStoryInteractor
-	private val dummyResponse = "Registered success"
+	private val dummyResponse = generateDummySuccessMessage()
+	private val dummyError = generateDummyErrorMessage()
 
 	private val registerRequest = generateDummyRegisterRequest()
 	private val dummyEmail = registerRequest.email
@@ -56,6 +59,25 @@ class RegisterViewModelTest {
 				// Assert
 				assertNotNull(response)
 				assertTrue(response is Resource.Success)
+				assertSame(expectedResult, response)
+			}
+		}
+	}
+
+	@Test
+	fun `when registerAccount error should throw exception`() = runTest {
+		// Arrange
+		val expectedResult = flow {
+			emit(Resource.Error<String>(dummyError))
+		}
+
+		// Act
+		dummyName?.let {
+			viewModel.registerAccount(it, dummyEmail, dummyPassword).collect { response ->
+
+				// Assert
+				assertNotNull(response)
+				assertTrue(response is Resource.Error)
 				assertSame(expectedResult, response)
 			}
 		}
