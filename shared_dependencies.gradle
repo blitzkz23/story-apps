@@ -25,11 +25,27 @@ dependencies {
     // Local Unit Tests
     implementation "androidx.test:core:$test_core_version"
     testImplementation "junit:junit:$junit_version"
-    testImplementation "org.hamcrest:hamcrest-all:$harmcrest_version"
+    testImplementation 'androidx.test:runner:1.4.0'
     testImplementation "androidx.arch.core:core-testing:$core_testing_version"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlin_coroutines_test_version"
-    testImplementation "com.google.truth:truth:$truth_version"
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1" //TestDispatcher
+
+    // Mockito
     testImplementation "org.mockito:mockito-core:$mockito_core_version"
+    testImplementation "org.mockito:mockito-inline:$mockito_core_version"
+
+    testImplementation "org.hamcrest:hamcrest-all:$harmcrest_version"
+    testImplementation "com.google.truth:truth:$truth_version"
+
+    // Hilt testing
+    // For Robolectric tests.
+    testImplementation "com.google.dagger:hilt-android-testing:2.38.1"
+    // ...with Kotlin.
+    kaptTest "com.google.dagger:hilt-android-compiler:2.38.1"
+    // For instrumented tests.
+    androidTestImplementation "com.google.dagger:hilt-android-testing:2.38.1"
+    // ...with Kotlin.
+    kaptAndroidTest "com.google.dagger:hilt-android-compiler:2.38.1"
 
     // Instrumented Unit Tests
     androidTestImplementation "junit:junit:$junit_version"
