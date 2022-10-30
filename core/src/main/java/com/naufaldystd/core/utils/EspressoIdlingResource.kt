@@ -1,4 +1,4 @@
-package com.naufaldystd.storyapps.utils
+package com.naufaldystd.core.utils
 
 import androidx.test.espresso.idling.CountingIdlingResource
 

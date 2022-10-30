@@ -56,7 +56,6 @@ dependencies {
     implementation "androidx.camera:camera-lifecycle:$camerax_version"
     implementation "androidx.camera:camera-view:$camerax_version"
     implementation "com.facebook.shimmer:shimmer:$shimmer_version"
-    implementation 'androidx.test.espresso:espresso-idling-resource:3.4.0'
     implementation 'androidx.test.espresso:espresso-contrib:3.4.0'
     implementation 'androidx.test.espresso:espresso-intents:3.4.0'
 }

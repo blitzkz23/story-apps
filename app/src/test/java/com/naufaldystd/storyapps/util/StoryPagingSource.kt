@@ -5,7 +5,6 @@ import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.naufaldystd.core.data.source.remote.response.StoryResponse
-import com.naufaldystd.core.domain.model.Story
 
 class StoryPagingSource :
     PagingSource<Int, LiveData<List<StoryResponse>>>() {

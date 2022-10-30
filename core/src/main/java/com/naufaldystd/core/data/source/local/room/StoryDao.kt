@@ -7,7 +7,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.naufaldystd.core.data.source.local.entity.StoryEntity
 import com.naufaldystd.core.data.source.remote.response.StoryResponse
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface StoryDao {

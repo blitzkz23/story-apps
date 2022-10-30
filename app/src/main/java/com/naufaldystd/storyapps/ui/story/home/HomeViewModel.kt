@@ -18,8 +18,6 @@ class HomeViewModel @Inject constructor(
 	private val storyUseCase: StoryUseCase,
 	private val pref: UserPreference
 ) : ViewModel() {
-	suspend fun loginAccount(email: String, password: String) =
-		storyUseCase.loginAccount(email, password)
 
 	fun getUser(): LiveData<UserModel> {
 		return pref.getUser().asLiveData()

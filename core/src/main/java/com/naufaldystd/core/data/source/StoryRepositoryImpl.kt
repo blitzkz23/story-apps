@@ -15,6 +15,7 @@ import com.naufaldystd.core.domain.model.Story
 import com.naufaldystd.core.domain.model.UserModel
 import com.naufaldystd.core.domain.repository.StoryRepository
 import com.naufaldystd.core.utils.DataMapper
+import com.naufaldystd.core.utils.wrapEspressoIdlingResource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
@@ -119,16 +120,18 @@ class StoryRepositoryImpl @Inject constructor(
 	}
 
 	override fun getStoriesWithLocation(token: String): Flow<Resource<List<Story>>> = flow {
-		when (val response = remoteDataSource.getAllStories(token, location = 1).first()) {
-			is StoryApiResponse.Success -> {
-				val story = DataMapper.mapResponsesToStory(response.data)
-				emit(Resource.Success(story))
-			}
-			is StoryApiResponse.Error -> {
-				emit(Resource.Error(response.errorMessage))
-			}
-			else -> {
-				emit(Resource.Loading())
+		wrapEspressoIdlingResource {
+			when (val response = remoteDataSource.getAllStories(token, location = 1).first()) {
+				is StoryApiResponse.Success -> {
+					val story = DataMapper.mapResponsesToStory(response.data)
+					emit(Resource.Success(story))
+				}
+				is StoryApiResponse.Error -> {
+					emit(Resource.Error(response.errorMessage))
+				}
+				else -> {
+					emit(Resource.Loading())
+				}
 			}
 		}
 	}
