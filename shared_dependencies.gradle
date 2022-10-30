@@ -24,11 +24,11 @@ dependencies {
 
     // Local Unit Tests
     implementation "androidx.test:core:$test_core_version"
-    testImplementation "junit:junit:$junit_version"
     testImplementation 'androidx.test:runner:1.4.0'
     testImplementation "androidx.arch.core:core-testing:$core_testing_version"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlin_coroutines_test_version"
     androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1" //TestDispatcher
+    implementation "com.google.guava:guava:29.0-android"
 
     // Mockito
     testImplementation "org.mockito:mockito-core:$mockito_core_version"
@@ -38,21 +38,17 @@ dependencies {
     testImplementation "com.google.truth:truth:$truth_version"
 
     // Hilt testing
-    // For Robolectric tests.
-    testImplementation "com.google.dagger:hilt-android-testing:2.38.1"
-    // ...with Kotlin.
-    kaptTest "com.google.dagger:hilt-android-compiler:2.38.1"
-    // For instrumented tests.
-    androidTestImplementation "com.google.dagger:hilt-android-testing:2.38.1"
-    // ...with Kotlin.
-    kaptAndroidTest "com.google.dagger:hilt-android-compiler:2.38.1"
+    kaptTest 'com.google.dagger:hilt-android-compiler:2.41'
+    testImplementation 'com.google.dagger:hilt-android-testing:2.41'
+
+    kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.41'
+    androidTestImplementation 'com.google.dagger:hilt-android-testing:2.41'
+    debugImplementation "androidx.fragment:fragment-testing:1.5.4"
 
     // Instrumented Unit Tests
-    androidTestImplementation "junit:junit:$junit_version"
     androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlin_coroutines_test_version"
     androidTestImplementation "androidx.arch.core:core-testing:$core_testing_version"
     androidTestImplementation "com.google.truth:truth:$truth_version"
-    androidTestImplementation "androidx.test.ext:junit:$instrumented_junit_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
     androidTestImplementation "org.mockito:mockito-core:$mockito_core_version"
 
@@ -67,4 +63,8 @@ dependencies {
     // Paging 3
     implementation "androidx.paging:paging-runtime-ktx:$paging3_version"
     implementation "androidx.room:room-paging:$room_paging_version"
+
+    // MockWebServer
+    androidTestImplementation "com.squareup.okhttp3:mockwebserver:4.9.3"
+    androidTestImplementation "com.squareup.okhttp3:okhttp-tls:4.9.3"
 }
