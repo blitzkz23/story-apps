@@ -8,6 +8,7 @@ import com.naufaldystd.core.domain.model.UserModel
 import com.naufaldystd.core.domain.usecase.StoryUseCase
 import com.naufaldystd.storyapps.util.DataDummy.generateDummyStories
 import com.naufaldystd.storyapps.util.DataDummy.generateDummyStoriesWithLocation
+import com.naufaldystd.storyapps.util.DataDummy.generateDummySuccessMessage
 import com.naufaldystd.storyapps.util.DataDummy.generateDummyUserModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -18,6 +19,7 @@ class FakeStoryInteractor : StoryUseCase {
 	private val dummyUser = generateDummyUserModel()
 	private val dummyStories = generateDummyStories()
 	private val dummyStoriesWithLoc = generateDummyStoriesWithLocation()
+	private val dummySuccessMsg = generateDummySuccessMessage()
 
 	override suspend fun registerAccount(
 		name: String,
@@ -55,7 +57,7 @@ class FakeStoryInteractor : StoryUseCase {
 		lon: RequestBody?
 	): Flow<Resource<String>> {
 		return flow {
-			Resource.Success(dummyUser)
+			Resource.Success(dummySuccessMsg)
 		}
 	}
 
@@ -66,7 +68,7 @@ class FakeStoryInteractor : StoryUseCase {
 		lon: RequestBody?
 	): Flow<Resource<String>> {
 		return flow {
-			Resource.Success(dummyUser)
+			Resource.Success(dummySuccessMsg)
 		}
 	}
 

@@ -22,6 +22,7 @@ import org.mockito.junit.MockitoJUnitRunner
 
 @SmallTest
 @RunWith(MockitoJUnitRunner::class)
+@OptIn(ExperimentalCoroutinesApi::class)
 class LocationViewModelTest {
 	@get: Rule
 	val instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -41,7 +42,7 @@ class LocationViewModelTest {
 	}
 
 	@Test
-	fun `when getUser should call mockPref getUser and not null`() = runTest {
+	fun `when getUser should call mockPref's getUser and not null`() = runTest {
 		// Arrange
 		val prefResponse = flowOf(dummyUser)
 
@@ -55,14 +56,13 @@ class LocationViewModelTest {
 		assertSame(prefResponse, actualResult)
 	}
 
-	@OptIn(ExperimentalCoroutinesApi::class)
 	@Test
 	fun `when getStoriesWithLocation should return Story and not null`() = runTest {
 		// Arrange
 		val expectedResult = DataDummy.generateDummyStoriesWithLocation()
 
 		// Act
-		val actualResult = locationViewModel.getStoriesWithLocation(dummyToken).collect { stories ->
+		locationViewModel.getStoriesWithLocation(dummyToken).collect { stories ->
 			// Assert
 			assertNotNull(stories)
 			assertSame(expectedResult.size, stories.data?.size)

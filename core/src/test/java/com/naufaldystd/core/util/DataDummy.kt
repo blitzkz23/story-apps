@@ -1,5 +1,6 @@
 package com.naufaldystd.storyapps.util
 
+import com.naufaldystd.core.data.source.remote.response.LoginResult
 import com.naufaldystd.core.data.source.remote.response.StoryResponse
 import com.naufaldystd.core.domain.model.UserModel
 import okhttp3.MultipartBody
@@ -72,6 +73,10 @@ object DataDummy {
 		)
 	}
 
+	fun generateDummyUserCreatedMessage(): String {
+		return "User Created"
+	}
+
 	fun generateDummySuccessMessage(): String {
 		return "success"
 	}
@@ -89,6 +94,14 @@ object DataDummy {
 			token = generateDummyToken(),
 			description = dummyDescription,
 			photo = dummyPhoto
+		)
+	}
+
+	fun generateDummyLoginResult(): LoginResult {
+		return LoginResult(
+			name = "Joko",
+			userId = "joko1",
+			token = generateDummyToken()
 		)
 	}
 }

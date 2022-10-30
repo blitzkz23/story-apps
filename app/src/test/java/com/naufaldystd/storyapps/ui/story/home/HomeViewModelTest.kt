@@ -21,11 +21,11 @@ import org.mockito.junit.MockitoJUnitRunner
 
 @SmallTest
 @RunWith(MockitoJUnitRunner::class)
+@OptIn(ExperimentalCoroutinesApi::class)
 class HomeViewModelTest {
 	@get:Rule
 	val instantTaskExecutorRule = InstantTaskExecutorRule()
 
-	@OptIn(ExperimentalCoroutinesApi::class)
 	@get:Rule
 	val mainDispatcherRule = MainDispatcherRule()
 
@@ -43,9 +43,9 @@ class HomeViewModelTest {
 		viewModel = HomeViewModel(fakeUseCase, mockPref)
 	}
 
-	@OptIn(ExperimentalCoroutinesApi::class)
+
 	@Test
-	fun `when getUser should call mockPref getUser and response not null`() = runTest {
+	fun `when getUser should call mockPref's getUser and response not null`() = runTest {
 		// Arrange
 		val prefResponse = flowOf(dummyUser)
 

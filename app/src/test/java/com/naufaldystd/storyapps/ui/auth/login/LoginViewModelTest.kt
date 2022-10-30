@@ -56,7 +56,7 @@ class LoginViewModelTest {
 		}
 
 		// Act
-		val actualResult = loginViewModel.loginAccount(dummyEmail, dummyPassword).collect { user ->
+		loginViewModel.loginAccount(dummyEmail, dummyPassword).collect { user ->
 
 			// Assert
 			assertNotNull(user)
@@ -66,7 +66,7 @@ class LoginViewModelTest {
 	}
 
 	@Test
-	fun `when logUser should log the data of logged in user and call mockPref saveUserSession`() = runTest {
+	fun `when logUser should log the data of logged in user and call mockPref's saveUserSession`() = runTest {
 		// Arrange
 		val expectedUserData = generateDummyUserModel()
 
@@ -86,7 +86,7 @@ class LoginViewModelTest {
 		}
 
 		// Act
-		val actualResult = loginViewModel.loginAccount(dummyEmail, dummyPassword).collect { user ->
+		loginViewModel.loginAccount(dummyEmail, dummyPassword).collect { user ->
 
 			// Assert
 			assertNotNull(user)

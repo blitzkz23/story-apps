@@ -20,11 +20,11 @@ import org.mockito.junit.MockitoJUnitRunner
 
 @SmallTest
 @RunWith(MockitoJUnitRunner::class)
+@OptIn(ExperimentalCoroutinesApi::class)
 class SettingViewModelTest {
 	@get:Rule
 	val instantTaskExecutorRule = InstantTaskExecutorRule()
 
-	@OptIn(ExperimentalCoroutinesApi::class)
 	@get:Rule
 	val mainDispatcherRule = MainDispatcherRule()
 
@@ -40,7 +40,7 @@ class SettingViewModelTest {
 	}
 
 	@Test
-	fun `when getUser should call mockPref getUser and not null`() = runTest {
+	fun `when getUser should call mockPref's getUser and not null`() = runTest {
 		// Arrange
 		val prefResponse = flowOf(dummyUser)
 
@@ -54,7 +54,6 @@ class SettingViewModelTest {
 		assertSame(prefResponse, actualResult)
 	}
 
-	@OptIn(ExperimentalCoroutinesApi::class)
 	@Test
 	fun `when logOutUser should call mockPref logout`() = runTest {
 		settingViewModel.logOutUser()

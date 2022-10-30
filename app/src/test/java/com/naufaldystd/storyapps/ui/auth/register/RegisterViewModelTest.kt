@@ -50,15 +50,14 @@ class RegisterViewModelTest {
 		}
 
 		// Act
-		val actualResult =
-			dummyName?.let {
-				viewModel.registerAccount(it, dummyEmail, dummyPassword).collect { response ->
+		dummyName?.let {
+			viewModel.registerAccount(it, dummyEmail, dummyPassword).collect { response ->
 
-					// Assert
-					assertNotNull(response)
-					assertNotNull(response is Resource.Success)
-					assertSame(expectedResult, response)
-				}
+				// Assert
+				assertNotNull(response)
+				assertTrue(response is Resource.Success)
+				assertSame(expectedResult, response)
 			}
+		}
 	}
 }
