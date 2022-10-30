@@ -137,3 +137,33 @@ StoryRepositoryImpl
 - Memastikan bahwa response tidak null
 - Memastikan bahwa response merupakan Resource.Error
 - Memastikan bahwa remoteDataSource.getStoriesWithLocation dipanggil
+
+
+Integration Test (@MediumTest)
+
+HomeFragmentTest
+1. Load Stories Berhasil
+- Berhasil meluncurkan HomeFragment
+- Memastikan apakah item dengan id R.id.rv_story terdisplay
+- Melakukan action scroll hingga item di posisi ke-10
+
+2. Load Detail Story Berhasil
+- Berhasil meluncurkan Home
+- Memastikan apakah item dengan id R.id.rv_story terdisplay
+- Melakukan action click pada item di posisi ke-0
+- Kembali ke halaman sebelumnya
+
+End-to-end Test (@LargeTest)
+
+StoryActivityTest 
+Skenario: Pengguna sudah login
+
+1. Berhasil membuka semua menu
+- Memastikan apakah item dengan id rv_story terdisplay
+- Melakukan action scroll hingga item di posisi ke-5
+- Melakukan action click pada item di posisi ke-5
+- Kembali ke halaman sebelumnya
+- Melakukan action click pada item dengan id fragment_location
+- Memastikan apakah item dengan id view_map terdisplay
+- Melakukan action click pada item dengan id fragment_setting
+- Memastikan apakah item dengan id user_name terdisplay
