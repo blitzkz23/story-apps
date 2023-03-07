@@ -1,8 +1,6 @@
 package com.naufaldystd.storyapps.ui.story.location
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import com.naufaldystd.core.domain.model.UserModel
 import com.naufaldystd.core.domain.model.UserPreference
 import com.naufaldystd.core.domain.usecase.StoryUseCase

@@ -1,0 +1,169 @@
+Unit Test
+
+RegisterViewModel
+1. Ketika register berhasil
+- Memastikan response tidak null
+- Memastikan response merupakan Resource.Success
+- Memastikan expectedResult sama dengan response
+
+2. Ketika register gagal
+- Memastikan response tidak null
+- Memastikan response merupakan Resource.Error
+- Memastikan expectedResult sama dengan response
+
+LoginViewModel
+1. Ketika login berhasil
+- Memastikan response tidak null
+- Memastikan response merupakan Resource.Success
+- Memastikan expectedResult sama dengan response
+
+2. Ketika login berhasil, session disimpan
+- Memastikan mockPref.saveUserSession dipanggil
+- Memastikan actualUserData tidak null
+
+AuthViewModel
+1. Ketika mendapatkan data User
+- Memastikan bahwa mockPref.getUser() dipanggil
+- Memastikan bahwa actualResult tidak null
+
+3. Ketika login gagal
+- Memastikan response tidak null
+- Memastikan response merupakan Resource.Error
+- Memastikan expectedResult sama dengan response 
+
+HomeViewModel
+1. Ketika mendapatkan data User
+- Memastikan bahwa mockPref.getUser() dipanggil
+- Memastikan bahwa actualResult tidak null
+
+2. Ketika mendapatkan semua story 
+- Memastikan bahwa homeViewModel.getAllStories telah dipanggil
+- Memastikan bahwa nilai differ.snapshot tidak null
+- Memastikan bahwa ukuran dari storyResponse sama dengan differ.snapshot
+
+AddStoryViewModel
+1. Ketika mendapatkan data User
+- Memastikan bahwa mockPref.getUser() dipanggil
+- Memastikan bahwa actualResult tidak null
+
+2. Ketika menambahkan story berhasil
+- Memastikan response tidak null
+- Memastikan response merupakan Resource.Success
+- Memastikan expectedResult sama dengan response
+
+3. Ketika menambahkan story gagal
+- Memastikan response tidak null
+- Memastikan response merupakan Resource.Error
+- Memastikan expectedResult sama dengan response 
+
+4. Ketika menambahkan story guest berhasil
+- Memastikan response tidak null
+- Memastikan response merupakan Resource.Success
+- Memastikan expectedResult sama dengan response
+
+5. Ketika menambahkan story guest gagal
+- Memastikan response tidak null
+- Memastikan response merupakan Resource.Error
+- Memastikan expectedResult sama dengan response 
+
+LocationViewModel
+1. Ketika mendapatkan data User
+- Memastikan bahwa mockPref.getUser() dipanggil
+- Memastikan bahwa actualResult tidak null
+
+2. Ketika mendapatkan semua story dengan lokasi 
+- Memastikan bahwa stories tidak null
+- Memastikan bahwa ukuran dari expectedResult sama dengan stories
+
+SettingViewModel
+1. Ketika mendapatkan data User
+- Memastikan bahwa mockPref.getUser() dipanggil
+- Memastikan bahwa actualResult tidak null
+
+2. Ketika user logout
+- Memastikan bahwa mockPref.logout dipanggil
+
+StoryRepositoryImpl
+1. Ketika register account berhasil
+- Memastikan bahwa response tidak null
+- Memastikan bahwa response merupakan Resource.Success
+- memastikan bahwa remoteDataSource.registerAccount dipanggil
+
+2. Ketika register account gagal
+- Memastikan bahwa response tidak null
+- Memastikan bahwa response merupakan Resource.Error
+- Memastikan bahwa remoteDataSource.registerAccount dipanggil
+
+3. Ketika login account berhasil
+- Memastikan bahwa response tidak null
+- Memastikan bahwa response merupakan Resource.Success
+- Memastikan bahwa remoteDataSource.loginAccount dipanggil
+
+4. Ketika register account gagal
+- Memastikan bahwa response tidak null
+- Memastikan bahwa response merupakan Resource.Error
+- Memastikan bahwa remoteDataSource.loginAccount dipanggil
+
+5. Ketika menambahkan story berhasil
+- Memastikan bahwa response tidak null
+- Memastikan bahwa response merupakan Resource.Success
+- Memastikan bahwa remoteDataSource.addStory dipanggil
+
+6. Ketika menambahkan story gagal
+- Memastikan bahwa response tidak null
+- Memastikan bahwa response merupakan Resource.Error
+- Memastikan bahwa remoteDataSource.addStory dipanggil
+
+7. Ketika menambahkan story guest berhasil
+- Memastikan bahwa response tidak null
+- Memastikan bahwa response merupakan Resource.Success
+- Memastikan bahwa remoteDataSource.addStoryGuest dipanggil
+
+8. Ketika menambahkan story guest gagal
+- Memastikan bahwa response tidak null
+- Memastikan bahwa response merupakan Resource.Error
+- Memastikan bahwa remoteDataSource.addStoryGuest dipanggil
+
+9. Ketika mendapatkan semua story dengan lokasi berhasil
+- Memastikan bahwa response tidak null
+- Memastikan bahwa response merupakan Resource.Success
+- Memastikan bahwa remoteDataSource.getStoriesWithLocation dipanggil
+
+10. Ketika mendapatkan semua story dengan lokasi gagal
+- Memastikan bahwa response tidak null
+- Memastikan bahwa response merupakan Resource.Error
+- Memastikan bahwa remoteDataSource.getStoriesWithLocation dipanggil
+
+
+Integration Test (@MediumTest)
+
+HomeFragmentTest
+1. Load Stories Berhasil
+- Berhasil meluncurkan HomeFragment
+- Memastikan apakah item dengan id R.id.rv_story terdisplay
+- Melakukan action scroll hingga item di posisi ke-10
+
+2. Load Detail Story Berhasil
+- Berhasil meluncurkan Home
+- Memastikan apakah item dengan id R.id.rv_story terdisplay
+- Melakukan action click pada item di posisi ke-0
+- Kembali ke halaman sebelumnya
+
+StoryRemoteMediatorTest
+- Memastikan bahwa hasil dari pemanggilan remoteMediator.load merupakan RemoteMediator.MediatorResult.Success
+- Memastikan bahwa hasil dari pemanggilan remoteMediator.load merupakan RemoteMediator.MediatorResult.Success saat akhir dari halaman paginasi tercapai
+
+End-to-end Test (@LargeTest)
+
+StoryActivityTest 
+Skenario: Pengguna sudah login
+
+1. Berhasil membuka semua menu
+- Memastikan apakah item dengan id rv_story terdisplay
+- Melakukan action scroll hingga item di posisi ke-5
+- Melakukan action click pada item di posisi ke-5
+- Kembali ke halaman sebelumnya
+- Melakukan action click pada item dengan id fragment_location
+- Memastikan apakah item dengan id view_map terdisplay
+- Melakukan action click pada item dengan id fragment_setting
+- Memastikan apakah item dengan id user_name terdisplay

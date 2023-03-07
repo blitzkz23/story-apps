@@ -1,8 +1,6 @@
 package com.naufaldystd.core.data.source.local
 
-import com.naufaldystd.core.data.source.local.entity.StoryEntity
 import com.naufaldystd.core.data.source.local.room.StoryDao
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 

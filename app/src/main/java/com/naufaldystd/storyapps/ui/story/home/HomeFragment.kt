@@ -5,10 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.core.app.ActivityOptionsCompat
-import androidx.core.util.Pair
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -16,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.naufaldystd.storyapps.R
 import com.naufaldystd.storyapps.databinding.FragmentHomeBinding
 import com.naufaldystd.storyapps.ui.auth.AuthActivity
-import com.naufaldystd.storyapps.ui.detail.DetailStoryActivity
 import com.naufaldystd.storyapps.ui.story.add.AddStoryActivity
 import com.naufaldystd.storyapps.ui.story.home.adapter.LoadingStateAdapter
 import com.naufaldystd.storyapps.ui.story.home.adapter.StoryAdapter

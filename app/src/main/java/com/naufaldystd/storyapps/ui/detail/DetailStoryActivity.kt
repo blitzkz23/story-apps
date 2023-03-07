@@ -5,7 +5,6 @@ import android.os.Build
 import android.os.Bundle
 import android.view.WindowInsets
 import android.view.WindowManager
-import android.view.animation.DecelerateInterpolator
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -81,7 +80,7 @@ class DetailStoryActivity : AppCompatActivity() {
 						isFirstResource: Boolean
 					): Boolean {
 						ActivityCompat.startPostponedEnterTransition(this@DetailStoryActivity)
-						return false;
+						return false
 					}
 
 				})

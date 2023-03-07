@@ -1,7 +1,6 @@
 package com.naufaldystd.storyapps.ui.auth.login
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.naufaldystd.core.domain.model.UserModel
 import com.naufaldystd.core.domain.model.UserPreference
